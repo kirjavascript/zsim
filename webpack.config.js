@@ -12,7 +12,8 @@ module.exports = (env={}, args={}) => {
             path:     path.join(__dirname, 'static'),
             filename: '[name].js',
             library: 'zsim',
-            libraryTarget: 'umd',
+            libraryTarget: 'window',
+            auxiliaryComment: 'zsim - embeddable cube simulator',
         },
         module: {
             rules: [
