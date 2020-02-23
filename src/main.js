@@ -3,14 +3,14 @@ import Zdog from 'zdog';
 
 // dont forget to math
 
-class CoreSim {
+class ZSim {
     constructor(container) {
         const zoom = 2;
         const element = container.appendChild(document.createElement('canvas'));
-        element.width = zoom * 200;
-        element.height = zoom * 200;
+        element.setAttribute('width', zoom * 400);
+        element.setAttribute('height', zoom * 400);
 
-        let illo = new Zdog.Illustration({
+        const illo = new Zdog.Illustration({
             element,
             zoom,
             dragRotate: true,
@@ -24,7 +24,6 @@ class CoreSim {
             stroke: 20,
             color: '#F00',
         });
-
         new Zdog.Rect({
             addTo: illo,
             width: 83,
@@ -33,11 +32,18 @@ class CoreSim {
             translate: { z: -4 },
             color: '#000',
         });
-        let box = new Zdog.Box({
+
+        const anc = new Zdog.Anchor({
             addTo: illo,
-            width: 120,
-            height: 120,
-            depth: 120,
+        });
+
+        const size = zoom * 40;
+        const distance = zoom * 42;
+        const box = new Zdog.Box({
+            addTo: anc,
+            width: size,
+            height: size,
+            depth: size,
             stroke: false,
             // color: '#C25', // default face color
             leftFace: '#EA0',
@@ -47,14 +53,16 @@ class CoreSim {
             topFace: '#ED0',
             bottomFace: 'transparent',
             translate: {
-                z: 120,
-                y: -120,
-                x: -120,
+                z: distance,
+                y: -distance,
+                x: -distance,
             },
         });
 
 
         (function loop() {
+
+            anc.rotate.z += 0.1;
 
             illo.updateRenderGraph();
             requestAnimationFrame(loop);
@@ -62,6 +70,8 @@ class CoreSim {
     }
 }
 
-const core = new CoreSim(document.querySelector('main'));
+const core = new ZSim(document.querySelector('main'));
 
 console.log(core);
+
+export { ZSim as core };

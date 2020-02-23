@@ -11,6 +11,8 @@ module.exports = (env={}, args={}) => {
         output: {
             path:     path.join(__dirname, 'static'),
             filename: '[name].js',
+            library: 'zsim',
+            libraryTarget: 'umd',
         },
         module: {
             rules: [
