@@ -1,12 +1,35 @@
 import Zdog, { TAU, lerp } from 'zdog';
 import { hexToRgba } from './util';
 
+/*
+ * examples
+ *
+ * stickerless
+ * japanese
+ * alg demo
+ * solve playback
+ * timer
+ * solver
+ * trainer
+ * controlled position
+ */
+
+
+
+
 function zsim(container) {
     const zoom = 2;
     const alpha = 1;
     const colors = [
-    ];
+        '#ffffff',
+        '#0045ad',
+        '#b90000',
+        '#009b48',
+        '#ff5900',
+        '#ffd500',
+    ].map(color => hexToRgba(color, alpha));
     const cubeColor = hexToRgba('#000', alpha); // rgb
+
     const element = container.appendChild(document.createElement('canvas'));
     element.setAttribute('width', zoom * 400);
     element.setAttribute('height', zoom * 400);
@@ -17,7 +40,6 @@ function zsim(container) {
         dragRotate: true,
     });
 
-    // add circle
     new Zdog.Rect({
         addTo: illo,
         width: 80,
@@ -28,104 +50,120 @@ function zsim(container) {
     });
 
 
-    function Corner({ translate, rotate, stickerless = false }) {
+    function Cubie({
+        translate,
+        stickers,
+    }) {
         const anchor = new Zdog.Anchor({
             addTo: illo,
         });
-
-
         const size = zoom * 40;
-        const typeConfig = stickerless ? {
-            leftFace: '#EA0',
-            rightFace: 'transparent',
-            rearFace: 'transparent',
-            frontFace: 'rgba(255, 0, 0, 0.5)',
-            topFace: '#ED0',
-            bottomFace: 'transparent',
-        } : {
-            leftFace: cubeColor,
-            rightFace: cubeColor,
-            rearFace: cubeColor,
-            frontFace: cubeColor,
-            topFace: cubeColor,
-            bottomFace: cubeColor,
-        };
-        const box = new Zdog.Box({
+        new Zdog.Box({
             addTo: anchor,
             width: size,
             height: size,
             depth: size,
             stroke: false,
             translate,
-            rotate,
-            ...typeConfig,
+            color: cubeColor,
         });
 
-        if (!stickerless) {
-            const stickerOffset = (size / 2) + 1;
+        const stickerOffset = (size / 2) + 1;
+        const rotations = {
+            x: { y: TAU / 4 },
+            y: { x: TAU / 4 },
+        };
 
-            const stickerA = new Zdog.Rect({
+        stickers.forEach(({ color, axis, offset }) => {
+
+            const sticker = new Zdog.Rect({
                 addTo: anchor,
                 width: size * 0.9,
                 height: size * 0.9,
                 stroke: 2,
                 fill: true,
                 translate,
-                color: '#F00',
+                color,
+                rotate: rotations[axis],
             });
 
-            const stickerB = stickerA.copy({
-                color: '#0F0',
-                rotate: { y: TAU / 4 },
-            });
+            sticker.translate[axis] += stickerOffset * offset;
 
-            const stickerC = stickerA.copy({
-                color: '#00F',
-                rotate: { x: TAU / 4 },
-            });
+        });
 
-            stickerA.translate.z += stickerOffset;
-            stickerB.translate.x -= stickerOffset;
-            stickerC.translate.y -= stickerOffset;
-        }
 
-        // stickers instead of rotation
         return {
             anchor,
         };
     }
 
+
     const distance = zoom * 42;
-    Corner({
-        translate: {
-            z: distance,
-            y: -distance,
-            x: -distance,
-        },
-    });
-    Corner({
-        translate: {
-            z: distance,
-            y: -distance,
-            x: distance,
-        },
-        rotate: {
-            z: TAU / 4
-        },
-    });
+    [
+        Cubie({
+            translate: {
+                x: -distance,
+                y: -distance,
+                z: distance,
+            },
+            stickers: [
+                { color: colors[4], axis: 'x', offset: -1 },
+                { color: colors[0], axis: 'y', offset: -1 },
+                { color: colors[3], axis: 'z', offset: 1 },
+            ],
+        }),
+        Cubie({
+            translate: {
+                z: distance,
+                y: -distance,
+                x: distance,
+            },
+            stickers: [
+                { color: colors[2], axis: 'x', offset: 1 },
+                { color: colors[0], axis: 'y', offset: -1 },
+                { color: colors[3], axis: 'z', offset: 1 },
+            ],
+        }),
+        Cubie({
+            translate: {
+                z: distance,
+                y: -distance,
+                // x: distance,
+            },
+            stickers: [
+                { color: colors[0], axis: 'y', offset: -1 },
+                { color: colors[3], axis: 'z', offset: 1 },
+            ],
+        }),
+        Cubie({
+            translate: {
+                z: distance,
+                y: -distance,
+            },
+            stickers: [
+                { color: colors[0], axis: 'y', offset: -1 },
+                { color: colors[3], axis: 'z', offset: 1 },
+            ],
+        }),
+        Cubie({
+            translate: {
+                z: distance,
+            },
+            stickers: [
+                { color: colors[3], axis: 'z', offset: 1 },
+            ],
+        }),
+    ];
+
+    // const { anchor: anc } = ref;
 
     (function loop() {
 
         // if (anc.rotate.z < TAU / 4) {
         //     anc.rotate.z += 0.05;
         // } else {
-        //     if (anc.rotate.x < TAU / 4) {
-        //         anc.rotate.x += 0.05;
-        //     } else {
-        //         if (anc.rotate.y < TAU / 4) {
-        //             anc.rotate.y += 0.05;
-        //         } else {
-        //         }
+        //     if (anc.rotate.y < TAU / 4) {
+        //         anc.rotate.y += 0.05;
         //     }
         // }
 
