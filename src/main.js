@@ -56,16 +56,16 @@ function zsim(container) {
             height: size,
             depth: size,
             stroke: false,
-            ...typeConfig,
             translate,
             rotate,
+            ...typeConfig,
         });
 
         if (!stickerless) {
             const stickerOffset = (size / 2) + 1;
 
             const stickerA = new Zdog.Rect({
-                addTo: illo,
+                addTo: anchor,
                 width: size * 0.9,
                 height: size * 0.9,
                 stroke: 2,
