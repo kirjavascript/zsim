@@ -14,9 +14,6 @@ import { hexToRgba } from './util';
  * controlled position
  */
 
-
-
-
 function zsim(container) {
     const zoom = 2;
     const alpha = 1;
@@ -91,12 +88,10 @@ function zsim(container) {
 
         });
 
-
         return {
             anchor,
         };
     }
-
 
     const distance = zoom * 42;
     [
