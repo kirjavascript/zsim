@@ -1,5 +1,6 @@
-import Zdog, { TAU, lerp } from 'zdog';
+import Zdog from 'zdog';
 import { hexToRgba } from './util';
+import Cube from './cube';
 
 /*
  * examples
@@ -12,6 +13,8 @@ import { hexToRgba } from './util';
  * solver
  * trainer
  * controlled position
+ * disco
+ * pillowed
  */
 
 function zsim(container) {
@@ -37,122 +40,21 @@ function zsim(container) {
         dragRotate: true,
     });
 
-    new Zdog.Rect({
-        addTo: illo,
-        width: 80,
-        height: 80,
-        stroke: 20,
-        fill: !0,
-        color: '#F004',
-    });
-
-
-    function Cubie({
-        translate,
-        stickers,
-    }) {
-        const anchor = new Zdog.Anchor({
-            addTo: illo,
-        });
-        const size = zoom * 40;
-        new Zdog.Box({
-            addTo: anchor,
-            width: size,
-            height: size,
-            depth: size,
-            stroke: false,
-            translate,
-            color: cubeColor,
-        });
-
-        const stickerOffset = (size / 2) + 1;
-        const rotations = {
-            x: { y: TAU / 4 },
-            y: { x: TAU / 4 },
-        };
-
-        stickers.forEach(({ color, axis, offset }) => {
-
-            const sticker = new Zdog.Rect({
-                addTo: anchor,
-                width: size * 0.9,
-                height: size * 0.9,
-                stroke: 2,
-                fill: true,
-                translate,
-                color,
-                rotate: rotations[axis],
-            });
-
-            sticker.translate[axis] += stickerOffset * offset;
-
-        });
-
-        return {
-            anchor,
-        };
-    }
-
-    const distance = zoom * 42;
-    [
-        Cubie({
-            translate: {
-                x: -distance,
-                y: -distance,
-                z: distance,
-            },
-            stickers: [
-                { color: colors[4], axis: 'x', offset: -1 },
-                { color: colors[0], axis: 'y', offset: -1 },
-                { color: colors[3], axis: 'z', offset: 1 },
-            ],
-        }),
-        Cubie({
-            translate: {
-                z: distance,
-                y: -distance,
-                x: distance,
-            },
-            stickers: [
-                { color: colors[2], axis: 'x', offset: 1 },
-                { color: colors[0], axis: 'y', offset: -1 },
-                { color: colors[3], axis: 'z', offset: 1 },
-            ],
-        }),
-        Cubie({
-            translate: {
-                z: distance,
-                y: -distance,
-                // x: distance,
-            },
-            stickers: [
-                { color: colors[0], axis: 'y', offset: -1 },
-                { color: colors[3], axis: 'z', offset: 1 },
-            ],
-        }),
-        Cubie({
-            translate: {
-                z: distance,
-                y: -distance,
-            },
-            stickers: [
-                { color: colors[0], axis: 'y', offset: -1 },
-                { color: colors[3], axis: 'z', offset: 1 },
-            ],
-        }),
-        Cubie({
-            translate: {
-                z: distance,
-            },
-            stickers: [
-                { color: colors[3], axis: 'z', offset: 1 },
-            ],
-        }),
-    ];
+    const cube = Cube({ illo, zoom, colors, cubeColor });
+    console.log(cube);
 
     // const { anchor: anc } = ref;
 
     (function loop() {
+        [5, 9, 4, 1].map(i => cube.edges[i]).forEach(({ anchor }) => {
+            anchor.rotate.x += 0.05;
+        });
+
+        [5, 4, 0, 1].map(i => cube.corners[i]).forEach(({ anchor }) => {
+            anchor.rotate.x += 0.05;
+        })
+
+        cube.centres[2].anchor.rotate.x += 0.05;
 
         // if (anc.rotate.z < TAU / 4) {
         //     anc.rotate.z += 0.05;
