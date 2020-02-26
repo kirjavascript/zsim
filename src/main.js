@@ -11,6 +11,7 @@ import Cube from './cube';
  * snap to position
  * alg demo
  * solve playback
+ * move slider
  * timer
  * solver
  * trainer
@@ -43,33 +44,14 @@ function zsim(container) {
     });
 
     const cube = Cube({ illo, zoom, colors, cubeColor });
-    console.log(cube);
-    // move queue
-
-    // const { anchor: anc } = ref;
 
     (function loop() {
-        // [5, 9, 4, 1].map(i => cube.edges[i]).forEach(({ anchor }) => {
-        //     anchor.rotate.x += 0.05;
-        // });
-
-        // [5, 4, 0, 1].map(i => cube.corners[i]).forEach(({ anchor }) => {
-        //     anchor.rotate.x += 0.05;
-        // })
-
-        // cube.centres[2].anchor.rotate.x += 0.05;
-
-        // if (anc.rotate.z < TAU / 4) {
-        //     anc.rotate.z += 0.05;
-        // } else {
-        //     if (anc.rotate.y < TAU / 4) {
-        //         anc.rotate.y += 0.05;
-        //     }
-        // }
-
+        cube.render();
         illo.updateRenderGraph();
         requestAnimationFrame(loop);
-    })()
+    })();
+
+    return cube;
 }
 
 export default zsim;

@@ -1,4 +1,7 @@
-import Zdog, { TAU } from 'zdog';
+import Zdog, { lerp } from 'zdog';
+import { getMoves, getMove, quarter } from './moves';
+
+// TODO: destroy -> return translate / etc
 
 export default function({ illo, zoom, colors, cubeColor }) {
     const distance = zoom * 42;
@@ -27,8 +30,8 @@ export default function({ illo, zoom, colors, cubeColor }) {
 
         const stickerOffset = (size / 2) + 1;
         const rotations = {
-            x: { y: TAU / 4 },
-            y: { x: TAU / 4 },
+            x: { y: quarter },
+            y: { x: quarter },
         };
 
         stickers.forEach(({ color, axis, offset }) => {
@@ -39,7 +42,7 @@ export default function({ illo, zoom, colors, cubeColor }) {
                 stroke: 2,
                 fill: true,
                 translate,
-                color,
+                color: colors[color],
                 rotate: rotations[axis],
             });
 
@@ -48,90 +51,90 @@ export default function({ illo, zoom, colors, cubeColor }) {
 
         return {
             anchor,
+            stickers,
         };
     }
-    // addTo to addChild
 
     const centres = [
-        Cubie({ stickers: [ { color: colors[0], axis: 'y', offset: -1 } ] }),
-        Cubie({ stickers: [ { color: colors[1], axis: 'z', offset: -1 } ] }),
-        Cubie({ stickers: [ { color: colors[2], axis: 'x', offset: 1 } ] }),
-        Cubie({ stickers: [ { color: colors[3], axis: 'z', offset: 1 } ] }),
-        Cubie({ stickers: [ { color: colors[4], axis: 'x', offset: -1 } ] }),
-        Cubie({ stickers: [ { color: colors[5], axis: 'y', offset: 1 } ] }),
+        Cubie({ stickers: [ { color: 0, axis: 'y', offset: -1 } ] }),
+        Cubie({ stickers: [ { color: 1, axis: 'z', offset: -1 } ] }),
+        Cubie({ stickers: [ { color: 2, axis: 'x', offset: 1 } ] }),
+        Cubie({ stickers: [ { color: 3, axis: 'z', offset: 1 } ] }),
+        Cubie({ stickers: [ { color: 4, axis: 'x', offset: -1 } ] }),
+        Cubie({ stickers: [ { color: 5, axis: 'y', offset: 1 } ] }),
     ];
 
     const edges = [
         Cubie({
             stickers: [
-                { color: colors[1], axis: 'z', offset: -1 },
-                { color: colors[0], axis: 'y', offset: -1 },
+                { color: 1, axis: 'z', offset: -1 },
+                { color: 0, axis: 'y', offset: -1 },
             ],
         }),
         Cubie({
             stickers: [
-                { color: colors[2], axis: 'x', offset: 1 },
-                { color: colors[0], axis: 'y', offset: -1 },
+                { color: 2, axis: 'x', offset: 1 },
+                { color: 0, axis: 'y', offset: -1 },
             ],
         }),
         Cubie({
             stickers: [
-                { color: colors[3], axis: 'z', offset: 1 },
-                { color: colors[0], axis: 'y', offset: -1 },
+                { color: 3, axis: 'z', offset: 1 },
+                { color: 0, axis: 'y', offset: -1 },
             ],
         }),
         Cubie({
             stickers: [
-                { color: colors[4], axis: 'x', offset: -1 },
-                { color: colors[0], axis: 'y', offset: -1 },
+                { color: 4, axis: 'x', offset: -1 },
+                { color: 0, axis: 'y', offset: -1 },
             ],
         }),
         Cubie({
             stickers: [
-                { color: colors[2], axis: 'x', offset: 1 },
-                { color: colors[1], axis: 'z', offset: -1 },
+                { color: 2, axis: 'x', offset: 1 },
+                { color: 1, axis: 'z', offset: -1 },
             ],
         }),
         Cubie({
             stickers: [
-                { color: colors[2], axis: 'x', offset: 1 },
-                { color: colors[3], axis: 'z', offset: 1 },
+                { color: 2, axis: 'x', offset: 1 },
+                { color: 3, axis: 'z', offset: 1 },
             ],
         }),
         Cubie({
             stickers: [
-                { color: colors[4], axis: 'x', offset: -1 },
-                { color: colors[3], axis: 'z', offset: 1 },
+                { color: 4, axis: 'x', offset: -1 },
+                { color: 3, axis: 'z', offset: 1 },
             ],
         }),
         Cubie({
             stickers: [
-                { color: colors[4], axis: 'x', offset: -1 },
-                { color: colors[1], axis: 'z', offset: -1 },
+                { color: 4, axis: 'x', offset: -1 },
+                { color: 1, axis: 'z', offset: -1 },
             ],
         }),
         Cubie({
             stickers: [
-                { color: colors[1], axis: 'z', offset: -1 },
-                { color: colors[5], axis: 'y', offset: 1 },
+                { color: 1, axis: 'z', offset: -1 },
+                { color: 5, axis: 'y', offset: 1 },
             ],
         }),
         Cubie({
             stickers: [
-                { color: colors[2], axis: 'x', offset: 1 },
-                { color: colors[5], axis: 'y', offset: 1 },
+                { color: 2, axis: 'x', offset: 1 },
+                { color: 5, axis: 'y', offset: 1 },
             ],
         }),
         Cubie({
             stickers: [
-                { color: colors[3], axis: 'z', offset: 1 },
-                { color: colors[5], axis: 'y', offset: 1 },
+                { color: 3, axis: 'z', offset: 1 },
+                { color: 5, axis: 'y', offset: 1 },
             ],
         }),
         Cubie({
             stickers: [
-                { color: colors[4], axis: 'x', offset: -1 },
-                { color: colors[5], axis: 'y', offset: 1 },
+                { color: 4, axis: 'x', offset: -1 },
+                { color: 5, axis: 'y', offset: 1 },
             ],
         }),
     ];
@@ -140,65 +143,94 @@ export default function({ illo, zoom, colors, cubeColor }) {
     const corners = [
         Cubie({
             stickers: [
-                { color: colors[2], axis: 'x', offset: 1 },
-                { color: colors[0], axis: 'y', offset: -1 },
-                { color: colors[1], axis: 'z', offset: -1 },
+                { color: 2, axis: 'x', offset: 1 },
+                { color: 0, axis: 'y', offset: -1 },
+                { color: 1, axis: 'z', offset: -1 },
             ],
         }),
         Cubie({
             stickers: [
-                { color: colors[2], axis: 'x', offset: 1 },
-                { color: colors[0], axis: 'y', offset: -1 },
-                { color: colors[3], axis: 'z', offset: 1 },
+                { color: 2, axis: 'x', offset: 1 },
+                { color: 0, axis: 'y', offset: -1 },
+                { color: 3, axis: 'z', offset: 1 },
             ],
         }),
         Cubie({
             stickers: [
-                { color: colors[4], axis: 'x', offset: -1 },
-                { color: colors[0], axis: 'y', offset: -1 },
-                { color: colors[3], axis: 'z', offset: 1 },
+                { color: 4, axis: 'x', offset: -1 },
+                { color: 0, axis: 'y', offset: -1 },
+                { color: 3, axis: 'z', offset: 1 },
             ],
         }),
         Cubie({
             stickers: [
-                { color: colors[4], axis: 'x', offset: -1 },
-                { color: colors[0], axis: 'y', offset: -1 },
-                { color: colors[1], axis: 'z', offset: -1 },
+                { color: 4, axis: 'x', offset: -1 },
+                { color: 0, axis: 'y', offset: -1 },
+                { color: 1, axis: 'z', offset: -1 },
             ],
         }),
         Cubie({
             stickers: [
-                { color: colors[2], axis: 'x', offset: 1 },
-                { color: colors[5], axis: 'y', offset: 1 },
-                { color: colors[1], axis: 'z', offset: -1 },
+                { color: 2, axis: 'x', offset: 1 },
+                { color: 5, axis: 'y', offset: 1 },
+                { color: 1, axis: 'z', offset: -1 },
             ],
         }),
         Cubie({
             stickers: [
-                { color: colors[2], axis: 'x', offset: 1 },
-                { color: colors[5], axis: 'y', offset: 1 },
-                { color: colors[3], axis: 'z', offset: 1 },
+                { color: 2, axis: 'x', offset: 1 },
+                { color: 5, axis: 'y', offset: 1 },
+                { color: 3, axis: 'z', offset: 1 },
             ],
         }),
         Cubie({
             stickers: [
-                { color: colors[4], axis: 'x', offset: -1 },
-                { color: colors[5], axis: 'y', offset: 1 },
-                { color: colors[3], axis: 'z', offset: 1 },
+                { color: 4, axis: 'x', offset: -1 },
+                { color: 5, axis: 'y', offset: 1 },
+                { color: 3, axis: 'z', offset: 1 },
             ],
         }),
         Cubie({
             stickers: [
-                { color: colors[4], axis: 'x', offset: -1 },
-                { color: colors[5], axis: 'y', offset: 1 },
-                { color: colors[1], axis: 'z', offset: -1 },
+                { color: 4, axis: 'x', offset: -1 },
+                { color: 5, axis: 'y', offset: 1 },
+                { color: 1, axis: 'z', offset: -1 },
             ],
         }),
     ];
 
+    const queue = [];
+
+    // addState
+
     return {
-        corners,
-        centres,
-        edges,
+        test_domove: () => {
+            const moves = getMoves(`RU`, { corners, centres, edges });
+
+            moves.forEach(d => d.apply())
+
+
+            // do sune, support instant and different tps
+        },
+        render: () => {
+        // [5, 9, 4, 1].map(i => cube.edges[i]).forEach(({ anchor }) => {
+        //     anchor.rotate.x += 0.05;
+        // });
+
+        // [5, 4, 0, 1].map(i => cube.corners[i]).forEach(({ anchor }) => {
+        //     anchor.rotate.x += 0.05;
+        // })
+
+        // cube.centres[2].anchor.rotate.x += 0.05;
+
+        // if (anc.rotate.z < TAU / 4) {
+        //     anc.rotate.z += 0.05;
+        // } else {
+        //     if (anc.rotate.y < TAU / 4) {
+        //         anc.rotate.y += 0.05;
+        //     }
+        // }
+
+        },
     };
 }

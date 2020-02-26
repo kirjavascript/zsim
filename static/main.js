@@ -2519,6 +2519,9 @@ return Vector;
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var zdog__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! zdog */ "./node_modules/zdog/js/index.js");
 /* harmony import */ var zdog__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(zdog__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _moves__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./moves */ "./src/moves.js");
+
+ // TODO: destroy -> return translate / etc
 
 /* harmony default export */ __webpack_exports__["default"] = (function (_ref) {
   var illo = _ref.illo,
@@ -2552,10 +2555,10 @@ __webpack_require__.r(__webpack_exports__);
     var stickerOffset = size / 2 + 1;
     var rotations = {
       x: {
-        y: zdog__WEBPACK_IMPORTED_MODULE_0__["TAU"] / 4
+        y: _moves__WEBPACK_IMPORTED_MODULE_1__["quarter"]
       },
       y: {
-        x: zdog__WEBPACK_IMPORTED_MODULE_0__["TAU"] / 4
+        x: _moves__WEBPACK_IMPORTED_MODULE_1__["quarter"]
       }
     };
     stickers.forEach(function (_ref4) {
@@ -2569,292 +2572,316 @@ __webpack_require__.r(__webpack_exports__);
         stroke: 2,
         fill: true,
         translate: translate,
-        color: color,
+        color: colors[color],
         rotate: rotations[axis]
       });
       sticker.translate[axis] += stickerOffset * offset;
     });
     return {
-      anchor: anchor
+      anchor: anchor,
+      stickers: stickers
     };
-  } // addTo to addChild
-
+  }
 
   var centres = [Cubie({
     stickers: [{
-      color: colors[0],
+      color: 0,
       axis: 'y',
       offset: -1
     }]
   }), Cubie({
     stickers: [{
-      color: colors[1],
+      color: 1,
       axis: 'z',
       offset: -1
     }]
   }), Cubie({
     stickers: [{
-      color: colors[2],
+      color: 2,
       axis: 'x',
       offset: 1
     }]
   }), Cubie({
     stickers: [{
-      color: colors[3],
+      color: 3,
       axis: 'z',
       offset: 1
     }]
   }), Cubie({
     stickers: [{
-      color: colors[4],
+      color: 4,
       axis: 'x',
       offset: -1
     }]
   }), Cubie({
     stickers: [{
-      color: colors[5],
+      color: 5,
       axis: 'y',
       offset: 1
     }]
   })];
   var edges = [Cubie({
     stickers: [{
-      color: colors[1],
+      color: 1,
       axis: 'z',
       offset: -1
     }, {
-      color: colors[0],
+      color: 0,
       axis: 'y',
       offset: -1
     }]
   }), Cubie({
     stickers: [{
-      color: colors[2],
+      color: 2,
       axis: 'x',
       offset: 1
     }, {
-      color: colors[0],
+      color: 0,
       axis: 'y',
       offset: -1
     }]
   }), Cubie({
     stickers: [{
-      color: colors[3],
+      color: 3,
       axis: 'z',
       offset: 1
     }, {
-      color: colors[0],
+      color: 0,
       axis: 'y',
       offset: -1
     }]
   }), Cubie({
     stickers: [{
-      color: colors[4],
+      color: 4,
       axis: 'x',
       offset: -1
     }, {
-      color: colors[0],
+      color: 0,
       axis: 'y',
       offset: -1
     }]
   }), Cubie({
     stickers: [{
-      color: colors[2],
+      color: 2,
       axis: 'x',
       offset: 1
     }, {
-      color: colors[1],
+      color: 1,
       axis: 'z',
       offset: -1
     }]
   }), Cubie({
     stickers: [{
-      color: colors[2],
+      color: 2,
       axis: 'x',
       offset: 1
     }, {
-      color: colors[3],
-      axis: 'z',
-      offset: 1
-    }]
-  }), Cubie({
-    stickers: [{
-      color: colors[4],
-      axis: 'x',
-      offset: -1
-    }, {
-      color: colors[3],
+      color: 3,
       axis: 'z',
       offset: 1
     }]
   }), Cubie({
     stickers: [{
-      color: colors[4],
+      color: 4,
       axis: 'x',
       offset: -1
     }, {
-      color: colors[1],
+      color: 3,
+      axis: 'z',
+      offset: 1
+    }]
+  }), Cubie({
+    stickers: [{
+      color: 4,
+      axis: 'x',
+      offset: -1
+    }, {
+      color: 1,
       axis: 'z',
       offset: -1
     }]
   }), Cubie({
     stickers: [{
-      color: colors[1],
+      color: 1,
       axis: 'z',
       offset: -1
     }, {
-      color: colors[5],
+      color: 5,
       axis: 'y',
       offset: 1
     }]
   }), Cubie({
     stickers: [{
-      color: colors[2],
+      color: 2,
       axis: 'x',
       offset: 1
     }, {
-      color: colors[5],
+      color: 5,
       axis: 'y',
       offset: 1
     }]
   }), Cubie({
     stickers: [{
-      color: colors[3],
+      color: 3,
       axis: 'z',
       offset: 1
     }, {
-      color: colors[5],
+      color: 5,
       axis: 'y',
       offset: 1
     }]
   }), Cubie({
     stickers: [{
-      color: colors[4],
+      color: 4,
       axis: 'x',
       offset: -1
     }, {
-      color: colors[5],
+      color: 5,
       axis: 'y',
       offset: 1
     }]
   })];
   var corners = [Cubie({
     stickers: [{
-      color: colors[2],
+      color: 2,
       axis: 'x',
       offset: 1
     }, {
-      color: colors[0],
+      color: 0,
       axis: 'y',
       offset: -1
     }, {
-      color: colors[1],
+      color: 1,
       axis: 'z',
       offset: -1
     }]
   }), Cubie({
     stickers: [{
-      color: colors[2],
+      color: 2,
       axis: 'x',
       offset: 1
     }, {
-      color: colors[0],
+      color: 0,
       axis: 'y',
       offset: -1
     }, {
-      color: colors[3],
+      color: 3,
       axis: 'z',
       offset: 1
     }]
   }), Cubie({
     stickers: [{
-      color: colors[4],
+      color: 4,
       axis: 'x',
       offset: -1
     }, {
-      color: colors[0],
+      color: 0,
       axis: 'y',
       offset: -1
     }, {
-      color: colors[3],
+      color: 3,
       axis: 'z',
       offset: 1
     }]
   }), Cubie({
     stickers: [{
-      color: colors[4],
+      color: 4,
       axis: 'x',
       offset: -1
     }, {
-      color: colors[0],
+      color: 0,
       axis: 'y',
       offset: -1
     }, {
-      color: colors[1],
+      color: 1,
       axis: 'z',
       offset: -1
     }]
   }), Cubie({
     stickers: [{
-      color: colors[2],
+      color: 2,
       axis: 'x',
       offset: 1
     }, {
-      color: colors[5],
+      color: 5,
       axis: 'y',
       offset: 1
     }, {
-      color: colors[1],
+      color: 1,
       axis: 'z',
       offset: -1
     }]
   }), Cubie({
     stickers: [{
-      color: colors[2],
+      color: 2,
       axis: 'x',
       offset: 1
     }, {
-      color: colors[5],
+      color: 5,
       axis: 'y',
       offset: 1
     }, {
-      color: colors[3],
+      color: 3,
       axis: 'z',
       offset: 1
     }]
   }), Cubie({
     stickers: [{
-      color: colors[4],
+      color: 4,
       axis: 'x',
       offset: -1
     }, {
-      color: colors[5],
+      color: 5,
       axis: 'y',
       offset: 1
     }, {
-      color: colors[3],
+      color: 3,
       axis: 'z',
       offset: 1
     }]
   }), Cubie({
     stickers: [{
-      color: colors[4],
+      color: 4,
       axis: 'x',
       offset: -1
     }, {
-      color: colors[5],
+      color: 5,
       axis: 'y',
       offset: 1
     }, {
-      color: colors[1],
+      color: 1,
       axis: 'z',
       offset: -1
     }]
   })];
+  var queue = []; // addState
+
   return {
-    corners: corners,
-    centres: centres,
-    edges: edges
+    test_domove: function test_domove() {
+      var moves = Object(_moves__WEBPACK_IMPORTED_MODULE_1__["getMoves"])("RU", {
+        corners: corners,
+        centres: centres,
+        edges: edges
+      });
+      moves.forEach(function (d) {
+        return d.apply();
+      }); // do sune, support instant and different tps
+    },
+    render: function render() {// [5, 9, 4, 1].map(i => cube.edges[i]).forEach(({ anchor }) => {
+      //     anchor.rotate.x += 0.05;
+      // });
+      // [5, 4, 0, 1].map(i => cube.corners[i]).forEach(({ anchor }) => {
+      //     anchor.rotate.x += 0.05;
+      // })
+      // cube.centres[2].anchor.rotate.x += 0.05;
+      // if (anc.rotate.z < TAU / 4) {
+      //     anc.rotate.z += 0.05;
+      // } else {
+      //     if (anc.rotate.y < TAU / 4) {
+      //         anc.rotate.y += 0.05;
+      //     }
+      // }
+    }
   };
 });
 
@@ -2885,6 +2912,7 @@ __webpack_require__.r(__webpack_exports__);
  * snap to position
  * alg demo
  * solve playback
+ * move slider
  * timer
  * solver
  * trainer
@@ -2915,30 +2943,208 @@ function zsim(container) {
     colors: colors,
     cubeColor: cubeColor
   });
-  console.log(cube); // move queue
-  // const { anchor: anc } = ref;
 
   (function loop() {
-    // [5, 9, 4, 1].map(i => cube.edges[i]).forEach(({ anchor }) => {
-    //     anchor.rotate.x += 0.05;
-    // });
-    // [5, 4, 0, 1].map(i => cube.corners[i]).forEach(({ anchor }) => {
-    //     anchor.rotate.x += 0.05;
-    // })
-    // cube.centres[2].anchor.rotate.x += 0.05;
-    // if (anc.rotate.z < TAU / 4) {
-    //     anc.rotate.z += 0.05;
-    // } else {
-    //     if (anc.rotate.y < TAU / 4) {
-    //         anc.rotate.y += 0.05;
-    //     }
-    // }
+    cube.render();
     illo.updateRenderGraph();
     requestAnimationFrame(loop);
   })();
+
+  return cube;
 }
 
 /* harmony default export */ __webpack_exports__["default"] = (zsim);
+
+/***/ }),
+
+/***/ "./src/moves.js":
+/*!**********************!*\
+  !*** ./src/moves.js ***!
+  \**********************/
+/*! exports provided: quarter, getMoves */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "quarter", function() { return quarter; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getMoves", function() { return getMoves; });
+/* harmony import */ var zdog__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! zdog */ "./node_modules/zdog/js/index.js");
+/* harmony import */ var zdog__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(zdog__WEBPACK_IMPORTED_MODULE_0__);
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
+
+function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
+var quarter = zdog__WEBPACK_IMPORTED_MODULE_0__["TAU"] / 4;
+var moveList = {
+  R: {
+    edges: [[5, 9, 4, 1]],
+    corners: [[5, 4, 0, 1], [-1, 1, -1, 1]],
+    centre: 2,
+    axis: 'x'
+  },
+  U: {
+    edges: [[3, 2, 1, 0]],
+    corners: [[3, 2, 1, 0]],
+    centre: 0,
+    axis: 'y'
+  },
+  F: {
+    edges: [[6, 10, 5, 2], [1, 1, 1, 1]],
+    corners: [[1, 2, 6, 5], [-1, 1, -1, 1]]
+  },
+  L: {
+    edges: [[3, 7, 11, 6]],
+    corners: [[2, 3, 7, 6], [-1, 1, -1, 1]]
+  },
+  B: {
+    edges: [[4, 8, 7, 0], [1, 1, 1, 1]],
+    corners: [[4, 7, 3, 0], [-1, 1, -1, 1]]
+  },
+  D: {
+    edges: [[8, 9, 10, 11]],
+    corners: [[4, 5, 6, 7]]
+  },
+  M: {
+    centres: [0, 1, 5, 3],
+    edges: [[2, 0, 8, 10], [1, 1, 1, 1]]
+  },
+  E: {
+    centres: [3, 4, 1, 2],
+    edges: [[4, 5, 6, 7], [1, 1, 1, 1]]
+  },
+  S: {
+    centres: [4, 5, 2, 0],
+    edges: [[3, 11, 9, 1], [1, 1, 1, 1]]
+  }
+};
+
+function getTransform() {}
+
+function getMove(moveRaw, cube) {
+  var _toObject = toObject(moveRaw),
+      move = _toObject.move,
+      order = _toObject.order;
+
+  if (!moveList[move]) throw new Error("invalid move ".concat(move));
+
+  var _moveList$move = moveList[move],
+      _moveList$move$corner = _slicedToArray(_moveList$move.corners, 1),
+      corners = _moveList$move$corner[0],
+      _moveList$move$edges = _slicedToArray(_moveList$move.edges, 1),
+      edges = _moveList$move$edges[0],
+      centre = _moveList$move.centre,
+      axis = _moveList$move.axis; // calculate transforms
+
+
+  var transforms = [].concat(_toConsumableArray(corners.map(function (index) {
+    return cube.corners[index];
+  })), _toConsumableArray(edges.map(function (index) {
+    return cube.edges[index];
+  })), [cube.centres[centre]]); // adjust places
+
+  doCycle(cube.edges, order, edges);
+  doCycle(cube.corners, order, corners); // generate solved state from cubies
+
+  function apply() {
+    console.log(transforms);
+    transforms.forEach(function (_ref) {// anchor.rotate[axis] += quarter;
+      // apply
+      // run cubies, swap colours
+      // resetting rotate makes animations easier
+
+      var anchor = _ref.anchor;
+    });
+  } // apply
+  // calc finalvalue
+  // lerp moves
+  // list of cubies to update each cube with the update
+  // transforms
+
+
+  return {
+    apply: apply
+  };
+}
+
+function getMoves(moves, cube) {
+  return splitMoves(moves).map(function (move) {
+    return getMove(move, cube);
+  });
+}
+
+function toObject(move) {
+  if (typeof move !== 'string') return move;
+  return {
+    move: move[0],
+    order: {
+      '': 1,
+      '2': 2,
+      '\'': -1
+    }[move[1]]
+  };
+}
+
+function splitMoves(str) {
+  if (typeof str !== 'string') return str;
+  return str.replace(/\s/g, '').split(/(\w2|\w'|\w)/).filter(function (move) {
+    return move;
+  });
+}
+
+function doCycle(arr, order, cycle, twists) {
+  if (order == -1) {
+    cycle = cycle.reverse();
+    twists && (twists = twists.reverse());
+  } else if (order == 2) {
+    doCycle(arr, 1, cycle, twists);
+  } // corner twists
+
+
+  if (twists) {
+    for (var i = 0; i < twists.length; i++) {
+      twist(arr, cycle[i], twists[i]);
+    }
+  } // cycles
+
+
+  for (var _i2 = 0; _i2 < cycle.length - 1; _i2++) {
+    swap(arr, cycle[_i2], cycle[_i2 + 1]);
+  }
+}
+
+function swap(arr, first, second) {
+  var tmp = arr[first];
+  arr[first] = arr[second];
+  arr[second] = tmp;
+}
+
+function twist(arr, cubieIndex, order) {
+  var cubie = arr[cubieIndex]; // edges
+
+  if (cubie.length == 2) {
+    cubie.push(cubie.splice(0, 1)[0]);
+  } else {
+    //corners
+    if (order == 1) {
+      cubie.splice(0, 0, cubie.splice(2, 1)[0]);
+    } else if (order == -1) {
+      cubie.splice(2, 0, cubie.splice(0, 1)[0]);
+    }
+  }
+}
 
 /***/ }),
 
