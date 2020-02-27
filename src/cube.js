@@ -1,9 +1,10 @@
 import Zdog, { lerp } from 'zdog';
 import { getMoves, getMove, quarter } from './moves';
 
-// TODO: destroy -> return translate / etc
+// TODO: destroy -> return stickers
+// TODO: config -> generate setters/getters from an array
 
-export default function({ illo, zoom, colors, cubeColor }) {
+export default function({ illo, zoom, colors: colorsRGB, cubeColor }) {
     const distance = zoom * 38;
 
     function Cubie({ stickers }) {
@@ -43,7 +44,7 @@ export default function({ illo, zoom, colors, cubeColor }) {
                 height: size * 0.9,
                 stroke: 2,
                 fill: true,
-                color: colors[color],
+                color: colorsRGB[color],
                 rotate: rotations[axis],
             });
 
@@ -53,9 +54,14 @@ export default function({ illo, zoom, colors, cubeColor }) {
 
         return {
             anchor,
-            container,
             stickers,
-            stickerElements,
+            setColors: (colors) => {
+                for (let i = 0; i < stickerElements.length; i++) {
+                    const color = colors[i];
+                    stickerElements[i].color = colorsRGB[color];
+                    stickers[i].color = color;
+                }
+            },
         };
     }
 
@@ -203,17 +209,31 @@ export default function({ illo, zoom, colors, cubeColor }) {
         }),
     ];
 
-    const queue = [];
 
-    // addState
+    const cube = {
+        edges: edges.map(edge => edge.stickers.map(sticker => sticker.color)),
+        corners: corners.map(corner => corner.stickers.map(sticker => sticker.color)),
+        centres: centres.map(centre => centre.stickers.map(sticker => sticker.color)),
+        cubies: {
+            edges,
+            corners,
+            centres,
+        },
+        setCubieColors: (positions, type) => {
+            for (let i = 0; i < positions.length; i++) {
+                const index = positions[i];
+                cube.cubies[type][index].setColors(cube[type][index]);
+            }
+        },
+    };
+
+    const queue = [];
 
     return {
         test_domove: () => {
-            const [a, b] = corners;
 
 
-
-            // const moves = getMoves(`R`, { corners, centres, edges });
+            const moves = getMoves(`RUF`, cube);
 
             // moves.forEach(d => d.apply())
 
@@ -221,15 +241,15 @@ export default function({ illo, zoom, colors, cubeColor }) {
             // do sune, support instant and different tps
         },
         render: () => {
-        // [5, 9, 4, 1].map(i => cube.edges[i]).forEach(({ anchor }) => {
+        // [5, 9, 4, 1].map(i => edges[i]).forEach(({ anchor }) => {
         //     anchor.rotate.x += 0.05;
         // });
 
-        // [5, 4, 0, 1].map(i => cube.corners[i]).forEach(({ anchor }) => {
+        // [5, 4, 0, 1].map(i => corners[i]).forEach(({ anchor }) => {
         //     anchor.rotate.x += 0.05;
         // })
 
-        // cube.centres[2].anchor.rotate.x += 0.05;
+        // centres[2].anchor.rotate.x += 0.05;
 
         // if (anc.rotate.z < TAU / 4) {
         //     anc.rotate.z += 0.05;

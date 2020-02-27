@@ -11,13 +11,15 @@ import Cube from './cube';
  * snap to position
  * alg demo
  * solve playback
- * move slider
+ * move slider (slide during moves) | lerp | snap
+ * return to position lerp / delay
  * timer
  * solver
  * trainer
  * controlled position
  * disco
  * pillowed
+ * R3 M'R2
  */
 
 function zsim(container) {

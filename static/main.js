@@ -2521,12 +2521,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var zdog__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(zdog__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _moves__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./moves */ "./src/moves.js");
 
- // TODO: destroy -> return translate / etc
+ // TODO: destroy -> return stickers
+// TODO: config -> generate setters/getters from an array
 
 /* harmony default export */ __webpack_exports__["default"] = (function (_ref) {
   var illo = _ref.illo,
       zoom = _ref.zoom,
-      colors = _ref.colors,
+      colorsRGB = _ref.colors,
       cubeColor = _ref.cubeColor;
   var distance = zoom * 38;
 
@@ -2574,7 +2575,7 @@ __webpack_require__.r(__webpack_exports__);
         height: size * 0.9,
         stroke: 2,
         fill: true,
-        color: colors[color],
+        color: colorsRGB[color],
         rotate: rotations[axis]
       });
       stickerEl.translate[axis] += stickerOffset * offset;
@@ -2582,9 +2583,14 @@ __webpack_require__.r(__webpack_exports__);
     });
     return {
       anchor: anchor,
-      container: container,
       stickers: stickers,
-      stickerElements: stickerElements
+      setColors: function setColors(colors) {
+        for (var i = 0; i < stickerElements.length; i++) {
+          var color = colors[i];
+          stickerElements[i].color = colorsRGB[color];
+          stickers[i].color = color;
+        }
+      }
     };
   }
 
@@ -2859,22 +2865,47 @@ __webpack_require__.r(__webpack_exports__);
       offset: -1
     }]
   })];
-  var queue = []; // addState
-
+  var cube = {
+    edges: edges.map(function (edge) {
+      return edge.stickers.map(function (sticker) {
+        return sticker.color;
+      });
+    }),
+    corners: corners.map(function (corner) {
+      return corner.stickers.map(function (sticker) {
+        return sticker.color;
+      });
+    }),
+    centres: centres.map(function (centre) {
+      return centre.stickers.map(function (sticker) {
+        return sticker.color;
+      });
+    }),
+    cubies: {
+      edges: edges,
+      corners: corners,
+      centres: centres
+    },
+    setCubieColors: function setCubieColors(positions, type) {
+      for (var i = 0; i < positions.length; i++) {
+        var index = positions[i];
+        cube.cubies[type][index].setColors(cube[type][index]);
+      }
+    }
+  };
+  var queue = [];
   return {
     test_domove: function test_domove() {
-      var a = corners[0],
-          b = corners[1]; // const moves = getMoves(`R`, { corners, centres, edges });
-      // moves.forEach(d => d.apply())
+      var moves = Object(_moves__WEBPACK_IMPORTED_MODULE_1__["getMoves"])("RUF", cube); // moves.forEach(d => d.apply())
       // do sune, support instant and different tps
     },
-    render: function render() {// [5, 9, 4, 1].map(i => cube.edges[i]).forEach(({ anchor }) => {
+    render: function render() {// [5, 9, 4, 1].map(i => edges[i]).forEach(({ anchor }) => {
       //     anchor.rotate.x += 0.05;
       // });
-      // [5, 4, 0, 1].map(i => cube.corners[i]).forEach(({ anchor }) => {
+      // [5, 4, 0, 1].map(i => corners[i]).forEach(({ anchor }) => {
       //     anchor.rotate.x += 0.05;
       // })
-      // cube.centres[2].anchor.rotate.x += 0.05;
+      // centres[2].anchor.rotate.x += 0.05;
       // if (anc.rotate.z < TAU / 4) {
       //     anc.rotate.z += 0.05;
       // } else {
@@ -2913,13 +2944,15 @@ __webpack_require__.r(__webpack_exports__);
  * snap to position
  * alg demo
  * solve playback
- * move slider
+ * move slider (slide during moves) | lerp | snap
+ * return to position lerp / delay
  * timer
  * solver
  * trainer
  * controlled position
  * disco
  * pillowed
+ * R3 M'R2
  */
 
 function zsim(container) {
@@ -2962,23 +2995,16 @@ function zsim(container) {
 /*!**********************!*\
   !*** ./src/moves.js ***!
   \**********************/
-/*! exports provided: quarter, getMoves */
+/*! exports provided: quarter, half, getMoves */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "quarter", function() { return quarter; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "half", function() { return half; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getMoves", function() { return getMoves; });
 /* harmony import */ var zdog__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! zdog */ "./node_modules/zdog/js/index.js");
 /* harmony import */ var zdog__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(zdog__WEBPACK_IMPORTED_MODULE_0__);
-function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
-
-function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
-
-function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
-
-function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
-
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
@@ -2989,6 +3015,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 var quarter = zdog__WEBPACK_IMPORTED_MODULE_0__["TAU"] / 4;
+var half = zdog__WEBPACK_IMPORTED_MODULE_0__["TAU"] / 2;
 var moveList = {
   R: {
     edges: [[5, 9, 4, 1]],
@@ -3004,7 +3031,8 @@ var moveList = {
   },
   F: {
     edges: [[6, 10, 5, 2], [1, 1, 1, 1]],
-    corners: [[1, 2, 6, 5], [-1, 1, -1, 1]]
+    corners: [[1, 2, 6, 5], [-1, 1, -1, 1]],
+    axis: 'z'
   },
   L: {
     edges: [[3, 7, 11, 6]],
@@ -3042,19 +3070,84 @@ function getMove(moveRaw, cube) {
   if (!moveList[move]) throw new Error("invalid move ".concat(move));
 
   var _moveList$move = moveList[move],
-      _moveList$move$corner = _slicedToArray(_moveList$move.corners, 1),
+      _moveList$move$corner = _slicedToArray(_moveList$move.corners, 2),
       corners = _moveList$move$corner[0],
-      _moveList$move$edges = _slicedToArray(_moveList$move.edges, 1),
+      cornerTwists = _moveList$move$corner[1],
+      _moveList$move$edges = _slicedToArray(_moveList$move.edges, 2),
       edges = _moveList$move$edges[0],
+      edgeTwists = _moveList$move$edges[1],
       centre = _moveList$move.centre,
       axis = _moveList$move.axis; // calculate transforms
+  // const transforms = [
+  //     ...corners.map(index => cube.corners[index]),
+  //     ...edges.map(index => cube.edges[index]),
+  //     cube.centres[centre],
+  // ];
 
 
-  var transforms = [].concat(_toConsumableArray(corners.map(function (index) {
-    return cube.corners[index];
-  })), _toConsumableArray(edges.map(function (index) {
-    return cube.edges[index];
-  })), [cube.centres[centre]]); // adjust places
+  function doCycle(arr, order, cycle, twists) {
+    if (order === -1) {
+      cycle = cycle.reverse();
+      twists && (twists = twists.reverse());
+    } else if (order === 2) {
+      doCycle(arr, 1, cycle, twists);
+    } // corner twists TODO: change
+
+
+    if (twists) {
+      for (var i = 0; i < twists.length; i++) {
+        twist(arr, cycle[i], twists[i]);
+      }
+    } // cycles
+
+
+    for (var _i2 = 0; _i2 < cycle.length - 1; _i2++) {
+      swap(arr, cycle[_i2], cycle[_i2 + 1]);
+    }
+
+    var _z$y$x$axis = _slicedToArray({
+      z: [0, 1],
+      y: [0, 2],
+      x: [1, 2]
+    }[axis], 2),
+        a = _z$y$x$axis[0],
+        b = _z$y$x$axis[1]; // corner fix
+
+
+    if (arr[0].length === 3) {
+      for (var _i3 = 0; _i3 < cycle.length; _i3++) {
+        swap(arr[cycle[_i3]], a, b);
+      }
+    }
+  }
+
+  function twist(arr, cubieIndex, order) {
+    var cubie = arr[cubieIndex]; // edges
+
+    if (cubie.length == 2) {
+      cubie.push(cubie.splice(0, 1)[0]);
+    } else {
+      //corners
+      if (order === 1) {// cubie.splice(0, 0, cubie.splice(2, 1)[0]);
+      } else if (order === -1) {// cubie.splice(2, 0, cubie.splice(0, 1)[0]);
+      }
+    }
+  }
+
+  function swap(arr, first, second) {
+    var tmp = arr[first];
+    arr[first] = arr[second];
+    arr[second] = tmp;
+  }
+
+  doCycle(cube.edges, order, edges, edgeTwists);
+  cube.setCubieColors(edges, 'edges');
+  doCycle(cube.corners, order, corners, cornerTwists);
+  cube.setCubieColors(corners, 'corners'); // const [a, b, c] = cube.corners;
+  // a.stickerElements.forEach((element, i) => {
+  //     element.color = b.stickerElements[[0,2,1][i]].color
+  // })
+  // adjust places
   // doCycle(cube.edges, order, edges);
   // doCycle(cube.corners, order, corners);
   // generate solved state from cubies
@@ -3090,61 +3183,56 @@ function toObject(move) {
   return {
     move: move[0],
     order: {
+      '\'': -1,
+      '3': -1,
       '': 1,
-      '2': 2,
-      '\'': -1
+      '2': 2
     }[move[1]]
   };
 }
 
 function splitMoves(str) {
   if (typeof str !== 'string') return str;
-  return str.replace(/\s/g, '').split(/(\w2|\w'|\w)/).filter(function (move) {
+  return str.replace(/\s/g, '').split(/(\w3|\w2|\w'|\w)/).filter(function (move) {
     return move;
   });
-}
-
-function doCycle(arr, order, cycle, twists) {
-  if (order == -1) {
-    cycle = cycle.reverse();
-    twists && (twists = twists.reverse());
-  } else if (order == 2) {
-    doCycle(arr, 1, cycle, twists);
-  } // corner twists
-
-
-  if (twists) {
-    for (var i = 0; i < twists.length; i++) {
-      twist(arr, cycle[i], twists[i]);
-    }
-  } // cycles
-
-
-  for (var _i2 = 0; _i2 < cycle.length - 1; _i2++) {
-    swap(arr, cycle[_i2], cycle[_i2 + 1]);
-  }
-}
-
-function swap(arr, first, second) {
-  var tmp = arr[first];
-  arr[first] = arr[second];
-  arr[second] = tmp;
-}
-
-function twist(arr, cubieIndex, order) {
-  var cubie = arr[cubieIndex]; // edges
-
-  if (cubie.length == 2) {
-    cubie.push(cubie.splice(0, 1)[0]);
-  } else {
-    //corners
-    if (order == 1) {
-      cubie.splice(0, 0, cubie.splice(2, 1)[0]);
-    } else if (order == -1) {
-      cubie.splice(2, 0, cubie.splice(0, 1)[0]);
-    }
-  }
-}
+} //function doCycle(arr, order, cycle, twists) {
+//    if (order == -1) {
+//        cycle = cycle.reverse();
+//        twists && (twists = twists.reverse());
+//    } else if (order == 2) {
+//        doCycle(arr, 1, cycle, twists);
+//    }
+//    // corner twists
+//    if (twists) {
+//        for (let i = 0; i < twists.length; i++) {
+//            twist(arr, cycle[i], twists[i]);
+//        }
+//    }
+//    // cycles
+//    for (let i = 0; i < cycle.length - 1; i++) {
+//        swap(arr, cycle[i], cycle[i + 1]);
+//    }
+//}
+//function swap(arr, first, second) {
+//    const tmp = arr[first];
+//    arr[first] = arr[second];
+//    arr[second] = tmp;
+//}
+//function twist(arr, cubieIndex, order) {
+//    const cubie = arr[cubieIndex];
+//    // edges
+//    if (cubie.length == 2) {
+//        cubie.push(cubie.splice(0, 1)[0]);
+//    } else {
+//        //corners
+//        if (order == 1) {
+//            cubie.splice(0, 0, cubie.splice(2, 1)[0]);
+//        } else if (order == -1) {
+//            cubie.splice(2, 0, cubie.splice(0, 1)[0]);
+//        }
+//    }
+//}
 
 /***/ }),
 
