@@ -47,10 +47,6 @@ const moveList = {
     },
 };
 
-function getTransform() {
-
-}
-
 function getMove(moveRaw, cube) {
     const { move, order } = toObject(moveRaw);
     if (!moveList[move]) throw new Error(`invalid move ${move}`);
@@ -68,8 +64,6 @@ function getMove(moveRaw, cube) {
     //     cube.centres[centre],
     // ];
 
-
-
     function doCycle(arr, order, cycle, twists) {
         if (order === -1) {
             cycle = cycle.reverse();
@@ -78,7 +72,7 @@ function getMove(moveRaw, cube) {
             doCycle(arr, 1, cycle, twists);
         }
 
-       // corner twists TODO: change
+       // edge twists TODO: change
        if (twists) {
            for (let i = 0; i < twists.length; i++) {
                twist(arr, cycle[i], twists[i]);
@@ -96,10 +90,9 @@ function getMove(moveRaw, cube) {
             x: [1, 2],
         }[axis]);
 
-        // corner fix
+        // corner 'twists'
         if (arr[0].length === 3) {
             for (let i = 0; i < cycle.length; i++) {
-
                 swap(arr[cycle[i]], a, b);
             }
         }
@@ -128,8 +121,9 @@ function getMove(moveRaw, cube) {
     }
 
     doCycle(cube.edges, order, edges, edgeTwists);
-    cube.setCubieColors(edges, 'edges');
     doCycle(cube.corners, order, corners, cornerTwists);
+
+    cube.setCubieColors(edges, 'edges');
     cube.setCubieColors(corners, 'corners');
 
             // const [a, b, c] = cube.corners;
@@ -160,6 +154,8 @@ function getMove(moveRaw, cube) {
     // transforms
     return {
         apply,
+        edges,
+        order,
     };
 }
 
@@ -174,9 +170,8 @@ function toObject(move) {
         order: {
             '\'': -1,
             '3': -1,
-            '': 1,
             '2': 2,
-        }[move[1]],
+        }[move[1]] || 1,
     };
 }
 
@@ -184,44 +179,3 @@ function splitMoves(str) {
     if (typeof str !== 'string') return str;
     return str.replace(/\s/g,'').split(/(\w3|\w2|\w'|\w)/).filter((move) => move);
 }
-
-//function doCycle(arr, order, cycle, twists) {
-//    if (order == -1) {
-//        cycle = cycle.reverse();
-//        twists && (twists = twists.reverse());
-//    } else if (order == 2) {
-//        doCycle(arr, 1, cycle, twists);
-//    }
-//    // corner twists
-//    if (twists) {
-//        for (let i = 0; i < twists.length; i++) {
-//            twist(arr, cycle[i], twists[i]);
-//        }
-//    }
-
-//    // cycles
-//    for (let i = 0; i < cycle.length - 1; i++) {
-//        swap(arr, cycle[i], cycle[i + 1]);
-//    }
-//}
-
-//function swap(arr, first, second) {
-//    const tmp = arr[first];
-//    arr[first] = arr[second];
-//    arr[second] = tmp;
-//}
-
-//function twist(arr, cubieIndex, order) {
-//    const cubie = arr[cubieIndex];
-//    // edges
-//    if (cubie.length == 2) {
-//        cubie.push(cubie.splice(0, 1)[0]);
-//    } else {
-//        //corners
-//        if (order == 1) {
-//            cubie.splice(0, 0, cubie.splice(2, 1)[0]);
-//        } else if (order == -1) {
-//            cubie.splice(2, 0, cubie.splice(0, 1)[0]);
-//        }
-//    }
-//}

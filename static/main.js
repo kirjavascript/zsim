@@ -2896,7 +2896,8 @@ __webpack_require__.r(__webpack_exports__);
   var queue = [];
   return {
     test_domove: function test_domove() {
-      var moves = Object(_moves__WEBPACK_IMPORTED_MODULE_1__["getMoves"])("RUF", cube); // moves.forEach(d => d.apply())
+      var moves = Object(_moves__WEBPACK_IMPORTED_MODULE_1__["getMoves"])("URUR'UR", cube);
+      console.log(moves); // moves.forEach(d => d.apply())
       // do sune, support instant and different tps
     },
     render: function render() {// [5, 9, 4, 1].map(i => edges[i]).forEach(({ anchor }) => {
@@ -3060,8 +3061,6 @@ var moveList = {
   }
 };
 
-function getTransform() {}
-
 function getMove(moveRaw, cube) {
   var _toObject = toObject(moveRaw),
       move = _toObject.move,
@@ -3091,7 +3090,7 @@ function getMove(moveRaw, cube) {
       twists && (twists = twists.reverse());
     } else if (order === 2) {
       doCycle(arr, 1, cycle, twists);
-    } // corner twists TODO: change
+    } // edge twists TODO: change
 
 
     if (twists) {
@@ -3111,7 +3110,7 @@ function getMove(moveRaw, cube) {
       x: [1, 2]
     }[axis], 2),
         a = _z$y$x$axis[0],
-        b = _z$y$x$axis[1]; // corner fix
+        b = _z$y$x$axis[1]; // corner 'twists'
 
 
     if (arr[0].length === 3) {
@@ -3141,8 +3140,8 @@ function getMove(moveRaw, cube) {
   }
 
   doCycle(cube.edges, order, edges, edgeTwists);
-  cube.setCubieColors(edges, 'edges');
   doCycle(cube.corners, order, corners, cornerTwists);
+  cube.setCubieColors(edges, 'edges');
   cube.setCubieColors(corners, 'corners'); // const [a, b, c] = cube.corners;
   // a.stickerElements.forEach((element, i) => {
   //     element.color = b.stickerElements[[0,2,1][i]].color
@@ -3168,7 +3167,9 @@ function getMove(moveRaw, cube) {
 
 
   return {
-    apply: apply
+    apply: apply,
+    edges: edges,
+    order: order
   };
 }
 
@@ -3185,9 +3186,8 @@ function toObject(move) {
     order: {
       '\'': -1,
       '3': -1,
-      '': 1,
       '2': 2
-    }[move[1]]
+    }[move[1]] || 1
   };
 }
 
@@ -3196,43 +3196,7 @@ function splitMoves(str) {
   return str.replace(/\s/g, '').split(/(\w3|\w2|\w'|\w)/).filter(function (move) {
     return move;
   });
-} //function doCycle(arr, order, cycle, twists) {
-//    if (order == -1) {
-//        cycle = cycle.reverse();
-//        twists && (twists = twists.reverse());
-//    } else if (order == 2) {
-//        doCycle(arr, 1, cycle, twists);
-//    }
-//    // corner twists
-//    if (twists) {
-//        for (let i = 0; i < twists.length; i++) {
-//            twist(arr, cycle[i], twists[i]);
-//        }
-//    }
-//    // cycles
-//    for (let i = 0; i < cycle.length - 1; i++) {
-//        swap(arr, cycle[i], cycle[i + 1]);
-//    }
-//}
-//function swap(arr, first, second) {
-//    const tmp = arr[first];
-//    arr[first] = arr[second];
-//    arr[second] = tmp;
-//}
-//function twist(arr, cubieIndex, order) {
-//    const cubie = arr[cubieIndex];
-//    // edges
-//    if (cubie.length == 2) {
-//        cubie.push(cubie.splice(0, 1)[0]);
-//    } else {
-//        //corners
-//        if (order == 1) {
-//            cubie.splice(0, 0, cubie.splice(2, 1)[0]);
-//        } else if (order == -1) {
-//            cubie.splice(2, 0, cubie.splice(0, 1)[0]);
-//        }
-//    }
-//}
+}
 
 /***/ }),
 
