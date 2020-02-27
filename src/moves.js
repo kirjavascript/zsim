@@ -67,13 +67,12 @@ function getMove(moveRaw, cube) {
     ];
 
     // adjust places
-    doCycle(cube.edges, order, edges);
-    doCycle(cube.corners, order, corners);
+    // doCycle(cube.edges, order, edges);
+    // doCycle(cube.corners, order, corners);
 
     // generate solved state from cubies
 
     function apply() {
-        console.log(transforms);
         transforms.forEach(({ anchor }) => {
             // anchor.rotate[axis] += quarter;
             // apply

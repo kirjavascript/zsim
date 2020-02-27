@@ -2528,7 +2528,7 @@ __webpack_require__.r(__webpack_exports__);
       zoom = _ref.zoom,
       colors = _ref.colors,
       cubeColor = _ref.cubeColor;
-  var distance = zoom * 42;
+  var distance = zoom * 38;
 
   function Cubie(_ref2) {
     var stickers = _ref2.stickers;
@@ -2542,14 +2542,17 @@ __webpack_require__.r(__webpack_exports__);
       acc[axis] = distance * offset;
       return acc;
     }, {});
-    var size = zoom * 40;
-    new zdog__WEBPACK_IMPORTED_MODULE_0___default.a.Box({
+    var container = new zdog__WEBPACK_IMPORTED_MODULE_0___default.a.Anchor({
       addTo: anchor,
+      translate: translate
+    });
+    var size = zoom * 36;
+    new zdog__WEBPACK_IMPORTED_MODULE_0___default.a.Box({
+      addTo: container,
       width: size,
       height: size,
       depth: size,
       stroke: false,
-      translate: translate,
       color: cubeColor
     });
     var stickerOffset = size / 2 + 1;
@@ -2561,25 +2564,27 @@ __webpack_require__.r(__webpack_exports__);
         x: _moves__WEBPACK_IMPORTED_MODULE_1__["quarter"]
       }
     };
-    stickers.forEach(function (_ref4) {
+    var stickerElements = stickers.map(function (_ref4) {
       var color = _ref4.color,
           axis = _ref4.axis,
           offset = _ref4.offset;
-      var sticker = new zdog__WEBPACK_IMPORTED_MODULE_0___default.a.Rect({
-        addTo: anchor,
+      var stickerEl = new zdog__WEBPACK_IMPORTED_MODULE_0___default.a.Rect({
+        addTo: container,
         width: size * 0.9,
         height: size * 0.9,
         stroke: 2,
         fill: true,
-        translate: translate,
         color: colors[color],
         rotate: rotations[axis]
       });
-      sticker.translate[axis] += stickerOffset * offset;
+      stickerEl.translate[axis] += stickerOffset * offset;
+      return stickerEl;
     });
     return {
       anchor: anchor,
-      stickers: stickers
+      container: container,
+      stickers: stickers,
+      stickerElements: stickerElements
     };
   }
 
@@ -2858,14 +2863,10 @@ __webpack_require__.r(__webpack_exports__);
 
   return {
     test_domove: function test_domove() {
-      var moves = Object(_moves__WEBPACK_IMPORTED_MODULE_1__["getMoves"])("RU", {
-        corners: corners,
-        centres: centres,
-        edges: edges
-      });
-      moves.forEach(function (d) {
-        return d.apply();
-      }); // do sune, support instant and different tps
+      var a = corners[0],
+          b = corners[1]; // const moves = getMoves(`R`, { corners, centres, edges });
+      // moves.forEach(d => d.apply())
+      // do sune, support instant and different tps
     },
     render: function render() {// [5, 9, 4, 1].map(i => cube.edges[i]).forEach(({ anchor }) => {
       //     anchor.rotate.x += 0.05;
@@ -3054,12 +3055,11 @@ function getMove(moveRaw, cube) {
   })), _toConsumableArray(edges.map(function (index) {
     return cube.edges[index];
   })), [cube.centres[centre]]); // adjust places
-
-  doCycle(cube.edges, order, edges);
-  doCycle(cube.corners, order, corners); // generate solved state from cubies
+  // doCycle(cube.edges, order, edges);
+  // doCycle(cube.corners, order, corners);
+  // generate solved state from cubies
 
   function apply() {
-    console.log(transforms);
     transforms.forEach(function (_ref) {// anchor.rotate[axis] += quarter;
       // apply
       // run cubies, swap colours

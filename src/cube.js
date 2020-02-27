@@ -4,12 +4,10 @@ import { getMoves, getMove, quarter } from './moves';
 // TODO: destroy -> return translate / etc
 
 export default function({ illo, zoom, colors, cubeColor }) {
-    const distance = zoom * 42;
+    const distance = zoom * 38;
 
     function Cubie({ stickers }) {
-        const anchor = new Zdog.Anchor({
-            addTo: illo,
-        });
+        const anchor = new Zdog.Anchor({ addTo: illo });
 
         // infer position from cube stickers, because why not
         const translate = stickers.reduce((acc, { offset, axis }) => {
@@ -17,14 +15,18 @@ export default function({ illo, zoom, colors, cubeColor }) {
             return acc;
         }, {});
 
-        const size = zoom * 40;
-        new Zdog.Box({
+        const container = new Zdog.Anchor({
             addTo: anchor,
+            translate,
+        });
+
+        const size = zoom * 36;
+        new Zdog.Box({
+            addTo: container,
             width: size,
             height: size,
             depth: size,
             stroke: false,
-            translate,
             color: cubeColor,
         });
 
@@ -34,24 +36,26 @@ export default function({ illo, zoom, colors, cubeColor }) {
             y: { x: quarter },
         };
 
-        stickers.forEach(({ color, axis, offset }) => {
-            const sticker = new Zdog.Rect({
-                addTo: anchor,
+        const stickerElements = stickers.map(({ color, axis, offset }) => {
+            const stickerEl = new Zdog.Rect({
+                addTo: container,
                 width: size * 0.9,
                 height: size * 0.9,
                 stroke: 2,
                 fill: true,
-                translate,
                 color: colors[color],
                 rotate: rotations[axis],
             });
 
-            sticker.translate[axis] += stickerOffset * offset;
+            stickerEl.translate[axis] += stickerOffset * offset;
+            return stickerEl;
         });
 
         return {
             anchor,
+            container,
             stickers,
+            stickerElements,
         };
     }
 
@@ -205,9 +209,13 @@ export default function({ illo, zoom, colors, cubeColor }) {
 
     return {
         test_domove: () => {
-            const moves = getMoves(`RU`, { corners, centres, edges });
+            const [a, b] = corners;
 
-            moves.forEach(d => d.apply())
+
+
+            // const moves = getMoves(`R`, { corners, centres, edges });
+
+            // moves.forEach(d => d.apply())
 
 
             // do sune, support instant and different tps
