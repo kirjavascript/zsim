@@ -233,9 +233,9 @@ export default function({ illo, zoom, colors: colorsRGB, cubeColor }) {
         test_domove: () => {
 
 
-            const moves = getMoves(`M`, cube);
+            const moves = getMoves(`RUR'r'`, cube);
 
-            // moves.forEach(d => d.apply())
+            moves.forEach(d => d.apply())
 
 
             // do sune, support instant and different tps

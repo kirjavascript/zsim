@@ -51,12 +51,9 @@ const moveList = {
         edges: [3, 11, 9, 1],
         axis: 'z',
     },
-};
-
-const cornerSwaps = {
-    z: [0, 1],
-    y: [0, 2],
-    x: [1, 2],
+    r: {
+        moves: [toObject('R'), toObject('M\'')],
+    },
 };
 
 function getMove(moveRaw, cube) {
@@ -67,6 +64,7 @@ function getMove(moveRaw, cube) {
         edges,
         centres,
         axis,
+        moves,
     } = moveList[move];
 
     // calculate transforms
@@ -78,29 +76,26 @@ function getMove(moveRaw, cube) {
 
     // multiple moves at once
 
-
-    if (edges) {
-        // force axis as z if we have a slice move
-        doCycle(cube.edges, order, edges, centres ? 'z' : axis);
-        cube.setCubieColors(edges, 'edges');
-    }
-    if (centres) {
-        doCycle(cube.centres, order, centres, axis);
-        cube.setCubieColors(centres, 'centres');
-    }
-    if (corners) {
-        doCycle(cube.corners, order, corners, axis);
-        cube.setCubieColors(corners, 'corners');
-    }
-
+    // applyCycle for perf
 
     function apply() {
-        transforms.forEach(({ anchor }) => {
-            // anchor.rotate[axis] += quarter;
-            // apply
-            // run cubies, swap colours
-            // resetting rotate makes animations easier
-        });
+        moves && moves.map(move => getMove(move, cube).apply());
+        if (edges) {
+            // force axis as z if we have a slice move
+            doCycle(cube.edges, order, edges, centres ? 'z' : axis);
+            cube.setCubieColors(edges, 'edges');
+        }
+        if (centres) {
+            doCycle(cube.centres, order, centres, axis);
+            cube.setCubieColors(centres, 'centres');
+        }
+        if (corners) {
+            doCycle(cube.corners, order, corners, axis);
+            cube.setCubieColors(corners, 'corners');
+        }
+        // transforms.forEach(({ anchor }) => {
+        //     // TODO: reset transforms
+        // });
 
     }
 
@@ -134,6 +129,12 @@ function splitMoves(str) {
     if (typeof str !== 'string') return str;
     return str.replace(/\s/g,'').split(/(\w3|\w2|\w'|\w)/).filter((move) => move);
 }
+
+const cornerSwaps = {
+    z: [0, 1],
+    y: [0, 2],
+    x: [1, 2],
+};
 
 function doCycle(arr, order, cycle, axis) {
     if (order === -1 || order === 3) {
