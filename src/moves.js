@@ -124,7 +124,7 @@ function toObject(move) {
         move: move[0],
         order: {
             '\'': -1,
-            '3': -1,
+            '3': 3,
             '2': 2,
         }[move[1]] || 1,
     };
@@ -136,7 +136,7 @@ function splitMoves(str) {
 }
 
 function doCycle(arr, order, cycle, axis) {
-    if (order === -1) {
+    if (order === -1 || order === 3) {
         cycle = [...cycle].reverse();
     } else if (order === 2) {
         doCycle(arr, 1, cycle, axis);
@@ -146,7 +146,6 @@ function doCycle(arr, order, cycle, axis) {
     for (let i = 0; i < cycle.length - 1; i++) {
         swap(arr, cycle[i], cycle[i + 1]);
     }
-
 
     // corner 'twists'
     if (arr[0].length === 3) {
