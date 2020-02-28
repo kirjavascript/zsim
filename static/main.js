@@ -2896,8 +2896,10 @@ __webpack_require__.r(__webpack_exports__);
   var queue = [];
   return {
     test_domove: function test_domove() {
-      var moves = Object(_moves__WEBPACK_IMPORTED_MODULE_1__["getMoves"])("M", cube); // moves.forEach(d => d.apply())
-      // do sune, support instant and different tps
+      var moves = Object(_moves__WEBPACK_IMPORTED_MODULE_1__["getMoves"])("RUR'r'", cube);
+      moves.forEach(function (d) {
+        return d.apply();
+      }); // do sune, support instant and different tps
     },
     render: function render() {// [5, 9, 4, 1].map(i => edges[i]).forEach(({ anchor }) => {
       //     anchor.rotate.x += 0.05;
@@ -3063,12 +3065,10 @@ var moveList = {
     centres: [4, 5, 2, 0],
     edges: [3, 11, 9, 1],
     axis: 'z'
+  },
+  r: {
+    moves: [toObject('R'), toObject('M\'')]
   }
-};
-var cornerSwaps = {
-  z: [0, 1],
-  y: [0, 2],
-  x: [1, 2]
 };
 
 function getMove(moveRaw, cube) {
@@ -3081,7 +3081,8 @@ function getMove(moveRaw, cube) {
       corners = _moveList$move.corners,
       edges = _moveList$move.edges,
       centres = _moveList$move.centres,
-      axis = _moveList$move.axis; // calculate transforms
+      axis = _moveList$move.axis,
+      moves = _moveList$move.moves; // calculate transforms
   // const transforms = [
   //     ...corners.map(index => cube.corners[index]),
   //     ...edges.map(index => cube.edges[index]),
@@ -3089,30 +3090,29 @@ function getMove(moveRaw, cube) {
   // ];
   // multiple moves at once
 
-  if (edges) {
-    // force axis as z if we have a slice move
-    doCycle(cube.edges, order, edges, centres ? 'z' : axis);
-    cube.setCubieColors(edges, 'edges');
-  }
-
-  if (centres) {
-    doCycle(cube.centres, order, centres, axis);
-    cube.setCubieColors(centres, 'centres');
-  }
-
-  if (corners) {
-    doCycle(cube.corners, order, corners, axis);
-    cube.setCubieColors(corners, 'corners');
-  }
-
   function apply() {
-    transforms.forEach(function (_ref) {// anchor.rotate[axis] += quarter;
-      // apply
-      // run cubies, swap colours
-      // resetting rotate makes animations easier
-
-      var anchor = _ref.anchor;
+    moves && moves.map(function (move) {
+      return getMove(move, cube).apply();
     });
+
+    if (edges) {
+      // force axis as z if we have a slice move
+      doCycle(cube.edges, order, edges, centres ? 'z' : axis);
+      cube.setCubieColors(edges, 'edges');
+    }
+
+    if (centres) {
+      doCycle(cube.centres, order, centres, axis);
+      cube.setCubieColors(centres, 'centres');
+    }
+
+    if (corners) {
+      doCycle(cube.corners, order, corners, axis);
+      cube.setCubieColors(corners, 'corners');
+    } // transforms.forEach(({ anchor }) => {
+    //     // TODO: reset transforms
+    // });
+
   } // apply
   // calc finalvalue
   // lerp moves
@@ -3149,6 +3149,12 @@ function splitMoves(str) {
     return move;
   });
 }
+
+var cornerSwaps = {
+  z: [0, 1],
+  y: [0, 2],
+  x: [1, 2]
+};
 
 function doCycle(arr, order, cycle, axis) {
   if (order === -1) {
