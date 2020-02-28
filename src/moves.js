@@ -76,7 +76,7 @@ function getMove(moveRaw, cube) {
 
     // multiple moves at once
 
-
+    // applyCycle for perf
 
     function apply() {
         moves && moves.map(move => getMove(move, cube).apply());
