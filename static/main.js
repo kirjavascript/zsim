@@ -2896,8 +2896,7 @@ __webpack_require__.r(__webpack_exports__);
   var queue = [];
   return {
     test_domove: function test_domove() {
-      var moves = Object(_moves__WEBPACK_IMPORTED_MODULE_1__["getMoves"])("URUR'UR", cube);
-      console.log(moves); // moves.forEach(d => d.apply())
+      var moves = Object(_moves__WEBPACK_IMPORTED_MODULE_1__["getMoves"])("M", cube); // moves.forEach(d => d.apply())
       // do sune, support instant and different tps
     },
     render: function render() {// [5, 9, 4, 1].map(i => edges[i]).forEach(({ anchor }) => {
@@ -3006,59 +3005,70 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getMoves", function() { return getMoves; });
 /* harmony import */ var zdog__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! zdog */ "./node_modules/zdog/js/index.js");
 /* harmony import */ var zdog__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(zdog__WEBPACK_IMPORTED_MODULE_0__);
-function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
 
-function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
 
-function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
 
-function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
 
 
 var quarter = zdog__WEBPACK_IMPORTED_MODULE_0__["TAU"] / 4;
 var half = zdog__WEBPACK_IMPORTED_MODULE_0__["TAU"] / 2;
 var moveList = {
   R: {
-    edges: [[5, 9, 4, 1]],
-    corners: [[5, 4, 0, 1], [-1, 1, -1, 1]],
+    edges: [5, 9, 4, 1],
+    corners: [5, 4, 0, 1],
     centre: 2,
     axis: 'x'
   },
   U: {
-    edges: [[3, 2, 1, 0]],
-    corners: [[3, 2, 1, 0]],
+    edges: [3, 2, 1, 0],
+    corners: [3, 2, 1, 0],
     centre: 0,
     axis: 'y'
   },
   F: {
-    edges: [[6, 10, 5, 2], [1, 1, 1, 1]],
-    corners: [[1, 2, 6, 5], [-1, 1, -1, 1]],
+    edges: [6, 10, 5, 2],
+    corners: [1, 2, 6, 5],
     axis: 'z'
   },
   L: {
-    edges: [[3, 7, 11, 6]],
-    corners: [[2, 3, 7, 6], [-1, 1, -1, 1]]
+    edges: [3, 7, 11, 6],
+    corners: [2, 3, 7, 6],
+    axis: 'x'
   },
   B: {
-    edges: [[4, 8, 7, 0], [1, 1, 1, 1]],
-    corners: [[4, 7, 3, 0], [-1, 1, -1, 1]]
+    edges: [4, 8, 7, 0],
+    corners: [4, 7, 3, 0],
+    axis: 'z'
   },
   D: {
-    edges: [[8, 9, 10, 11]],
-    corners: [[4, 5, 6, 7]]
+    edges: [8, 9, 10, 11],
+    corners: [4, 5, 6, 7],
+    axis: 'y'
   },
   M: {
     centres: [0, 1, 5, 3],
-    edges: [[2, 0, 8, 10], [1, 1, 1, 1]]
+    edges: [2, 0, 8, 10],
+    axis: 'x'
   },
   E: {
     centres: [3, 4, 1, 2],
-    edges: [[4, 5, 6, 7], [1, 1, 1, 1]]
+    edges: [4, 5, 6, 7],
+    axis: 'y'
   },
   S: {
     centres: [4, 5, 2, 0],
-    edges: [[3, 11, 9, 1], [1, 1, 1, 1]]
+    edges: [3, 11, 9, 1],
+    axis: 'z'
   }
+};
+var cornerSwaps = {
+  z: [0, 1],
+  y: [0, 2],
+  x: [1, 2]
 };
 
 function getMove(moveRaw, cube) {
@@ -3067,89 +3077,33 @@ function getMove(moveRaw, cube) {
       order = _toObject.order;
 
   if (!moveList[move]) throw new Error("invalid move ".concat(move));
-
   var _moveList$move = moveList[move],
-      _moveList$move$corner = _slicedToArray(_moveList$move.corners, 2),
-      corners = _moveList$move$corner[0],
-      cornerTwists = _moveList$move$corner[1],
-      _moveList$move$edges = _slicedToArray(_moveList$move.edges, 2),
-      edges = _moveList$move$edges[0],
-      edgeTwists = _moveList$move$edges[1],
-      centre = _moveList$move.centre,
+      corners = _moveList$move.corners,
+      edges = _moveList$move.edges,
+      centres = _moveList$move.centres,
       axis = _moveList$move.axis; // calculate transforms
   // const transforms = [
   //     ...corners.map(index => cube.corners[index]),
   //     ...edges.map(index => cube.edges[index]),
   //     cube.centres[centre],
   // ];
+  // multiple moves at once
 
-
-  function doCycle(arr, order, cycle, twists) {
-    if (order === -1) {
-      cycle = cycle.reverse();
-      twists && (twists = twists.reverse());
-    } else if (order === 2) {
-      doCycle(arr, 1, cycle, twists);
-    } // edge twists TODO: change
-
-
-    if (twists) {
-      for (var i = 0; i < twists.length; i++) {
-        twist(arr, cycle[i], twists[i]);
-      }
-    } // cycles
-
-
-    for (var _i2 = 0; _i2 < cycle.length - 1; _i2++) {
-      swap(arr, cycle[_i2], cycle[_i2 + 1]);
-    }
-
-    var _z$y$x$axis = _slicedToArray({
-      z: [0, 1],
-      y: [0, 2],
-      x: [1, 2]
-    }[axis], 2),
-        a = _z$y$x$axis[0],
-        b = _z$y$x$axis[1]; // corner 'twists'
-
-
-    if (arr[0].length === 3) {
-      for (var _i3 = 0; _i3 < cycle.length; _i3++) {
-        swap(arr[cycle[_i3]], a, b);
-      }
-    }
+  if (edges) {
+    // force axis as z if we have a slice move
+    doCycle(cube.edges, order, edges, centres ? 'z' : axis);
+    cube.setCubieColors(edges, 'edges');
   }
 
-  function twist(arr, cubieIndex, order) {
-    var cubie = arr[cubieIndex]; // edges
-
-    if (cubie.length == 2) {
-      cubie.push(cubie.splice(0, 1)[0]);
-    } else {
-      //corners
-      if (order === 1) {// cubie.splice(0, 0, cubie.splice(2, 1)[0]);
-      } else if (order === -1) {// cubie.splice(2, 0, cubie.splice(0, 1)[0]);
-      }
-    }
+  if (centres) {
+    doCycle(cube.centres, order, centres, axis);
+    cube.setCubieColors(centres, 'centres');
   }
 
-  function swap(arr, first, second) {
-    var tmp = arr[first];
-    arr[first] = arr[second];
-    arr[second] = tmp;
+  if (corners) {
+    doCycle(cube.corners, order, corners, axis);
+    cube.setCubieColors(corners, 'corners');
   }
-
-  doCycle(cube.edges, order, edges, edgeTwists);
-  doCycle(cube.corners, order, corners, cornerTwists);
-  cube.setCubieColors(edges, 'edges');
-  cube.setCubieColors(corners, 'corners'); // const [a, b, c] = cube.corners;
-  // a.stickerElements.forEach((element, i) => {
-  //     element.color = b.stickerElements[[0,2,1][i]].color
-  // })
-  // adjust places
-  // doCycle(cube.edges, order, edges);
-  // doCycle(cube.corners, order, corners);
-  // generate solved state from cubies
 
   function apply() {
     transforms.forEach(function (_ref) {// anchor.rotate[axis] += quarter;
@@ -3167,9 +3121,7 @@ function getMove(moveRaw, cube) {
 
 
   return {
-    apply: apply,
-    edges: edges,
-    order: order
+    apply: apply
   };
 }
 
@@ -3196,6 +3148,37 @@ function splitMoves(str) {
   return str.replace(/\s/g, '').split(/(\w3|\w2|\w'|\w)/).filter(function (move) {
     return move;
   });
+}
+
+function doCycle(arr, order, cycle, axis) {
+  if (order === -1) {
+    cycle = _toConsumableArray(cycle).reverse();
+  } else if (order === 2) {
+    doCycle(arr, 1, cycle, axis);
+  } // cycles
+
+
+  for (var i = 0; i < cycle.length - 1; i++) {
+    swap(arr, cycle[i], cycle[i + 1]);
+  } // corner 'twists'
+
+
+  if (arr[0].length === 3) {
+    for (var _i = 0; _i < cycle.length; _i++) {
+      swap.apply(void 0, [arr[cycle[_i]]].concat(_toConsumableArray(cornerSwaps[axis])));
+    }
+  } // edge flips
+  else if (axis === 'z') {
+      for (var _i2 = 0; _i2 < cycle.length; _i2++) {
+        swap(arr[cycle[_i2]], 0, 1);
+      }
+    }
+}
+
+function swap(arr, first, second) {
+  var tmp = arr[first];
+  arr[first] = arr[second];
+  arr[second] = tmp;
 }
 
 /***/ }),

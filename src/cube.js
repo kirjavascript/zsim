@@ -233,8 +233,7 @@ export default function({ illo, zoom, colors: colorsRGB, cubeColor }) {
         test_domove: () => {
 
 
-            const moves = getMoves(`URUR'UR`, cube);
-            console.log(moves);
+            const moves = getMoves(`M`, cube);
 
             // moves.forEach(d => d.apply())
 
