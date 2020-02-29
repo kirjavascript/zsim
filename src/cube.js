@@ -1,8 +1,8 @@
-import Zdog, { lerp } from 'zdog';
+import Zdog from 'zdog';
 import { getMoves, getMove, quarter } from './moves';
 
 // TODO: destroy -> return stickers
-// TODO: config -> generate setters/getters from an array
+// TODO: generate getters for config
 
 export default function({ illo, zoom, colors: colorsRGB, cubeColor }) {
     const distance = zoom * 38;
@@ -43,6 +43,7 @@ export default function({ illo, zoom, colors: colorsRGB, cubeColor }) {
                 width: size * 0.9,
                 height: size * 0.9,
                 stroke: 2,
+
                 fill: true,
                 color: colorsRGB[color],
                 rotate: rotations[axis],
@@ -229,36 +230,31 @@ export default function({ illo, zoom, colors: colorsRGB, cubeColor }) {
 
     const queue = [];
 
+    // change TPS when queue is bigger
+    const tps = 5;
+    const diff = 1000 / tps;
+
     return {
+        // moves_instant
         test_domove: () => {
-
-
-            const moves = getMoves(`RUR'r'`, cube);
-
-            moves.forEach(d => d.apply())
-
-
-            // do sune, support instant and different tps
         },
         render: () => {
-        // [5, 9, 4, 1].map(i => edges[i]).forEach(({ anchor }) => {
-        //     anchor.rotate.x += 0.05;
-        // });
-
-        // [5, 4, 0, 1].map(i => corners[i]).forEach(({ anchor }) => {
-        //     anchor.rotate.x += 0.05;
-        // })
-
-        // centres[2].anchor.rotate.x += 0.05;
-
-        // if (anc.rotate.z < TAU / 4) {
-        //     anc.rotate.z += 0.05;
-        // } else {
-        //     if (anc.rotate.y < TAU / 4) {
-        //         anc.rotate.y += 0.05;
-        //     }
-        // }
-
+            if (queue.length) {
+                const now = performance.now();
+                const [move] = queue;
+                if (!move.epoch) {
+                    move.epoch = now;
+                }
+                const elapsed = now - move.epoch;
+                if (elapsed > diff) {
+                    move.apply();
+                    queue.shift();
+                } else {
+                    move.tween(elapsed / diff);
+                }
+            } else {
+                Array.prototype.push.apply(queue, getMoves(`RUR'U'R'FR2U'R'U'RUR'F'`, cube));
+            }
         },
     };
 }

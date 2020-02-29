@@ -9,6 +9,7 @@ import Cube from './cube';
  * backface
  * japanese
  * snap to position
+ * record/playback
  * alg demo
  * solve playback
  * move slider (slide during moves) | lerp | snap
@@ -19,7 +20,7 @@ import Cube from './cube';
  * controlled position
  * disco
  * pillowed
- * R3 M'R2
+ * R3 M'R2 axial
  */
 
 function zsim(container) {

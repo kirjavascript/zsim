@@ -2522,7 +2522,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _moves__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./moves */ "./src/moves.js");
 
  // TODO: destroy -> return stickers
-// TODO: config -> generate setters/getters from an array
+// TODO: generate getters for config
 
 /* harmony default export */ __webpack_exports__["default"] = (function (_ref) {
   var illo = _ref.illo,
@@ -2893,28 +2893,33 @@ __webpack_require__.r(__webpack_exports__);
       }
     }
   };
-  var queue = [];
+  var queue = []; // change TPS when queue is bigger
+
+  var tps = 5;
+  var diff = 1000 / tps;
   return {
-    test_domove: function test_domove() {
-      var moves = Object(_moves__WEBPACK_IMPORTED_MODULE_1__["getMoves"])("RUR'r'", cube);
-      moves.forEach(function (d) {
-        return d.apply();
-      }); // do sune, support instant and different tps
-    },
-    render: function render() {// [5, 9, 4, 1].map(i => edges[i]).forEach(({ anchor }) => {
-      //     anchor.rotate.x += 0.05;
-      // });
-      // [5, 4, 0, 1].map(i => corners[i]).forEach(({ anchor }) => {
-      //     anchor.rotate.x += 0.05;
-      // })
-      // centres[2].anchor.rotate.x += 0.05;
-      // if (anc.rotate.z < TAU / 4) {
-      //     anc.rotate.z += 0.05;
-      // } else {
-      //     if (anc.rotate.y < TAU / 4) {
-      //         anc.rotate.y += 0.05;
-      //     }
-      // }
+    // moves_instant
+    test_domove: function test_domove() {},
+    render: function render() {
+      if (queue.length) {
+        var now = performance.now();
+        var move = queue[0];
+
+        if (!move.epoch) {
+          move.epoch = now;
+        }
+
+        var elapsed = now - move.epoch;
+
+        if (elapsed > diff) {
+          move.apply();
+          queue.shift();
+        } else {
+          move.tween(elapsed / diff);
+        }
+      } else {
+        Array.prototype.push.apply(queue, Object(_moves__WEBPACK_IMPORTED_MODULE_1__["getMoves"])("RUR'U'R'FR2U'R'U'RUR'F'", cube));
+      }
     }
   };
 });
@@ -2944,6 +2949,7 @@ __webpack_require__.r(__webpack_exports__);
  * backface
  * japanese
  * snap to position
+ * record/playback
  * alg demo
  * solve playback
  * move slider (slide during moves) | lerp | snap
@@ -2954,7 +2960,7 @@ __webpack_require__.r(__webpack_exports__);
  * controlled position
  * disco
  * pillowed
- * R3 M'R2
+ * R3 M'R2 axial
  */
 
 function zsim(container) {
@@ -2997,13 +3003,14 @@ function zsim(container) {
 /*!**********************!*\
   !*** ./src/moves.js ***!
   \**********************/
-/*! exports provided: quarter, half, getMoves */
+/*! exports provided: quarter, half, getMove, getMoves */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "quarter", function() { return quarter; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "half", function() { return half; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getMove", function() { return getMove; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getMoves", function() { return getMoves; });
 /* harmony import */ var zdog__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! zdog */ "./node_modules/zdog/js/index.js");
 /* harmony import */ var zdog__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(zdog__WEBPACK_IMPORTED_MODULE_0__);
@@ -3017,7 +3024,8 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
 
 var quarter = zdog__WEBPACK_IMPORTED_MODULE_0__["TAU"] / 4;
-var half = zdog__WEBPACK_IMPORTED_MODULE_0__["TAU"] / 2;
+var half = zdog__WEBPACK_IMPORTED_MODULE_0__["TAU"] / 2; // U B R F L D
+
 var moveList = {
   R: {
     edges: [5, 9, 4, 1],
@@ -3034,6 +3042,7 @@ var moveList = {
   F: {
     edges: [6, 10, 5, 2],
     corners: [1, 2, 6, 5],
+    centre: 3,
     axis: 'z'
   },
   L: {
@@ -3067,10 +3076,9 @@ var moveList = {
     axis: 'z'
   },
   r: {
-    moves: [toObject('R'), toObject('M\'')]
+    moves: [toObject("R"), toObject("M'")]
   }
 };
-
 function getMove(moveRaw, cube) {
   var _toObject = toObject(moveRaw),
       move = _toObject.move,
@@ -3081,22 +3089,36 @@ function getMove(moveRaw, cube) {
       corners = _moveList$move.corners,
       edges = _moveList$move.edges,
       centres = _moveList$move.centres,
+      centre = _moveList$move.centre,
       axis = _moveList$move.axis,
       moves = _moveList$move.moves; // calculate transforms
-  // const transforms = [
-  //     ...corners.map(index => cube.corners[index]),
-  //     ...edges.map(index => cube.edges[index]),
-  //     cube.centres[centre],
-  // ];
-  // multiple moves at once
+
+  var transforms = [];
+  corners && transforms.push.apply(transforms, _toConsumableArray(corners.map(function (index) {
+    return cube.cubies.corners[index];
+  })));
+  edges && transforms.push.apply(transforms, _toConsumableArray(edges.map(function (index) {
+    return cube.cubies.edges[index];
+  })));
+  typeof centre !== 'undefined' && transforms.push(cube.cubies.centres[centre]); // animation function
+
+  function tween(i) {
+    if (corners) {
+      for (var j = 0; j < transforms.length; j++) {
+        var cubie = transforms[j];
+        cubie.anchor.rotate[axis] = Object(zdog__WEBPACK_IMPORTED_MODULE_0__["lerp"])(0, quarter * order, i);
+      }
+    }
+  } // clean up move
+
 
   function apply() {
-    moves && moves.map(function (move) {
-      return getMove(move, cube).apply();
+    moves && moves.forEach(function (move) {
+      return getMove(applyOrder(move, order), cube).apply();
     });
 
     if (edges) {
-      // force axis as z if we have a slice move
+      // force axis as z if we have a slice move (for some reason?)
       doCycle(cube.edges, order, edges, centres ? 'z' : axis);
       cube.setCubieColors(edges, 'edges');
     }
@@ -3109,25 +3131,27 @@ function getMove(moveRaw, cube) {
     if (corners) {
       doCycle(cube.corners, order, corners, axis);
       cube.setCubieColors(corners, 'corners');
-    } // transforms.forEach(({ anchor }) => {
-    //     // TODO: reset transforms
-    // });
+    } // reset transforms
 
-  } // apply
-  // calc finalvalue
-  // lerp moves
-  // list of cubies to update each cube with the update
-  // transforms
 
+    tween(0);
+  }
 
   return {
-    apply: apply
+    apply: apply,
+    tween: tween
   };
 }
-
 function getMoves(moves, cube) {
   return splitMoves(moves).map(function (move) {
     return getMove(move, cube);
+  });
+}
+
+function splitMoves(str) {
+  if (typeof str !== 'string') return str;
+  return str.replace(/\s/g, '').split(/(\w\d|\w'|\w)/).filter(function (move) {
+    return move;
   });
 }
 
@@ -3137,29 +3161,39 @@ function toObject(move) {
     move: move[0],
     order: {
       '\'': -1,
-      '3': -1,
       '2': 2
     }[move[1]] || 1
   };
 }
 
-function splitMoves(str) {
-  if (typeof str !== 'string') return str;
-  return str.replace(/\s/g, '').split(/(\w3|\w2|\w'|\w)/).filter(function (move) {
-    return move;
-  });
+function applyOrder(move, order) {
+  if (order === 1) return move;
+
+  if (order === -1) {
+    move.order = move.order === 2 ? 2 : -move.order;
+  }
+
+  if (order == 2) {
+    move.order = move.order === 2 ? 0 : 2;
+  }
+
+  return move;
 }
 
 var cornerSwaps = {
-  z: [0, 1],
+  x: [1, 2],
   y: [0, 2],
-  x: [1, 2]
+  z: [0, 1]
 };
 
 function doCycle(arr, order, cycle, axis) {
-  if (order === -1) {
+  if (order === 0) return;
+
+  if (order === -1 || order === 3) {
     cycle = _toConsumableArray(cycle).reverse();
-  } else if (order === 2) {
+  }
+
+  if (order === 2) {
     doCycle(arr, 1, cycle, axis);
   } // cycles
 

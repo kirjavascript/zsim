@@ -1,8 +1,9 @@
-import { TAU } from 'zdog';
+import { TAU, lerp } from 'zdog';
 
 export const quarter = TAU / 4;
 export const half = TAU / 2;
 
+// U B R F L D
 const moveList = {
     R: {
         edges: [5, 9, 4, 1],
@@ -19,6 +20,7 @@ const moveList = {
     F: {
         edges: [6, 10, 5, 2],
         corners: [1, 2, 6, 5],
+        centre: 3,
         axis: 'z',
     },
     L: {
@@ -51,37 +53,44 @@ const moveList = {
         edges: [3, 11, 9, 1],
         axis: 'z',
     },
-    r: {
-        moves: [toObject('R'), toObject('M\'')],
-    },
+    r: { moves: [toObject(`R`), toObject(`M'`)] },
 };
 
-function getMove(moveRaw, cube) {
+export function getMove(moveRaw, cube) {
     const { move, order } = toObject(moveRaw);
     if (!moveList[move]) throw new Error(`invalid move ${move}`);
     const {
         corners,
         edges,
         centres,
+        centre,
         axis,
         moves,
     } = moveList[move];
 
     // calculate transforms
-    // const transforms = [
-    //     ...corners.map(index => cube.corners[index]),
-    //     ...edges.map(index => cube.edges[index]),
-    //     cube.centres[centre],
-    // ];
+    const transforms = [];
+    corners && transforms.push(...corners.map(index => cube.cubies.corners[index]));
+    edges && transforms.push(...edges.map(index => cube.cubies.edges[index]));
+    typeof centre !== 'undefined' && transforms.push(cube.cubies.centres[centre]);
 
-    // multiple moves at once
+    // animation function
+    function tween(i) {
+        if (corners) {
+            for (let j = 0; j < transforms.length; j++) {
+                const cubie = transforms[j];
+                cubie.anchor.rotate[axis] = lerp(0, quarter * order, i);
+            }
+        }
 
-    // applyCycle for perf
-
+    }
+    // clean up move
     function apply() {
-        moves && moves.map(move => getMove(move, cube).apply());
+        moves && (
+            moves.forEach(move => getMove(applyOrder(move, order), cube).apply())
+        );
         if (edges) {
-            // force axis as z if we have a slice move
+            // force axis as z if we have a slice move (for some reason?)
             doCycle(cube.edges, order, edges, centres ? 'z' : axis);
             cube.setCubieColors(edges, 'edges');
         }
@@ -93,24 +102,23 @@ function getMove(moveRaw, cube) {
             doCycle(cube.corners, order, corners, axis);
             cube.setCubieColors(corners, 'corners');
         }
-        // transforms.forEach(({ anchor }) => {
-        //     // TODO: reset transforms
-        // });
-
+        // reset transforms
+        tween(0);
     }
 
-    // apply
-    // calc finalvalue
-    // lerp moves
-    // list of cubies to update each cube with the update
-    // transforms
     return {
         apply,
+        tween,
     };
 }
 
 export function getMoves(moves, cube) {
     return splitMoves(moves).map(move => getMove(move, cube));
+}
+
+function splitMoves(str) {
+    if (typeof str !== 'string') return str;
+    return str.replace(/\s/g,'').split(/(\w\d|\w'|\w)/).filter((move) => move);
 }
 
 function toObject(move) {
@@ -119,27 +127,35 @@ function toObject(move) {
         move: move[0],
         order: {
             '\'': -1,
-            '3': 3,
             '2': 2,
         }[move[1]] || 1,
     };
 }
 
-function splitMoves(str) {
-    if (typeof str !== 'string') return str;
-    return str.replace(/\s/g,'').split(/(\w3|\w2|\w'|\w)/).filter((move) => move);
+function applyOrder(move, order) {
+    if (order === 1) return move;
+    if (order === -1) {
+        move.order = move.order === 2 ? 2 : -move.order;
+    }
+    if (order == 2) {
+        move.order = move.order === 2 ? 0 : 2;
+    }
+    return move;
 }
 
+
 const cornerSwaps = {
-    z: [0, 1],
-    y: [0, 2],
     x: [1, 2],
+    y: [0, 2],
+    z: [0, 1],
 };
 
 function doCycle(arr, order, cycle, axis) {
+    if (order === 0) return;
     if (order === -1 || order === 3) {
         cycle = [...cycle].reverse();
-    } else if (order === 2) {
+    }
+    if (order === 2) {
         doCycle(arr, 1, cycle, axis);
     }
 
