@@ -9,7 +9,7 @@ module.exports = (env={}, args={}) => {
             main: './src/main.js',
         },
         output: {
-            path:     path.join(__dirname, 'static'),
+            path:     path.join(__dirname, 'examples'),
             filename: '[name].js',
             library: 'zsim',
             libraryTarget: 'window',
