@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>zsim - keymap</title>
+        <meta charset="UTF-8" />
+        <meta name="theme-color" content="#000000">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, minimal-ui">
+        <script src="./main.js"></script>
+    </head>
+    <body>
+        <main> </main>
+        <script>
+            const cube = zsim.default(document.querySelector('main'));
+            const keys = [ ['i', 'R'], ['k', 'R\''], ['8', 'R2'], ['u', 'r'], ['m', 'r\''], ['j', 'U'], ['f', 'U\''], ['s', 'D'], ['l', 'D\''], ['n', 'F'], ['v', 'F\''], ['o', 'B\''], ['w', 'B'], ['g', 'M\''], ['H', 'E2'], ['G', 'E2'], ['h', 'M'], ['d', 'L'], ['e', 'L\''], ['3', 'L2'], ['c', 'l'], ['r', 'l\''], [';', 'y'], ['a', 'y\''], ['y', 'x'], ['t', 'x\''], ['p', 'z'], ['q', 'z\''] ].reduce((a,[b,c])=>(a[b]=c,a),{});
+            window.addEventListener('keydown', (e) => cube.move(keys[e.key]));
+        </script>
+    </body>
+</html>

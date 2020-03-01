@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <title>zsim</title>
         <meta charset="UTF-8" />
         <meta name="theme-color" content="#000000">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, minimal-ui">
@@ -13,14 +14,18 @@
     </head>
     <body>
         <main> </main>
+        <button id="sune">sune</button>
+        <button id="asune">asune</button>
         <script>
             <!-- dat.gui -->
 
-            const cube = zsim.default(document.querySelector('main'));
+    const cube = zsim.default(document.querySelector('main'));
 
-            setTimeout(() => {
-                cube.test_domove();
-            }, 1500)
+document.querySelector('#sune')
+    .addEventListener('click', () => cube.moves(`RUR'URU2R'`))
+document.querySelector('#asune')
+    .addEventListener('click', () => cube.moves(`RU2R'U'RU'R'`))
+
 
         </script>
     </body>

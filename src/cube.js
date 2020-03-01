@@ -230,16 +230,16 @@ export default function({ illo, zoom, colors: colorsRGB, cubeColor }) {
 
     const queue = [];
 
-    // change TPS when queue is bigger
-    const tps = 5;
-    const diff = 1000 / tps;
-
     return {
         // moves_instant
-        test_domove: () => {
-        },
+        // combine axial
+        move: (move) => queue.push(getMove(move, cube)),
+        moves: (moves) => queue.push(...getMoves(moves, cube)),
         render: () => {
             if (queue.length) {
+                const tps = Math.max(queue.length, 5);
+                const diff = 1000 / tps;
+
                 const now = performance.now();
                 const [move] = queue;
                 if (!move.epoch) {
@@ -252,8 +252,6 @@ export default function({ illo, zoom, colors: colorsRGB, cubeColor }) {
                 } else {
                     move.tween(elapsed / diff);
                 }
-            } else {
-                Array.prototype.push.apply(queue, getMoves(`RUR'U'R'FR2U'R'U'RUR'F'`, cube));
             }
         },
     };
