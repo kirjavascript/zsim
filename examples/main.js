@@ -1,8 +1,3311 @@
-window.zsim=function(t){var e={};function o(r){if(e[r])return e[r].exports;var n=e[r]={i:r,l:!1,exports:{}};return t[r].call(n.exports,n,n.exports,o),n.l=!0,n.exports}return o.m=t,o.c=e,o.d=function(t,e,r){o.o(t,e)||Object.defineProperty(t,e,{enumerable:!0,get:r})},o.r=function(t){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(t,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(t,"__esModule",{value:!0})},o.t=function(t,e){if(1&e&&(t=o(t)),8&e)return t;if(4&e&&"object"==typeof t&&t&&t.__esModule)return t;var r=Object.create(null);if(o.r(r),Object.defineProperty(r,"default",{enumerable:!0,value:t}),2&e&&"string"!=typeof t)for(var n in t)o.d(r,n,function(e){return t[e]}.bind(null,n));return r},o.n=function(t){var e=t&&t.__esModule?function(){return t.default}:function(){return t};return o.d(e,"a",e),e},o.o=function(t,e){return Object.prototype.hasOwnProperty.call(t,e)},o.p="",o(o.s=20)}([function(t,e){t.exports=function(t){return t.webpackPolyfill||(t.deprecate=function(){},t.paths=[],t.children||(t.children=[]),Object.defineProperty(t,"loaded",{enumerable:!0,get:function(){return t.l}}),Object.defineProperty(t,"id",{enumerable:!0,get:function(){return t.i}}),t.webpackPolyfill=1),t}},function(t,e,o){(function(t){var r,n,i,s,a,h,c,u,f,p,l,d,y,m,g,v,b,x,S,w,z,C;function E(t){return(E="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t})(t)}s=this,"object"==E(t)&&t.exports?t.exports=(a=o(2),h=o(8),c=o(9),u=o(5),f=o(3),p=o(10),l=o(13),d=o(6),y=o(4),m=o(11),g=o(12),v=o(14),b=o(7),x=o(15),S=o(16),w=o(17),z=o(18),C=o(19),a.CanvasRenderer=h,a.SvgRenderer=c,a.Vector=u,a.Anchor=f,a.Dragger=p,a.Illustration=l,a.PathCommand=d,a.Shape=y,a.Group=m,a.Rect=g,a.RoundedRect=v,a.Ellipse=b,a.Polygon=x,a.Hemisphere=S,a.Cylinder=w,a.Cone=z,a.Box=C,a):(n=[],r=s.Zdog,void 0===(i="function"==typeof r?r.apply(e,n):r)||(t.exports=i))}).call(this,o(0)(t))},function(t,e,o){(function(t){function e(t){return(e="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t})(t)}
+window["zsim"] =
+/******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// define __esModule on exports
+/******/ 	__webpack_require__.r = function(exports) {
+/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 		}
+/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 	};
+/******/
+/******/ 	// create a fake namespace object
+/******/ 	// mode & 1: value is a module id, require it
+/******/ 	// mode & 2: merge all properties of value into the ns
+/******/ 	// mode & 4: return value when already ns object
+/******/ 	// mode & 8|1: behave like require
+/******/ 	__webpack_require__.t = function(value, mode) {
+/******/ 		if(mode & 1) value = __webpack_require__(value);
+/******/ 		if(mode & 8) return value;
+/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
+/******/ 		var ns = Object.create(null);
+/******/ 		__webpack_require__.r(ns);
+/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
+/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
+/******/ 		return ns;
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "";
+/******/
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = "./src/main.js");
+/******/ })
+/************************************************************************/
+/******/ ({
+
+/***/ "./node_modules/zdog/js/anchor.js":
+/*!****************************************!*\
+  !*** ./node_modules/zdog/js/anchor.js ***!
+  \****************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+/**
+ * Anchor
+ */
+
+( function( root, factory ) {
+  // module definition
+  if (  true && module.exports ) {
+    // CommonJS
+    module.exports = factory( __webpack_require__(/*! ./boilerplate */ "./node_modules/zdog/js/boilerplate.js"), __webpack_require__(/*! ./vector */ "./node_modules/zdog/js/vector.js"),
+        __webpack_require__(/*! ./canvas-renderer */ "./node_modules/zdog/js/canvas-renderer.js"), __webpack_require__(/*! ./svg-renderer */ "./node_modules/zdog/js/svg-renderer.js") );
+  } else {
+    // browser global
+    var Zdog = root.Zdog;
+    Zdog.Anchor = factory( Zdog, Zdog.Vector, Zdog.CanvasRenderer,
+        Zdog.SvgRenderer );
+  }
+}( this, function factory( utils, Vector, CanvasRenderer, SvgRenderer ) {
+
+var TAU = utils.TAU;
+var onePoint = { x: 1, y: 1, z: 1 };
+
+function Anchor( options ) {
+  this.create( options || {} );
+}
+
+Anchor.prototype.create = function( options ) {
+  this.children = [];
+  // set defaults & options
+  utils.extend( this, this.constructor.defaults );
+  this.setOptions( options );
+
+  // transform
+  this.translate = new Vector( options.translate );
+  this.rotate = new Vector( options.rotate );
+  this.scale = new Vector( onePoint ).multiply( this.scale );
+  // origin
+  this.origin = new Vector();
+  this.renderOrigin = new Vector();
+
+  if ( this.addTo ) {
+    this.addTo.addChild( this );
+  }
+};
+
+Anchor.defaults = {};
+
+Anchor.optionKeys = Object.keys( Anchor.defaults ).concat([
+  'rotate',
+  'translate',
+  'scale',
+  'addTo',
+]);
+
+Anchor.prototype.setOptions = function( options ) {
+  var optionKeys = this.constructor.optionKeys;
+
+  for ( var key in options ) {
+    if ( optionKeys.indexOf( key ) != -1 ) {
+      this[ key ] = options[ key ];
+    }
+  }
+};
+
+Anchor.prototype.addChild = function( shape ) {
+  if ( this.children.indexOf( shape ) != -1 ) {
+    return;
+  }
+  shape.remove(); // remove previous parent
+  shape.addTo = this; // keep parent reference
+  this.children.push( shape );
+};
+
+Anchor.prototype.removeChild = function( shape ) {
+  var index = this.children.indexOf( shape );
+  if ( index != -1 ) {
+    this.children.splice( index, 1 );
+  }
+};
+
+Anchor.prototype.remove = function() {
+  if ( this.addTo ) {
+    this.addTo.removeChild( this );
+  }
+};
+
+// ----- update ----- //
+
+Anchor.prototype.update = function() {
+  // update self
+  this.reset();
+  // update children
+  this.children.forEach( function( child ) {
+    child.update();
+  });
+  this.transform( this.translate, this.rotate, this.scale );
+};
+
+Anchor.prototype.reset = function() {
+  this.renderOrigin.set( this.origin );
+};
+
+Anchor.prototype.transform = function( translation, rotation, scale ) {
+  this.renderOrigin.transform( translation, rotation, scale );
+  // transform children
+  this.children.forEach( function( child ) {
+    child.transform( translation, rotation, scale );
+  });
+};
+
+Anchor.prototype.updateGraph = function() {
+  this.update();
+  this.updateFlatGraph();
+  this.flatGraph.forEach( function( item ) {
+    item.updateSortValue();
+  });
+  // z-sort
+  this.flatGraph.sort( Anchor.shapeSorter );
+};
+
+Anchor.shapeSorter = function( a, b ) {
+  return a.sortValue - b.sortValue;
+};
+
+// custom getter to check for flatGraph before using it
+Object.defineProperty( Anchor.prototype, 'flatGraph', {
+  get: function() {
+    if ( !this._flatGraph ) {
+      this.updateFlatGraph();
+    }
+    return this._flatGraph;
+  },
+  set: function( graph ) {
+    this._flatGraph = graph;
+  },
+});
+
+Anchor.prototype.updateFlatGraph = function() {
+  this.flatGraph = this.getFlatGraph();
+};
+
+// return Array of self & all child graph items
+Anchor.prototype.getFlatGraph = function() {
+  var flatGraph = [ this ];
+  return this.addChildFlatGraph( flatGraph );
+};
+
+Anchor.prototype.addChildFlatGraph = function( flatGraph ) {
+  this.children.forEach( function( child ) {
+    var childFlatGraph = child.getFlatGraph();
+    Array.prototype.push.apply( flatGraph, childFlatGraph );
+  });
+  return flatGraph;
+};
+
+Anchor.prototype.updateSortValue = function() {
+  this.sortValue = this.renderOrigin.z;
+};
+
+// ----- render ----- //
+
+Anchor.prototype.render = function() {};
+
+// TODO refactor out CanvasRenderer so its not a dependency within anchor.js
+Anchor.prototype.renderGraphCanvas = function( ctx ) {
+  if ( !ctx ) {
+    throw new Error( 'ctx is ' + ctx + '. ' +
+      'Canvas context required for render. Check .renderGraphCanvas( ctx ).' );
+  }
+  this.flatGraph.forEach( function( item ) {
+    item.render( ctx, CanvasRenderer );
+  });
+};
+
+Anchor.prototype.renderGraphSvg = function( svg ) {
+  if ( !svg ) {
+    throw new Error( 'svg is ' + svg + '. ' +
+      'SVG required for render. Check .renderGraphSvg( svg ).' );
+  }
+  this.flatGraph.forEach( function( item ) {
+    item.render( svg, SvgRenderer );
+  });
+};
+
+// ----- misc ----- //
+
+Anchor.prototype.copy = function( options ) {
+  // copy options
+  var itemOptions = {};
+  var optionKeys = this.constructor.optionKeys;
+  optionKeys.forEach( function( key ) {
+    itemOptions[ key ] = this[ key ];
+  }, this );
+  // add set options
+  utils.extend( itemOptions, options );
+  var ItemClass = this.constructor;
+  return new ItemClass( itemOptions );
+};
+
+Anchor.prototype.copyGraph = function( options ) {
+  var clone = this.copy( options );
+  this.children.forEach( function( child ) {
+    child.copyGraph({
+      addTo: clone,
+    });
+  });
+  return clone;
+};
+
+Anchor.prototype.normalizeRotate = function() {
+  this.rotate.x = utils.modulo( this.rotate.x, TAU );
+  this.rotate.y = utils.modulo( this.rotate.y, TAU );
+  this.rotate.z = utils.modulo( this.rotate.z, TAU );
+};
+
+// ----- subclass ----- //
+
+function getSubclass( Super ) {
+  return function( defaults ) {
+    // create constructor
+    function Item( options ) {
+      this.create( options || {} );
+    }
+
+    Item.prototype = Object.create( Super.prototype );
+    Item.prototype.constructor = Item;
+
+    Item.defaults = utils.extend( {}, Super.defaults );
+    utils.extend( Item.defaults, defaults );
+    // create optionKeys
+    Item.optionKeys = Super.optionKeys.slice(0);
+    // add defaults keys to optionKeys, dedupe
+    Object.keys( Item.defaults ).forEach( function( key ) {
+      if ( !Item.optionKeys.indexOf( key ) != 1 ) {
+        Item.optionKeys.push( key );
+      }
+    });
+
+    Item.subclass = getSubclass( Item );
+
+    return Item;
+  };
+}
+
+Anchor.subclass = getSubclass( Anchor );
+
+return Anchor;
+
+}));
+
+
+/***/ }),
+
+/***/ "./node_modules/zdog/js/boilerplate.js":
+/*!*********************************************!*\
+  !*** ./node_modules/zdog/js/boilerplate.js ***!
+  \*********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
 /*!
  * Zdog v1.1.1
  * Round, flat, designer-friendly pseudo-3D engine
  * Licensed MIT
  * https://zzz.dog
  * Copyright 2019 Metafizzy
- */var o,r;o=this,r=function(){var t={};t.TAU=2*Math.PI,t.extend=function(t,e){for(var o in e)t[o]=e[o];return t},t.lerp=function(t,e,o){return(e-t)*o+t},t.modulo=function(t,e){return(t%e+e)%e};var e={2:function(t){return t*t},3:function(t){return t*t*t},4:function(t){return t*t*t*t},5:function(t){return t*t*t*t*t}};return t.easeInOut=function(t,o){if(1==o)return t;var r=(t=Math.max(0,Math.min(1,t)))<.5,n=r?t:1-t,i=(e[o]||e[2])(n/=.5);return i/=2,r?i:1-i},t},"object"==e(t)&&t.exports?t.exports=r():o.Zdog=r()}).call(this,o(0)(t))},function(t,e,o){(function(t){function e(t){return(e="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t})(t)}!function(r,n){if("object"==e(t)&&t.exports)t.exports=n(o(2),o(5),o(8),o(9));else{var i=r.Zdog;i.Anchor=n(i,i.Vector,i.CanvasRenderer,i.SvgRenderer)}}(this,function(t,e,o,r){var n=t.TAU,i={x:1,y:1,z:1};function s(t){this.create(t||{})}return s.prototype.create=function(o){this.children=[],t.extend(this,this.constructor.defaults),this.setOptions(o),this.translate=new e(o.translate),this.rotate=new e(o.rotate),this.scale=new e(i).multiply(this.scale),this.origin=new e,this.renderOrigin=new e,this.addTo&&this.addTo.addChild(this)},s.defaults={},s.optionKeys=Object.keys(s.defaults).concat(["rotate","translate","scale","addTo"]),s.prototype.setOptions=function(t){var e=this.constructor.optionKeys;for(var o in t)-1!=e.indexOf(o)&&(this[o]=t[o])},s.prototype.addChild=function(t){-1==this.children.indexOf(t)&&(t.remove(),t.addTo=this,this.children.push(t))},s.prototype.removeChild=function(t){var e=this.children.indexOf(t);-1!=e&&this.children.splice(e,1)},s.prototype.remove=function(){this.addTo&&this.addTo.removeChild(this)},s.prototype.update=function(){this.reset(),this.children.forEach(function(t){t.update()}),this.transform(this.translate,this.rotate,this.scale)},s.prototype.reset=function(){this.renderOrigin.set(this.origin)},s.prototype.transform=function(t,e,o){this.renderOrigin.transform(t,e,o),this.children.forEach(function(r){r.transform(t,e,o)})},s.prototype.updateGraph=function(){this.update(),this.updateFlatGraph(),this.flatGraph.forEach(function(t){t.updateSortValue()}),this.flatGraph.sort(s.shapeSorter)},s.shapeSorter=function(t,e){return t.sortValue-e.sortValue},Object.defineProperty(s.prototype,"flatGraph",{get:function(){return this._flatGraph||this.updateFlatGraph(),this._flatGraph},set:function(t){this._flatGraph=t}}),s.prototype.updateFlatGraph=function(){this.flatGraph=this.getFlatGraph()},s.prototype.getFlatGraph=function(){var t=[this];return this.addChildFlatGraph(t)},s.prototype.addChildFlatGraph=function(t){return this.children.forEach(function(e){var o=e.getFlatGraph();Array.prototype.push.apply(t,o)}),t},s.prototype.updateSortValue=function(){this.sortValue=this.renderOrigin.z},s.prototype.render=function(){},s.prototype.renderGraphCanvas=function(t){if(!t)throw new Error("ctx is "+t+". Canvas context required for render. Check .renderGraphCanvas( ctx ).");this.flatGraph.forEach(function(e){e.render(t,o)})},s.prototype.renderGraphSvg=function(t){if(!t)throw new Error("svg is "+t+". SVG required for render. Check .renderGraphSvg( svg ).");this.flatGraph.forEach(function(e){e.render(t,r)})},s.prototype.copy=function(e){var o={};return this.constructor.optionKeys.forEach(function(t){o[t]=this[t]},this),t.extend(o,e),new(0,this.constructor)(o)},s.prototype.copyGraph=function(t){var e=this.copy(t);return this.children.forEach(function(t){t.copyGraph({addTo:e})}),e},s.prototype.normalizeRotate=function(){this.rotate.x=t.modulo(this.rotate.x,n),this.rotate.y=t.modulo(this.rotate.y,n),this.rotate.z=t.modulo(this.rotate.z,n)},s.subclass=function e(o){return function(r){function n(t){this.create(t||{})}return n.prototype=Object.create(o.prototype),n.prototype.constructor=n,n.defaults=t.extend({},o.defaults),t.extend(n.defaults,r),n.optionKeys=o.optionKeys.slice(0),Object.keys(n.defaults).forEach(function(t){1!=!n.optionKeys.indexOf(t)&&n.optionKeys.push(t)}),n.subclass=e(n),n}}(s),s})}).call(this,o(0)(t))},function(t,e,o){(function(t){function e(t){return(e="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t})(t)}!function(r,n){if("object"==e(t)&&t.exports)t.exports=n(o(2),o(5),o(6),o(3));else{var i=r.Zdog;i.Shape=n(i,i.Vector,i.PathCommand,i.Anchor)}}(this,function(t,e,o,r){var n=r.subclass({stroke:1,fill:!1,color:"#333",closed:!0,visible:!0,path:[{}],front:{z:1},backface:!0});n.prototype.create=function(t){r.prototype.create.call(this,t),this.updatePath(),this.front=new e(t.front||this.front),this.renderFront=new e(this.front),this.renderNormal=new e};var i=["move","line","bezier","arc"];n.prototype.updatePath=function(){this.setPath(),this.updatePathCommands()},n.prototype.setPath=function(){},n.prototype.updatePathCommands=function(){var t;this.pathCommands=this.path.map(function(e,r){var n=Object.keys(e),s=n[0],a=e[s];1==n.length&&-1!=i.indexOf(s)||(s="line",a=e);var h="line"==s||"move"==s,c=Array.isArray(a);h&&!c&&(a=[a]);var u=new o(s=0===r?"move":s,a,t);return t=u.endRenderPoint,u})},n.prototype.reset=function(){this.renderOrigin.set(this.origin),this.renderFront.set(this.front),this.pathCommands.forEach(function(t){t.reset()})},n.prototype.transform=function(t,e,o){this.renderOrigin.transform(t,e,o),this.renderFront.transform(t,e,o),this.renderNormal.set(this.renderOrigin).subtract(this.renderFront),this.pathCommands.forEach(function(r){r.transform(t,e,o)}),this.children.forEach(function(r){r.transform(t,e,o)})},n.prototype.updateSortValue=function(){var t=this.pathCommands.length,e=this.pathCommands[0].endRenderPoint,o=this.pathCommands[t-1].endRenderPoint;t>2&&e.isSame(o)&&(t-=1);for(var r=0,n=0;n<t;n++)r+=this.pathCommands[n].endRenderPoint.z;this.sortValue=r/t},n.prototype.render=function(t,e){var o=this.pathCommands.length;if(this.visible&&o&&(this.isFacingBack=this.renderNormal.z>0,this.backface||!this.isFacingBack)){if(!e)throw new Error("Zdog renderer required. Set to "+e);var r=1==o;e.isCanvas&&r?this.renderCanvasDot(t,e):this.renderPath(t,e)}};var s=t.TAU;n.prototype.renderCanvasDot=function(t){var e=this.getLineWidth();if(e){t.fillStyle=this.getRenderColor();var o=this.pathCommands[0].endRenderPoint;t.beginPath();var r=e/2;t.arc(o.x,o.y,r,0,s),t.fill()}},n.prototype.getLineWidth=function(){return this.stroke?1==this.stroke?1:this.stroke:0},n.prototype.getRenderColor=function(){return"string"==typeof this.backface&&this.isFacingBack?this.backface:this.color},n.prototype.renderPath=function(t,e){var o=this.getRenderElement(t,e),r=!(2==this.pathCommands.length&&"line"==this.pathCommands[1].method)&&this.closed,n=this.getRenderColor();e.renderPath(t,o,this.pathCommands,r),e.stroke(t,o,this.stroke,n,this.getLineWidth()),e.fill(t,o,this.fill,n),e.end(t,o)};return n.prototype.getRenderElement=function(t,e){if(e.isSvg)return this.svgElement||(this.svgElement=document.createElementNS("http://www.w3.org/2000/svg","path"),this.svgElement.setAttribute("stroke-linecap","round"),this.svgElement.setAttribute("stroke-linejoin","round")),this.svgElement},n})}).call(this,o(0)(t))},function(t,e,o){(function(t){function e(t){return(e="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t})(t)}!function(r,n){if("object"==e(t)&&t.exports)t.exports=n(o(2));else{var i=r.Zdog;i.Vector=n(i)}}(this,function(t){function e(t){this.set(t)}var o=t.TAU;function r(t,e,r,n){if(e&&e%o!=0){var i=Math.cos(e),s=Math.sin(e),a=t[r],h=t[n];t[r]=a*i-h*s,t[n]=h*i+a*s}}function n(t){return Math.abs(t-1)<1e-8?1:Math.sqrt(t)}return e.prototype.set=function(t){return this.x=t&&t.x||0,this.y=t&&t.y||0,this.z=t&&t.z||0,this},e.prototype.write=function(t){return t?(this.x=null!=t.x?t.x:this.x,this.y=null!=t.y?t.y:this.y,this.z=null!=t.z?t.z:this.z,this):this},e.prototype.rotate=function(t){if(t)return this.rotateZ(t.z),this.rotateY(t.y),this.rotateX(t.x),this},e.prototype.rotateZ=function(t){r(this,t,"x","y")},e.prototype.rotateX=function(t){r(this,t,"y","z")},e.prototype.rotateY=function(t){r(this,t,"x","z")},e.prototype.isSame=function(t){return!!t&&(this.x===t.x&&this.y===t.y&&this.z===t.z)},e.prototype.add=function(t){return t?(this.x+=t.x||0,this.y+=t.y||0,this.z+=t.z||0,this):this},e.prototype.subtract=function(t){return t?(this.x-=t.x||0,this.y-=t.y||0,this.z-=t.z||0,this):this},e.prototype.multiply=function(t){return null==t?this:("number"==typeof t?(this.x*=t,this.y*=t,this.z*=t):(this.x*=null!=t.x?t.x:1,this.y*=null!=t.y?t.y:1,this.z*=null!=t.z?t.z:1),this)},e.prototype.transform=function(t,e,o){return this.multiply(o),this.rotate(e),this.add(t),this},e.prototype.lerp=function(e,o){return this.x=t.lerp(this.x,e.x||0,o),this.y=t.lerp(this.y,e.y||0,o),this.z=t.lerp(this.z,e.z||0,o),this},e.prototype.magnitude=function(){return n(this.x*this.x+this.y*this.y+this.z*this.z)},e.prototype.magnitude2d=function(){return n(this.x*this.x+this.y*this.y)},e.prototype.copy=function(){return new e(this)},e})}).call(this,o(0)(t))},function(t,e,o){(function(t){function e(t){return(e="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t})(t)}!function(r,n){if("object"==e(t)&&t.exports)t.exports=n(o(5));else{var i=r.Zdog;i.PathCommand=n(i.Vector)}}(this,function(t){function e(e,n,i){this.method=e,this.points=n.map(o),this.renderPoints=n.map(r),this.previousPoint=i,this.endRenderPoint=this.renderPoints[this.renderPoints.length-1],"arc"==e&&(this.controlPoints=[new t,new t])}function o(e){return e instanceof t?e:new t(e)}function r(e){return new t(e)}e.prototype.reset=function(){var t=this.points;this.renderPoints.forEach(function(e,o){var r=t[o];e.set(r)})},e.prototype.transform=function(t,e,o){this.renderPoints.forEach(function(r){r.transform(t,e,o)})},e.prototype.render=function(t,e,o){return this[this.method](t,e,o)},e.prototype.move=function(t,e,o){return o.move(t,e,this.renderPoints[0])},e.prototype.line=function(t,e,o){return o.line(t,e,this.renderPoints[0])},e.prototype.bezier=function(t,e,o){var r=this.renderPoints[0],n=this.renderPoints[1],i=this.renderPoints[2];return o.bezier(t,e,r,n,i)};return e.prototype.arc=function(t,e,o){var r=this.previousPoint,n=this.renderPoints[0],i=this.renderPoints[1],s=this.controlPoints[0],a=this.controlPoints[1];return s.set(r).lerp(n,9/16),a.set(i).lerp(n,9/16),o.bezier(t,e,s,a,i)},e})}).call(this,o(0)(t))},function(t,e,o){(function(t){function e(t){return(e="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t})(t)}!function(r,n){if("object"==e(t)&&t.exports)t.exports=n(o(4));else{var i=r.Zdog;i.Ellipse=n(i.Shape)}}(this,function(t){var e=t.subclass({diameter:1,width:void 0,height:void 0,quarters:4,closed:!1});return e.prototype.setPath=function(){var t=(null!=this.width?this.width:this.diameter)/2,e=(null!=this.height?this.height:this.diameter)/2;this.path=[{x:0,y:-e},{arc:[{x:t,y:-e},{x:t,y:0}]}],this.quarters>1&&this.path.push({arc:[{x:t,y:e},{x:0,y:e}]}),this.quarters>2&&this.path.push({arc:[{x:-t,y:e},{x:-t,y:0}]}),this.quarters>3&&this.path.push({arc:[{x:-t,y:-e},{x:0,y:-e}]})},e})}).call(this,o(0)(t))},function(t,e,o){(function(t){function e(t){return(e="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t})(t)}var o,r;o=this,r=function(){var t={isCanvas:!0,begin:function(t){t.beginPath()},move:function(t,e,o){t.moveTo(o.x,o.y)},line:function(t,e,o){t.lineTo(o.x,o.y)},bezier:function(t,e,o,r,n){t.bezierCurveTo(o.x,o.y,r.x,r.y,n.x,n.y)},closePath:function(t){t.closePath()},setPath:function(){},renderPath:function(e,o,r,n){this.begin(e,o),r.forEach(function(r){r.render(e,o,t)}),n&&this.closePath(e,o)},stroke:function(t,e,o,r,n){o&&(t.strokeStyle=r,t.lineWidth=n,t.stroke())},fill:function(t,e,o,r){o&&(t.fillStyle=r,t.fill())},end:function(){}};return t},"object"==e(t)&&t.exports?t.exports=r():o.Zdog.CanvasRenderer=r()}).call(this,o(0)(t))},function(t,e,o){(function(t){function e(t){return(e="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t})(t)}var o,r;o=this,r=function(){var t={isSvg:!0},e=t.round=function(t){return Math.round(1e3*t)/1e3};function o(t){return e(t.x)+","+e(t.y)+" "}return t.begin=function(){},t.move=function(t,e,r){return"M"+o(r)},t.line=function(t,e,r){return"L"+o(r)},t.bezier=function(t,e,r,n,i){return"C"+o(r)+o(n)+o(i)},t.closePath=function(){return"Z"},t.setPath=function(t,e,o){e.setAttribute("d",o)},t.renderPath=function(e,o,r,n){var i="";r.forEach(function(r){i+=r.render(e,o,t)}),n&&(i+=this.closePath(e,o)),this.setPath(e,o,i)},t.stroke=function(t,e,o,r,n){o&&(e.setAttribute("stroke",r),e.setAttribute("stroke-width",n))},t.fill=function(t,e,o,r){var n=o?r:"none";e.setAttribute("fill",n)},t.end=function(t,e){t.appendChild(e)},t},"object"==e(t)&&t.exports?t.exports=r():o.Zdog.SvgRenderer=r()}).call(this,o(0)(t))},function(t,e,o){(function(t){function e(t){return(e="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t})(t)}var o,r;o=this,r=function(){var t="undefined"!=typeof window,e="mousedown",o="mousemove",r="mouseup";function n(){}function i(t){this.create(t||{})}return t&&(window.PointerEvent?(e="pointerdown",o="pointermove",r="pointerup"):"ontouchstart"in window&&(e="touchstart",o="touchmove",r="touchend")),i.prototype.create=function(t){this.onDragStart=t.onDragStart||n,this.onDragMove=t.onDragMove||n,this.onDragEnd=t.onDragEnd||n,this.bindDrag(t.startElement)},i.prototype.bindDrag=function(t){(t=this.getQueryElement(t))&&(t.style.touchAction="none",t.addEventListener(e,this))},i.prototype.getQueryElement=function(t){return"string"==typeof t&&(t=document.querySelector(t)),t},i.prototype.handleEvent=function(t){var e=this["on"+t.type];e&&e.call(this,t)},i.prototype.onmousedown=i.prototype.onpointerdown=function(t){this.dragStart(t,t)},i.prototype.ontouchstart=function(t){this.dragStart(t,t.changedTouches[0])},i.prototype.dragStart=function(e,n){e.preventDefault(),this.dragStartX=n.pageX,this.dragStartY=n.pageY,t&&(window.addEventListener(o,this),window.addEventListener(r,this)),this.onDragStart(n)},i.prototype.ontouchmove=function(t){this.dragMove(t,t.changedTouches[0])},i.prototype.onmousemove=i.prototype.onpointermove=function(t){this.dragMove(t,t)},i.prototype.dragMove=function(t,e){t.preventDefault();var o=e.pageX-this.dragStartX,r=e.pageY-this.dragStartY;this.onDragMove(e,o,r)},i.prototype.onmouseup=i.prototype.onpointerup=i.prototype.ontouchend=i.prototype.dragEnd=function(){window.removeEventListener(o,this),window.removeEventListener(r,this),this.onDragEnd()},i},"object"==e(t)&&t.exports?t.exports=r():o.Zdog.Dragger=r()}).call(this,o(0)(t))},function(t,e,o){(function(t){function e(t){return(e="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t})(t)}!function(r,n){if("object"==e(t)&&t.exports)t.exports=n(o(3));else{var i=r.Zdog;i.Group=n(i.Anchor)}}(this,function(t){var e=t.subclass({updateSort:!1,visible:!0});return e.prototype.updateSortValue=function(){var e=0;this.flatGraph.forEach(function(t){t.updateSortValue(),e+=t.sortValue}),this.sortValue=e/this.flatGraph.length,this.updateSort&&this.flatGraph.sort(t.shapeSorter)},e.prototype.render=function(t,e){this.visible&&this.flatGraph.forEach(function(o){o.render(t,e)})},e.prototype.updateFlatGraph=function(){this.flatGraph=this.addChildFlatGraph([])},e.prototype.getFlatGraph=function(){return[this]},e})}).call(this,o(0)(t))},function(t,e,o){(function(t){function e(t){return(e="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t})(t)}!function(r,n){if("object"==e(t)&&t.exports)t.exports=n(o(4));else{var i=r.Zdog;i.Rect=n(i.Shape)}}(this,function(t){var e=t.subclass({width:1,height:1});return e.prototype.setPath=function(){var t=this.width/2,e=this.height/2;this.path=[{x:-t,y:-e},{x:t,y:-e},{x:t,y:e},{x:-t,y:e}]},e})}).call(this,o(0)(t))},function(t,e,o){(function(t){function e(t){return(e="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t})(t)}!function(r,n){if("object"==e(t)&&t.exports)t.exports=n(o(2),o(3),o(10));else{var i=r.Zdog;i.Illustration=n(i,i.Anchor,i.Dragger)}}(this,function(t,e,o){function r(){}var n=t.TAU,i=e.subclass({element:void 0,centered:!0,zoom:1,dragRotate:!1,resize:!1,onPrerender:r,onDragStart:r,onDragMove:r,onDragEnd:r,onResize:r});return t.extend(i.prototype,o.prototype),i.prototype.create=function(t){e.prototype.create.call(this,t),o.prototype.create.call(this,t),this.setElement(this.element),this.setDragRotate(this.dragRotate),this.setResize(this.resize)},i.prototype.setElement=function(t){if(!(t=this.getQueryElement(t)))throw new Error("Zdog.Illustration element required. Set to "+t);var e=t.nodeName.toLowerCase();"canvas"==e?this.setCanvas(t):"svg"==e&&this.setSvg(t)},i.prototype.setSize=function(t,e){t=Math.round(t),e=Math.round(e),this.isCanvas?this.setSizeCanvas(t,e):this.isSvg&&this.setSizeSvg(t,e)},i.prototype.setResize=function(t){this.resize=t,this.resizeListener||(this.resizeListener=this.onWindowResize.bind(this)),t?(window.addEventListener("resize",this.resizeListener),this.onWindowResize()):window.removeEventListener("resize",this.resizeListener)},i.prototype.onWindowResize=function(){this.setMeasuredSize(),this.onResize(this.width,this.height)},i.prototype.setMeasuredSize=function(){var t,e;if("fullscreen"==this.resize)t=window.innerWidth,e=window.innerHeight;else{var o=this.element.getBoundingClientRect();t=o.width,e=o.height}this.setSize(t,e)},i.prototype.renderGraph=function(t){this.isCanvas?this.renderGraphCanvas(t):this.isSvg&&this.renderGraphSvg(t)},i.prototype.updateRenderGraph=function(t){this.updateGraph(),this.renderGraph(t)},i.prototype.setCanvas=function(t){this.element=t,this.isCanvas=!0,this.ctx=this.element.getContext("2d"),this.setSizeCanvas(t.width,t.height)},i.prototype.setSizeCanvas=function(t,e){this.width=t,this.height=e;var o=this.pixelRatio=window.devicePixelRatio||1;this.element.width=this.canvasWidth=t*o,this.element.height=this.canvasHeight=e*o,o>1&&!this.resize&&(this.element.style.width=t+"px",this.element.style.height=e+"px")},i.prototype.renderGraphCanvas=function(t){t=t||this,this.prerenderCanvas(),e.prototype.renderGraphCanvas.call(t,this.ctx),this.postrenderCanvas()},i.prototype.prerenderCanvas=function(){var t=this.ctx;if(t.lineCap="round",t.lineJoin="round",t.clearRect(0,0,this.canvasWidth,this.canvasHeight),t.save(),this.centered){var e=this.width/2*this.pixelRatio,o=this.height/2*this.pixelRatio;t.translate(e,o)}var r=this.pixelRatio*this.zoom;t.scale(r,r),this.onPrerender(t)},i.prototype.postrenderCanvas=function(){this.ctx.restore()},i.prototype.setSvg=function(t){this.element=t,this.isSvg=!0,this.pixelRatio=1;var e=t.getAttribute("width"),o=t.getAttribute("height");this.setSizeSvg(e,o)},i.prototype.setSizeSvg=function(t,e){this.width=t,this.height=e;var o=t/this.zoom,r=e/this.zoom,n=this.centered?-o/2:0,i=this.centered?-r/2:0;this.element.setAttribute("viewBox",n+" "+i+" "+o+" "+r),this.resize?(this.element.removeAttribute("width"),this.element.removeAttribute("height")):(this.element.setAttribute("width",t),this.element.setAttribute("height",e))},i.prototype.renderGraphSvg=function(t){t=t||this,function(t){for(;t.firstChild;)t.removeChild(t.firstChild)}(this.element),this.onPrerender(this.element),e.prototype.renderGraphSvg.call(t,this.element)},i.prototype.setDragRotate=function(t){t&&(!0===t&&(t=this),this.dragRotate=t,this.bindDrag(this.element))},i.prototype.dragStart=function(){this.dragStartRX=this.dragRotate.rotate.x,this.dragStartRY=this.dragRotate.rotate.y,o.prototype.dragStart.apply(this,arguments)},i.prototype.dragMove=function(t,e){var r=e.pageX-this.dragStartX,i=e.pageY-this.dragStartY,s=Math.min(this.width,this.height),a=r/s*n,h=i/s*n;this.dragRotate.rotate.x=this.dragStartRX-h,this.dragRotate.rotate.y=this.dragStartRY-a,o.prototype.dragMove.apply(this,arguments)},i})}).call(this,o(0)(t))},function(t,e,o){(function(t){function e(t){return(e="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t})(t)}!function(r,n){if("object"==e(t)&&t.exports)t.exports=n(o(4));else{var i=r.Zdog;i.RoundedRect=n(i.Shape)}}(this,function(t){var e=t.subclass({width:1,height:1,cornerRadius:.25,closed:!1});return e.prototype.setPath=function(){var t=this.width/2,e=this.height/2,o=Math.min(t,e),r=Math.min(this.cornerRadius,o),n=t-r,i=e-r,s=[{x:n,y:-e},{arc:[{x:t,y:-e},{x:t,y:-i}]}];i&&s.push({x:t,y:i}),s.push({arc:[{x:t,y:e},{x:n,y:e}]}),n&&s.push({x:-n,y:e}),s.push({arc:[{x:-t,y:e},{x:-t,y:i}]}),i&&s.push({x:-t,y:-i}),s.push({arc:[{x:-t,y:-e},{x:-n,y:-e}]}),n&&s.push({x:n,y:-e}),this.path=s},e})}).call(this,o(0)(t))},function(t,e,o){(function(t){function e(t){return(e="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t})(t)}!function(r,n){if("object"==e(t)&&t.exports)t.exports=n(o(2),o(4));else{var i=r.Zdog;i.Polygon=n(i,i.Shape)}}(this,function(t,e){var o=e.subclass({sides:3,radius:.5}),r=t.TAU;return o.prototype.setPath=function(){this.path=[];for(var t=0;t<this.sides;t++){var e=t/this.sides*r-r/4,o=Math.cos(e)*this.radius,n=Math.sin(e)*this.radius;this.path.push({x:o,y:n})}},o})}).call(this,o(0)(t))},function(t,e,o){(function(t){function e(t){return(e="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t})(t)}!function(r,n){if("object"==e(t)&&t.exports)t.exports=n(o(2),o(5),o(3),o(7));else{var i=r.Zdog;i.Hemisphere=n(i,i.Vector,i.Anchor,i.Ellipse)}}(this,function(t,e,o,r){var n=r.subclass({fill:!0}),i=t.TAU;n.prototype.create=function(){r.prototype.create.apply(this,arguments),this.apex=new o({addTo:this,translate:{z:this.diameter/2}}),this.renderCentroid=new e},n.prototype.updateSortValue=function(){this.renderCentroid.set(this.renderOrigin).lerp(this.apex.renderOrigin,3/8),this.sortValue=this.renderCentroid.z},n.prototype.render=function(t,e){this.renderDome(t,e),r.prototype.render.apply(this,arguments)},n.prototype.renderDome=function(t,e){if(this.visible){var o=this.getDomeRenderElement(t,e),r=Math.atan2(this.renderNormal.y,this.renderNormal.x),n=this.diameter/2*this.renderNormal.magnitude(),s=this.renderOrigin.x,a=this.renderOrigin.y;if(e.isCanvas){var h=r+i/4,c=r-i/4;t.beginPath(),t.arc(s,a,n,h,c)}else e.isSvg&&(r=(r-i/4)/i*360,this.domeSvgElement.setAttribute("d","M "+-n+",0 A "+n+","+n+" 0 0 1 "+n+",0"),this.domeSvgElement.setAttribute("transform","translate("+s+","+a+" ) rotate("+r+")"));e.stroke(t,o,this.stroke,this.color,this.getLineWidth()),e.fill(t,o,this.fill,this.color),e.end(t,o)}};return n.prototype.getDomeRenderElement=function(t,e){if(e.isSvg)return this.domeSvgElement||(this.domeSvgElement=document.createElementNS("http://www.w3.org/2000/svg","path"),this.domeSvgElement.setAttribute("stroke-linecap","round"),this.domeSvgElement.setAttribute("stroke-linejoin","round")),this.domeSvgElement},n})}).call(this,o(0)(t))},function(t,e,o){(function(t){function e(t){return(e="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t})(t)}!function(r,n){if("object"==e(t)&&t.exports)t.exports=n(o(2),o(6),o(4),o(11),o(7));else{var i=r.Zdog;i.Cylinder=n(i,i.PathCommand,i.Shape,i.Group,i.Ellipse)}}(this,function(t,e,o,r,n){function i(){}var s=r.subclass({color:"#333",updateSort:!0});s.prototype.create=function(){r.prototype.create.apply(this,arguments),this.pathCommands=[new e("move",[{}]),new e("line",[{}])]},s.prototype.render=function(t,e){this.renderCylinderSurface(t,e),r.prototype.render.apply(this,arguments)},s.prototype.renderCylinderSurface=function(t,e){if(this.visible){var o=this.getRenderElement(t,e),r=this.frontBase,n=this.rearBase,i=r.renderNormal.magnitude(),s=r.diameter*i+r.getLineWidth();this.pathCommands[0].renderPoints[0].set(r.renderOrigin),this.pathCommands[1].renderPoints[0].set(n.renderOrigin),e.isCanvas&&(t.lineCap="butt"),e.renderPath(t,o,this.pathCommands),e.stroke(t,o,!0,this.color,s),e.end(t,o),e.isCanvas&&(t.lineCap="round")}};s.prototype.getRenderElement=function(t,e){if(e.isSvg)return this.svgElement||(this.svgElement=document.createElementNS("http://www.w3.org/2000/svg","path")),this.svgElement},s.prototype.copyGraph=i,n.subclass().prototype.copyGraph=i;var a=o.subclass({diameter:1,length:1,frontFace:void 0,fill:!0}),h=t.TAU;a.prototype.create=function(){o.prototype.create.apply(this,arguments),this.group=new s({addTo:this,color:this.color,visible:this.visible});var t=this.length/2,e=this.backface||!0;this.frontBase=this.group.frontBase=new n({addTo:this.group,diameter:this.diameter,translate:{z:t},rotate:{y:h/2},color:this.color,stroke:this.stroke,fill:this.fill,backface:this.frontFace||e,visible:this.visible}),this.rearBase=this.group.rearBase=this.frontBase.copy({translate:{z:-t},rotate:{y:0},backface:e})},a.prototype.render=function(){};return["stroke","fill","color","visible"].forEach(function(t){var e="_"+t;Object.defineProperty(a.prototype,t,{get:function(){return this[e]},set:function(o){this[e]=o,this.frontBase&&(this.frontBase[t]=o,this.rearBase[t]=o,this.group[t]=o)}})}),a})}).call(this,o(0)(t))},function(t,e,o){(function(t){function e(t){return(e="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t})(t)}!function(r,n){if("object"==e(t)&&t.exports)t.exports=n(o(2),o(5),o(6),o(3),o(7));else{var i=r.Zdog;i.Cone=n(i,i.Vector,i.PathCommand,i.Anchor,i.Ellipse)}}(this,function(t,e,o,r,n){var i=n.subclass({length:1,fill:!0}),s=t.TAU;i.prototype.create=function(){n.prototype.create.apply(this,arguments),this.apex=new r({addTo:this,translate:{z:this.length}}),this.renderApex=new e,this.renderCentroid=new e,this.tangentA=new e,this.tangentB=new e,this.surfacePathCommands=[new o("move",[{}]),new o("line",[{}]),new o("line",[{}])]},i.prototype.updateSortValue=function(){this.renderCentroid.set(this.renderOrigin).lerp(this.apex.renderOrigin,1/3),this.sortValue=this.renderCentroid.z},i.prototype.render=function(t,e){this.renderConeSurface(t,e),n.prototype.render.apply(this,arguments)},i.prototype.renderConeSurface=function(t,e){if(this.visible){this.renderApex.set(this.apex.renderOrigin).subtract(this.renderOrigin);var o=this.renderNormal.magnitude(),r=this.renderApex.magnitude2d(),n=this.renderNormal.magnitude2d(),i=Math.acos(n/o),a=Math.sin(i),h=this.diameter/2*o;if(h*a<r){var c=Math.atan2(this.renderNormal.y,this.renderNormal.x)+s/2,u=r/a,f=Math.acos(h/u),p=this.tangentA,l=this.tangentB;p.x=Math.cos(f)*h*a,p.y=Math.sin(f)*h,l.set(this.tangentA),l.y*=-1,p.rotateZ(c),l.rotateZ(c),p.add(this.renderOrigin),l.add(this.renderOrigin),this.setSurfaceRenderPoint(0,p),this.setSurfaceRenderPoint(1,this.apex.renderOrigin),this.setSurfaceRenderPoint(2,l);var d=this.getSurfaceRenderElement(t,e);e.renderPath(t,d,this.surfacePathCommands),e.stroke(t,d,this.stroke,this.color,this.getLineWidth()),e.fill(t,d,this.fill,this.color),e.end(t,d)}}};return i.prototype.getSurfaceRenderElement=function(t,e){if(e.isSvg)return this.surfaceSvgElement||(this.surfaceSvgElement=document.createElementNS("http://www.w3.org/2000/svg","path"),this.surfaceSvgElement.setAttribute("stroke-linecap","round"),this.surfaceSvgElement.setAttribute("stroke-linejoin","round")),this.surfaceSvgElement},i.prototype.setSurfaceRenderPoint=function(t,e){this.surfacePathCommands[t].renderPoints[0].set(e)},i})}).call(this,o(0)(t))},function(t,e,o){(function(t){function e(t){return(e="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t})(t)}!function(r,n){if("object"==e(t)&&t.exports)t.exports=n(o(2),o(3),o(4),o(12));else{var i=r.Zdog;i.Box=n(i,i.Anchor,i.Shape,i.Rect)}}(this,function(t,e,o,r){var n=r.subclass();n.prototype.copyGraph=function(){};var i=t.TAU,s=["frontFace","rearFace","leftFace","rightFace","topFace","bottomFace"],a=t.extend({},o.defaults);delete a.path,s.forEach(function(t){a[t]=!0}),t.extend(a,{width:1,height:1,depth:1,fill:!0});var h=e.subclass(a);h.prototype.create=function(t){e.prototype.create.call(this,t),this.updatePath(),this.fill=this.fill},h.prototype.updatePath=function(){s.forEach(function(t){this[t]=this[t]},this)},s.forEach(function(t){var e="_"+t;Object.defineProperty(h.prototype,t,{get:function(){return this[e]},set:function(o){this[e]=o,this.setFace(t,o)}})}),h.prototype.setFace=function(t,e){var o=t+"Rect",r=this[o];if(e){var i=this.getFaceOptions(t);i.color="string"==typeof e?e:this.color,r?r.setOptions(i):r=this[o]=new n(i),r.updatePath(),this.addChild(r)}else this.removeChild(r)},h.prototype.getFaceOptions=function(t){return{frontFace:{width:this.width,height:this.height,translate:{z:this.depth/2}},rearFace:{width:this.width,height:this.height,translate:{z:-this.depth/2},rotate:{y:i/2}},leftFace:{width:this.depth,height:this.height,translate:{x:-this.width/2},rotate:{y:-i/4}},rightFace:{width:this.depth,height:this.height,translate:{x:this.width/2},rotate:{y:i/4}},topFace:{width:this.width,height:this.depth,translate:{y:-this.height/2},rotate:{x:-i/4}},bottomFace:{width:this.width,height:this.depth,translate:{y:this.height/2},rotate:{x:i/4}}}[t]};return["color","stroke","fill","backface","front","visible"].forEach(function(t){var e="_"+t;Object.defineProperty(h.prototype,t,{get:function(){return this[e]},set:function(o){this[e]=o,s.forEach(function(e){var r=this[e+"Rect"],n="string"==typeof this[e];r&&!("color"==t&&n)&&(r[t]=o)},this)}})}),h})}).call(this,o(0)(t))},function(t,e,o){"use strict";o.r(e);var r=o(1),n=o.n(r);function i(t){var e=arguments.length>1&&void 0!==arguments[1]?arguments[1]:1;return"rgba(".concat(t.match(t[5]?/\w./g:/\w/g).map(function(t){return"0x"+t+t&255}),",").concat(e,")")}function s(t){return function(t){if(Array.isArray(t)){for(var e=0,o=new Array(t.length);e<t.length;e++)o[e]=t[e];return o}}(t)||function(t){if(Symbol.iterator in Object(t)||"[object Arguments]"===Object.prototype.toString.call(t))return Array.from(t)}(t)||function(){throw new TypeError("Invalid attempt to spread non-iterable instance")}()}var a=r.TAU/4,h=(r.TAU,{R:{edges:[5,9,4,1],corners:[5,4,0,1],centre:2,axis:"x"},U:{edges:[3,2,1,0],corners:[3,2,1,0],centre:0,axis:"y"},F:{edges:[6,10,5,2],corners:[1,2,6,5],centre:3,axis:"z"},L:{edges:[3,7,11,6],corners:[2,3,7,6],axis:"x"},B:{edges:[4,8,7,0],corners:[4,7,3,0],axis:"z"},D:{edges:[8,9,10,11],corners:[4,5,6,7],axis:"y"},M:{centres:[0,1,5,3],edges:[2,0,8,10],axis:"x"},E:{centres:[3,4,1,2],edges:[4,5,6,7],axis:"y"},S:{centres:[4,5,2,0],edges:[3,11,9,1],axis:"z"},r:{moves:[u("R"),u("M'")]}});function c(t,e){var o=u(t),n=o.move,i=o.order;if(!h[n])throw new Error("invalid move ".concat(n));var f=h[n],l=f.corners,d=f.edges,y=f.centres,m=f.centre,g=f.axis,v=f.moves,b=[];function x(t){if(l)for(var e=0;e<b.length;e++){b[e].anchor.rotate[g]=Object(r.lerp)(0,a*i,t)}}return l&&b.push.apply(b,s(l.map(function(t){return e.cubies.corners[t]}))),d&&b.push.apply(b,s(d.map(function(t){return e.cubies.edges[t]}))),void 0!==m&&b.push(e.cubies.centres[m]),{apply:function(){v&&v.forEach(function(t){return c(function(t,e){if(1===e)return t;-1===e&&(t.order=2===t.order?2:-t.order);2==e&&(t.order=2===t.order?0:2);return t}(t,i),e).apply()}),d&&(p(e.edges,i,d,y?"z":g),e.setCubieColors(d,"edges")),y&&(p(e.centres,i,y,g),e.setCubieColors(y,"centres")),l&&(p(e.corners,i,l,g),e.setCubieColors(l,"corners")),x(0)},tween:x}}function u(t){return"string"!=typeof t?t:{move:t[0],order:{"'":-1,2:2}[t[1]]||1}}var f={x:[1,2],y:[0,2],z:[0,1]};function p(t,e,o,r){if(0!==e){-1!==e&&3!==e||(o=s(o).reverse()),2===e&&p(t,1,o,r);for(var n=0;n<o.length-1;n++)l(t,o[n],o[n+1]);if(3===t[0].length)for(var i=0;i<o.length;i++)l.apply(void 0,[t[o[i]]].concat(s(f[r])));else if("z"===r)for(var a=0;a<o.length;a++)l(t[o[a]],0,1)}}function l(t,e,o){var r=t[e];t[e]=t[o],t[o]=r}function d(t){return function(t){if(Array.isArray(t)){for(var e=0,o=new Array(t.length);e<t.length;e++)o[e]=t[e];return o}}(t)||function(t){if(Symbol.iterator in Object(t)||"[object Arguments]"===Object.prototype.toString.call(t))return Array.from(t)}(t)||function(){throw new TypeError("Invalid attempt to spread non-iterable instance")}()}var y=function(t){var e=t.illo,o=t.zoom,r=t.colors,i=t.cubeColor,s=38*o;function h(t){var h=t.stickers,c=new n.a.Anchor({addTo:e}),u=h.reduce(function(t,e){var o=e.offset;return t[e.axis]=s*o,t},{}),f=new n.a.Anchor({addTo:c,translate:u}),p=36*o;new n.a.Box({addTo:f,width:p,height:p,depth:p,stroke:!1,color:i});var l=p/2+1,d={x:{y:a},y:{x:a}},y=h.map(function(t){var e=t.color,o=t.axis,i=t.offset,s=new n.a.Rect({addTo:f,width:.9*p,height:.9*p,stroke:2,fill:!0,color:r[e],rotate:d[o]});return s.translate[o]+=l*i,s});return{anchor:c,stickers:h,setColors:function(t){for(var e=0;e<y.length;e++){var o=t[e];y[e].color=r[o],h[e].color=o}}}}var u=[h({stickers:[{color:0,axis:"y",offset:-1}]}),h({stickers:[{color:1,axis:"z",offset:-1}]}),h({stickers:[{color:2,axis:"x",offset:1}]}),h({stickers:[{color:3,axis:"z",offset:1}]}),h({stickers:[{color:4,axis:"x",offset:-1}]}),h({stickers:[{color:5,axis:"y",offset:1}]})],f=[h({stickers:[{color:1,axis:"z",offset:-1},{color:0,axis:"y",offset:-1}]}),h({stickers:[{color:2,axis:"x",offset:1},{color:0,axis:"y",offset:-1}]}),h({stickers:[{color:3,axis:"z",offset:1},{color:0,axis:"y",offset:-1}]}),h({stickers:[{color:4,axis:"x",offset:-1},{color:0,axis:"y",offset:-1}]}),h({stickers:[{color:2,axis:"x",offset:1},{color:1,axis:"z",offset:-1}]}),h({stickers:[{color:2,axis:"x",offset:1},{color:3,axis:"z",offset:1}]}),h({stickers:[{color:4,axis:"x",offset:-1},{color:3,axis:"z",offset:1}]}),h({stickers:[{color:4,axis:"x",offset:-1},{color:1,axis:"z",offset:-1}]}),h({stickers:[{color:1,axis:"z",offset:-1},{color:5,axis:"y",offset:1}]}),h({stickers:[{color:2,axis:"x",offset:1},{color:5,axis:"y",offset:1}]}),h({stickers:[{color:3,axis:"z",offset:1},{color:5,axis:"y",offset:1}]}),h({stickers:[{color:4,axis:"x",offset:-1},{color:5,axis:"y",offset:1}]})],p=[h({stickers:[{color:2,axis:"x",offset:1},{color:0,axis:"y",offset:-1},{color:1,axis:"z",offset:-1}]}),h({stickers:[{color:2,axis:"x",offset:1},{color:0,axis:"y",offset:-1},{color:3,axis:"z",offset:1}]}),h({stickers:[{color:4,axis:"x",offset:-1},{color:0,axis:"y",offset:-1},{color:3,axis:"z",offset:1}]}),h({stickers:[{color:4,axis:"x",offset:-1},{color:0,axis:"y",offset:-1},{color:1,axis:"z",offset:-1}]}),h({stickers:[{color:2,axis:"x",offset:1},{color:5,axis:"y",offset:1},{color:1,axis:"z",offset:-1}]}),h({stickers:[{color:2,axis:"x",offset:1},{color:5,axis:"y",offset:1},{color:3,axis:"z",offset:1}]}),h({stickers:[{color:4,axis:"x",offset:-1},{color:5,axis:"y",offset:1},{color:3,axis:"z",offset:1}]}),h({stickers:[{color:4,axis:"x",offset:-1},{color:5,axis:"y",offset:1},{color:1,axis:"z",offset:-1}]})],l={edges:f.map(function(t){return t.stickers.map(function(t){return t.color})}),corners:p.map(function(t){return t.stickers.map(function(t){return t.color})}),centres:u.map(function(t){return t.stickers.map(function(t){return t.color})}),cubies:{edges:f,corners:p,centres:u},setCubieColors:function(t,e){for(var o=0;o<t.length;o++){var r=t[o];l.cubies[e][r].setColors(l[e][r])}}},y=[];return{move:function(t){return y.push(c(t,l))},moves:function(t){return y.push.apply(y,d(function(t,e){return(o=t,"string"!=typeof o?o:o.replace(/\s/g,"").split(/(\w\d|\w'|\w)/).filter(function(t){return t})).map(function(t){return c(t,e)});var o}(t,l)))},render:function(){if(y.length){var t=1e3/Math.max(y.length,5),e=performance.now(),o=y[0];o.epoch||(o.epoch=e);var r=e-o.epoch;r>t?(o.apply(),y.shift()):o.tween(r/t)}}}};e.default=function(t){var e=["#ffffff","#0045ad","#b90000","#009b48","#ff5900","#ffd500"].map(function(t){return i(t,1)}),o=i("#000",1),r=t.appendChild(document.createElement("canvas"));r.setAttribute("width",800),r.setAttribute("height",800);var s=new n.a.Illustration({element:r,zoom:2,dragRotate:!0}),a=y({illo:s,zoom:2,colors:e,cubeColor:o});return function t(){a.render(),s.updateRenderGraph(),requestAnimationFrame(t)}(),a}}]);
+ */
+
+/**
+ * Boilerplate & utils
+ */
+
+( function( root, factory ) {
+  // module definition
+  if (  true && module.exports ) {
+    // CommonJS
+    module.exports = factory();
+  } else {
+    // browser global
+    root.Zdog = factory();
+  }
+}( this, function factory() {
+
+var Zdog = {};
+
+Zdog.TAU = Math.PI * 2;
+
+Zdog.extend = function( a, b ) {
+  for ( var prop in b ) {
+    a[ prop ] = b[ prop ];
+  }
+  return a;
+};
+
+Zdog.lerp = function( a, b, alpha ) {
+  return ( b - a ) * alpha + a;
+};
+
+Zdog.modulo = function( num, div ) {
+  return ( ( num % div ) + div ) % div;
+};
+
+var powerMultipliers = {
+  2: function( a ) {
+    return a * a;
+  },
+  3: function( a ) {
+    return a * a * a;
+  },
+  4: function( a ) {
+    return a * a * a * a;
+  },
+  5: function( a ) {
+    return a * a * a * a * a;
+  },
+};
+
+Zdog.easeInOut = function( alpha, power ) {
+  if ( power == 1 ) {
+    return alpha;
+  }
+  alpha = Math.max( 0, Math.min( 1, alpha ) );
+  var isFirstHalf = alpha < 0.5;
+  var slope = isFirstHalf ? alpha : 1 - alpha;
+  slope /= 0.5;
+  // make easing steeper with more multiples
+  var powerMultiplier = powerMultipliers[ power ] || powerMultipliers[2];
+  var curve = powerMultiplier( slope );
+  curve /= 2;
+  return isFirstHalf ? curve : 1 - curve;
+};
+
+return Zdog;
+
+}));
+
+
+/***/ }),
+
+/***/ "./node_modules/zdog/js/box.js":
+/*!*************************************!*\
+  !*** ./node_modules/zdog/js/box.js ***!
+  \*************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+/**
+ * Box composite shape
+ */
+
+( function( root, factory ) {
+  // module definition
+  if (  true && module.exports ) {
+    // CommonJS
+    module.exports = factory( __webpack_require__(/*! ./boilerplate */ "./node_modules/zdog/js/boilerplate.js"), __webpack_require__(/*! ./anchor */ "./node_modules/zdog/js/anchor.js"),
+        __webpack_require__(/*! ./shape */ "./node_modules/zdog/js/shape.js"), __webpack_require__(/*! ./rect */ "./node_modules/zdog/js/rect.js") );
+  } else {
+    // browser global
+    var Zdog = root.Zdog;
+    Zdog.Box = factory( Zdog, Zdog.Anchor, Zdog.Shape, Zdog.Rect );
+  }
+}( this, function factory( utils, Anchor, Shape, Rect ) {
+
+// ----- BoxRect ----- //
+
+var BoxRect = Rect.subclass();
+// prevent double-creation in parent.copyGraph()
+// only create in Box.create()
+BoxRect.prototype.copyGraph = function() {};
+
+// ----- Box ----- //
+
+var TAU = utils.TAU;
+var faceNames = [
+  'frontFace',
+  'rearFace',
+  'leftFace',
+  'rightFace',
+  'topFace',
+  'bottomFace',
+];
+
+var boxDefaults = utils.extend( {}, Shape.defaults );
+delete boxDefaults.path;
+faceNames.forEach( function( faceName ) {
+  boxDefaults[ faceName ] = true;
+});
+utils.extend( boxDefaults, {
+  width: 1,
+  height: 1,
+  depth: 1,
+  fill: true,
+});
+
+var Box = Anchor.subclass( boxDefaults );
+
+Box.prototype.create = function( options ) {
+  Anchor.prototype.create.call( this, options );
+  this.updatePath();
+  // HACK reset fill to trigger face setter
+  this.fill = this.fill;
+};
+
+Box.prototype.updatePath = function() {
+  // reset all faces to trigger setters
+  faceNames.forEach( function( faceName ) {
+    this[ faceName ] = this[ faceName ];
+  }, this );
+};
+
+faceNames.forEach( function( faceName ) {
+  var _faceName = '_' + faceName;
+  Object.defineProperty( Box.prototype, faceName, {
+    get: function() {
+      return this[ _faceName ];
+    },
+    set: function( value ) {
+      this[ _faceName ] = value;
+      this.setFace( faceName, value );
+    },
+  });
+});
+
+Box.prototype.setFace = function( faceName, value ) {
+  var rectProperty = faceName + 'Rect';
+  var rect = this[ rectProperty ];
+  // remove if false
+  if ( !value ) {
+    this.removeChild( rect );
+    return;
+  }
+  // update & add face
+  var options = this.getFaceOptions( faceName );
+  options.color = typeof value == 'string' ? value : this.color;
+
+  if ( rect ) {
+    // update previous
+    rect.setOptions( options );
+  } else {
+    // create new
+    rect = this[ rectProperty ] = new BoxRect( options );
+  }
+  rect.updatePath();
+  this.addChild( rect );
+};
+
+Box.prototype.getFaceOptions = function( faceName ) {
+  return {
+    frontFace: {
+      width: this.width,
+      height: this.height,
+      translate: { z: this.depth/2 },
+    },
+    rearFace: {
+      width: this.width,
+      height: this.height,
+      translate: { z: -this.depth/2 },
+      rotate: { y: TAU/2 },
+    },
+    leftFace: {
+      width: this.depth,
+      height: this.height,
+      translate: { x: -this.width/2 },
+      rotate: { y: -TAU/4 },
+    },
+    rightFace: {
+      width: this.depth,
+      height: this.height,
+      translate: { x: this.width/2 },
+      rotate: { y: TAU/4 },
+    },
+    topFace: {
+      width: this.width,
+      height: this.depth,
+      translate: { y: -this.height/2 },
+      rotate: { x: -TAU/4 },
+    },
+    bottomFace: {
+      width: this.width,
+      height: this.depth,
+      translate: { y: this.height/2 },
+      rotate: { x: TAU/4 },
+    },
+  }[ faceName ];
+};
+
+// ----- set face properties ----- //
+
+var childProperties = [ 'color', 'stroke', 'fill', 'backface', 'front',
+  'visible' ];
+childProperties.forEach( function( property ) {
+  // use proxy property for custom getter & setter
+  var _prop = '_' + property;
+  Object.defineProperty( Box.prototype, property, {
+    get: function() {
+      return this[ _prop ];
+    },
+    set: function( value ) {
+      this[ _prop ] = value;
+      faceNames.forEach( function( faceName ) {
+        var rect = this[ faceName + 'Rect' ];
+        var isFaceColor = typeof this[ faceName ] == 'string';
+        var isColorUnderwrite = property == 'color' && isFaceColor;
+        if ( rect && !isColorUnderwrite ) {
+          rect[ property ] = value;
+        }
+      }, this );
+    },
+  });
+});
+
+return Box;
+
+}));
+
+
+/***/ }),
+
+/***/ "./node_modules/zdog/js/canvas-renderer.js":
+/*!*************************************************!*\
+  !*** ./node_modules/zdog/js/canvas-renderer.js ***!
+  \*************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+/**
+ * CanvasRenderer
+ */
+
+( function( root, factory ) {
+  // module definition
+  if (  true && module.exports ) {
+    // CommonJS
+    module.exports = factory();
+  } else {
+    // browser global
+    root.Zdog.CanvasRenderer = factory();
+  }
+}( this, function factory() {
+
+var CanvasRenderer = { isCanvas: true };
+
+CanvasRenderer.begin = function( ctx ) {
+  ctx.beginPath();
+};
+
+CanvasRenderer.move = function( ctx, elem, point ) {
+  ctx.moveTo( point.x, point.y );
+};
+
+CanvasRenderer.line = function( ctx, elem, point ) {
+  ctx.lineTo( point.x, point.y );
+};
+
+CanvasRenderer.bezier = function( ctx, elem, cp0, cp1, end ) {
+  ctx.bezierCurveTo( cp0.x, cp0.y, cp1.x, cp1.y, end.x, end.y );
+};
+
+CanvasRenderer.closePath = function( ctx ) {
+  ctx.closePath();
+};
+
+CanvasRenderer.setPath = function() {};
+
+CanvasRenderer.renderPath = function( ctx, elem, pathCommands, isClosed ) {
+  this.begin( ctx, elem );
+  pathCommands.forEach( function( command ) {
+    command.render( ctx, elem, CanvasRenderer );
+  });
+  if ( isClosed ) {
+    this.closePath( ctx, elem );
+  }
+};
+
+CanvasRenderer.stroke = function( ctx, elem, isStroke, color, lineWidth ) {
+  if ( !isStroke ) {
+    return;
+  }
+  ctx.strokeStyle = color;
+  ctx.lineWidth = lineWidth;
+  ctx.stroke();
+};
+
+CanvasRenderer.fill = function( ctx, elem, isFill, color ) {
+  if ( !isFill ) {
+    return;
+  }
+  ctx.fillStyle = color;
+  ctx.fill();
+};
+
+CanvasRenderer.end = function() {};
+
+return CanvasRenderer;
+
+}));
+
+
+/***/ }),
+
+/***/ "./node_modules/zdog/js/cone.js":
+/*!**************************************!*\
+  !*** ./node_modules/zdog/js/cone.js ***!
+  \**************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+/**
+ * Cone composite shape
+ */
+
+( function( root, factory ) {
+  // module definition
+  if (  true && module.exports ) {
+    // CommonJS
+    module.exports = factory( __webpack_require__(/*! ./boilerplate */ "./node_modules/zdog/js/boilerplate.js"), __webpack_require__(/*! ./vector */ "./node_modules/zdog/js/vector.js"),
+        __webpack_require__(/*! ./path-command */ "./node_modules/zdog/js/path-command.js"), __webpack_require__(/*! ./anchor */ "./node_modules/zdog/js/anchor.js"), __webpack_require__(/*! ./ellipse */ "./node_modules/zdog/js/ellipse.js") );
+  } else {
+    // browser global
+    var Zdog = root.Zdog;
+    Zdog.Cone = factory( Zdog, Zdog.Vector, Zdog.PathCommand,
+        Zdog.Anchor, Zdog.Ellipse );
+  }
+}( this, function factory( utils, Vector, PathCommand, Anchor, Ellipse ) {
+
+var Cone = Ellipse.subclass({
+  length: 1,
+  fill: true,
+});
+
+var TAU = utils.TAU;
+
+Cone.prototype.create = function(/* options */) {
+  // call super
+  Ellipse.prototype.create.apply( this, arguments );
+  // composite shape, create child shapes
+  this.apex = new Anchor({
+    addTo: this,
+    translate: { z: this.length },
+  });
+
+  // vectors used for calculation
+  this.renderApex = new Vector();
+  this.renderCentroid = new Vector();
+  this.tangentA = new Vector();
+  this.tangentB = new Vector();
+
+  this.surfacePathCommands = [
+    new PathCommand( 'move', [ {} ] ), // points set in renderConeSurface
+    new PathCommand( 'line', [ {} ] ),
+    new PathCommand( 'line', [ {} ] ),
+  ];
+};
+
+Cone.prototype.updateSortValue = function() {
+  // center of cone is one third of its length
+  this.renderCentroid.set( this.renderOrigin )
+    .lerp( this.apex.renderOrigin, 1/3 );
+  this.sortValue = this.renderCentroid.z;
+};
+
+Cone.prototype.render = function( ctx, renderer ) {
+  this.renderConeSurface( ctx, renderer );
+  Ellipse.prototype.render.apply( this, arguments );
+};
+
+Cone.prototype.renderConeSurface = function( ctx, renderer ) {
+  if ( !this.visible ) {
+    return;
+  }
+  this.renderApex.set( this.apex.renderOrigin )
+    .subtract( this.renderOrigin );
+
+  var scale = this.renderNormal.magnitude();
+  var apexDistance = this.renderApex.magnitude2d();
+  var normalDistance = this.renderNormal.magnitude2d();
+  // eccentricity
+  var eccenAngle = Math.acos( normalDistance / scale );
+  var eccen = Math.sin( eccenAngle );
+  var radius = this.diameter/2 * scale;
+  // does apex extend beyond eclipse of face
+  var isApexVisible = radius * eccen < apexDistance;
+  if ( !isApexVisible ) {
+    return;
+  }
+  // update tangents
+  var apexAngle = Math.atan2( this.renderNormal.y, this.renderNormal.x ) +
+      TAU/2;
+  var projectLength = apexDistance / eccen;
+  var projectAngle = Math.acos( radius / projectLength );
+  // set tangent points
+  var tangentA = this.tangentA;
+  var tangentB = this.tangentB;
+
+  tangentA.x = Math.cos( projectAngle ) * radius * eccen;
+  tangentA.y = Math.sin( projectAngle ) * radius;
+
+  tangentB.set( this.tangentA );
+  tangentB.y *= -1;
+
+  tangentA.rotateZ( apexAngle );
+  tangentB.rotateZ( apexAngle );
+  tangentA.add( this.renderOrigin );
+  tangentB.add( this.renderOrigin );
+
+  this.setSurfaceRenderPoint( 0, tangentA );
+  this.setSurfaceRenderPoint( 1, this.apex.renderOrigin );
+  this.setSurfaceRenderPoint( 2, tangentB );
+
+  // render
+  var elem = this.getSurfaceRenderElement( ctx, renderer );
+  renderer.renderPath( ctx, elem, this.surfacePathCommands );
+  renderer.stroke( ctx, elem, this.stroke, this.color, this.getLineWidth() );
+  renderer.fill( ctx, elem, this.fill, this.color );
+  renderer.end( ctx, elem );
+};
+
+var svgURI = 'http://www.w3.org/2000/svg';
+
+Cone.prototype.getSurfaceRenderElement = function( ctx, renderer ) {
+  if ( !renderer.isSvg ) {
+    return;
+  }
+  if ( !this.surfaceSvgElement ) {
+    // create svgElement
+    this.surfaceSvgElement = document.createElementNS( svgURI, 'path');
+    this.surfaceSvgElement.setAttribute( 'stroke-linecap', 'round' );
+    this.surfaceSvgElement.setAttribute( 'stroke-linejoin', 'round' );
+  }
+  return this.surfaceSvgElement;
+};
+
+Cone.prototype.setSurfaceRenderPoint = function( index, point ) {
+  var renderPoint = this.surfacePathCommands[ index ].renderPoints[0];
+  renderPoint.set( point );
+};
+
+return Cone;
+
+}));
+
+
+/***/ }),
+
+/***/ "./node_modules/zdog/js/cylinder.js":
+/*!******************************************!*\
+  !*** ./node_modules/zdog/js/cylinder.js ***!
+  \******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+/**
+ * Cylinder composite shape
+ */
+
+( function( root, factory ) {
+  // module definition
+  if (  true && module.exports ) {
+    // CommonJS
+    module.exports = factory( __webpack_require__(/*! ./boilerplate */ "./node_modules/zdog/js/boilerplate.js"),
+        __webpack_require__(/*! ./path-command */ "./node_modules/zdog/js/path-command.js"), __webpack_require__(/*! ./shape */ "./node_modules/zdog/js/shape.js"), __webpack_require__(/*! ./group */ "./node_modules/zdog/js/group.js"),
+        __webpack_require__(/*! ./ellipse */ "./node_modules/zdog/js/ellipse.js") );
+  } else {
+    // browser global
+    var Zdog = root.Zdog;
+    Zdog.Cylinder = factory( Zdog, Zdog.PathCommand, Zdog.Shape,
+        Zdog.Group, Zdog.Ellipse );
+  }
+}( this, function factory( utils, PathCommand, Shape, Group, Ellipse ) {
+
+function noop() {}
+
+// ----- CylinderGroup ----- //
+
+var CylinderGroup = Group.subclass({
+  color: '#333',
+  updateSort: true,
+});
+
+CylinderGroup.prototype.create = function() {
+  Group.prototype.create.apply( this, arguments );
+  this.pathCommands = [
+    new PathCommand( 'move', [ {} ] ),
+    new PathCommand( 'line', [ {} ] ),
+  ];
+};
+
+CylinderGroup.prototype.render = function( ctx, renderer ) {
+  this.renderCylinderSurface( ctx, renderer );
+  Group.prototype.render.apply( this, arguments );
+};
+
+CylinderGroup.prototype.renderCylinderSurface = function( ctx, renderer ) {
+  if ( !this.visible ) {
+    return;
+  }
+  // render cylinder surface
+  var elem = this.getRenderElement( ctx, renderer );
+  var frontBase = this.frontBase;
+  var rearBase = this.rearBase;
+  var scale = frontBase.renderNormal.magnitude();
+  var strokeWidth = frontBase.diameter * scale + frontBase.getLineWidth();
+  // set path command render points
+  this.pathCommands[0].renderPoints[0].set( frontBase.renderOrigin );
+  this.pathCommands[1].renderPoints[0].set( rearBase.renderOrigin );
+
+  if ( renderer.isCanvas ) {
+    ctx.lineCap = 'butt'; // nice
+  }
+  renderer.renderPath( ctx, elem, this.pathCommands );
+  renderer.stroke( ctx, elem, true, this.color, strokeWidth );
+  renderer.end( ctx, elem );
+
+  if ( renderer.isCanvas ) {
+    ctx.lineCap = 'round'; // reset
+  }
+};
+
+var svgURI = 'http://www.w3.org/2000/svg';
+
+CylinderGroup.prototype.getRenderElement = function( ctx, renderer ) {
+  if ( !renderer.isSvg ) {
+    return;
+  }
+  if ( !this.svgElement ) {
+    // create svgElement
+    this.svgElement = document.createElementNS( svgURI, 'path');
+  }
+  return this.svgElement;
+};
+
+// prevent double-creation in parent.copyGraph()
+// only create in Cylinder.create()
+CylinderGroup.prototype.copyGraph = noop;
+
+// ----- CylinderEllipse ----- //
+
+var CylinderEllipse = Ellipse.subclass();
+
+CylinderEllipse.prototype.copyGraph = noop;
+
+// ----- Cylinder ----- //
+
+var Cylinder = Shape.subclass({
+  diameter: 1,
+  length: 1,
+  frontFace: undefined,
+  fill: true,
+});
+
+var TAU = utils.TAU;
+
+Cylinder.prototype.create = function(/* options */) {
+  // call super
+  Shape.prototype.create.apply( this, arguments );
+  // composite shape, create child shapes
+  // CylinderGroup to render cylinder surface then bases
+  this.group = new CylinderGroup({
+    addTo: this,
+    color: this.color,
+    visible: this.visible,
+  });
+  var baseZ = this.length/2;
+  var baseColor = this.backface || true;
+  // front outside base
+  this.frontBase = this.group.frontBase = new Ellipse({
+    addTo: this.group,
+    diameter: this.diameter,
+    translate: { z: baseZ },
+    rotate: { y: TAU/2 },
+    color: this.color,
+    stroke: this.stroke,
+    fill: this.fill,
+    backface: this.frontFace || baseColor,
+    visible: this.visible,
+  });
+  // back outside base
+  this.rearBase = this.group.rearBase = this.frontBase.copy({
+    translate: { z: -baseZ },
+    rotate: { y: 0 },
+    backface: baseColor,
+  });
+};
+
+// Cylinder shape does not render anything
+Cylinder.prototype.render = function() {};
+
+// ----- set child properties ----- //
+
+var childProperties = [ 'stroke', 'fill', 'color', 'visible' ];
+childProperties.forEach( function( property ) {
+  // use proxy property for custom getter & setter
+  var _prop = '_' + property;
+  Object.defineProperty( Cylinder.prototype, property, {
+    get: function() {
+      return this[ _prop ];
+    },
+    set: function( value ) {
+      this[ _prop ] = value;
+      // set property on children
+      if ( this.frontBase ) {
+        this.frontBase[ property ] = value;
+        this.rearBase[ property ] = value;
+        this.group[ property ] = value;
+      }
+    },
+  });
+});
+
+// TODO child property setter for backface, frontBaseColor, & rearBaseColor
+
+return Cylinder;
+
+}));
+
+
+/***/ }),
+
+/***/ "./node_modules/zdog/js/dragger.js":
+/*!*****************************************!*\
+  !*** ./node_modules/zdog/js/dragger.js ***!
+  \*****************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+/**
+ * Dragger
+ */
+
+( function( root, factory ) {
+  // module definition
+  if (  true && module.exports ) {
+    // CommonJS
+    module.exports = factory();
+  } else {
+    // browser global
+    root.Zdog.Dragger = factory();
+  }
+}( this, function factory() {
+
+// quick & dirty drag event stuff
+// messes up if multiple pointers/touches
+
+// check for browser window #85
+var hasWindow = typeof window != 'undefined';
+// event support, default to mouse events
+var downEvent = 'mousedown';
+var moveEvent = 'mousemove';
+var upEvent = 'mouseup';
+if ( hasWindow ) {
+  if ( window.PointerEvent ) {
+    // PointerEvent, Chrome
+    downEvent = 'pointerdown';
+    moveEvent = 'pointermove';
+    upEvent = 'pointerup';
+  } else if ( 'ontouchstart' in window ) {
+    // Touch Events, iOS Safari
+    downEvent = 'touchstart';
+    moveEvent = 'touchmove';
+    upEvent = 'touchend';
+  }
+}
+
+function noop() {}
+
+function Dragger( options ) {
+  this.create( options || {} );
+}
+
+Dragger.prototype.create = function( options ) {
+  this.onDragStart = options.onDragStart || noop;
+  this.onDragMove = options.onDragMove || noop;
+  this.onDragEnd = options.onDragEnd || noop;
+
+  this.bindDrag( options.startElement );
+};
+
+Dragger.prototype.bindDrag = function( element ) {
+  element = this.getQueryElement( element );
+  if ( !element ) {
+    return;
+  }
+  // disable browser gestures #53
+  element.style.touchAction = 'none';
+  element.addEventListener( downEvent, this );
+};
+
+Dragger.prototype.getQueryElement = function( element ) {
+  if ( typeof element == 'string' ) {
+    // with string, query selector
+    element = document.querySelector( element );
+  }
+  return element;
+};
+
+Dragger.prototype.handleEvent = function( event ) {
+  var method = this[ 'on' + event.type ];
+  if ( method ) {
+    method.call( this, event );
+  }
+};
+
+Dragger.prototype.onmousedown =
+Dragger.prototype.onpointerdown = function( event ) {
+  this.dragStart( event, event );
+};
+
+Dragger.prototype.ontouchstart = function( event ) {
+  this.dragStart( event, event.changedTouches[0] );
+};
+
+Dragger.prototype.dragStart = function( event, pointer ) {
+  event.preventDefault();
+  this.dragStartX = pointer.pageX;
+  this.dragStartY = pointer.pageY;
+  if ( hasWindow ) {
+    window.addEventListener( moveEvent, this );
+    window.addEventListener( upEvent, this );
+  }
+  this.onDragStart( pointer );
+};
+
+Dragger.prototype.ontouchmove = function( event ) {
+  // HACK, moved touch may not be first
+  this.dragMove( event, event.changedTouches[0] );
+};
+
+Dragger.prototype.onmousemove =
+Dragger.prototype.onpointermove = function( event ) {
+  this.dragMove( event, event );
+};
+
+Dragger.prototype.dragMove = function( event, pointer ) {
+  event.preventDefault();
+  var moveX = pointer.pageX - this.dragStartX;
+  var moveY = pointer.pageY - this.dragStartY;
+  this.onDragMove( pointer, moveX, moveY );
+};
+
+Dragger.prototype.onmouseup =
+Dragger.prototype.onpointerup =
+Dragger.prototype.ontouchend =
+Dragger.prototype.dragEnd = function(/* event */) {
+  window.removeEventListener( moveEvent, this );
+  window.removeEventListener( upEvent, this );
+  this.onDragEnd();
+};
+
+return Dragger;
+
+}));
+
+
+/***/ }),
+
+/***/ "./node_modules/zdog/js/ellipse.js":
+/*!*****************************************!*\
+  !*** ./node_modules/zdog/js/ellipse.js ***!
+  \*****************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+/**
+ * Ellipse
+ */
+
+( function( root, factory ) {
+  // module definition
+  if (  true && module.exports ) {
+    // CommonJS
+    module.exports = factory( __webpack_require__(/*! ./shape */ "./node_modules/zdog/js/shape.js") );
+  } else {
+    // browser global
+    var Zdog = root.Zdog;
+    Zdog.Ellipse = factory( Zdog.Shape );
+  }
+
+}( this, function factory( Shape ) {
+
+var Ellipse = Shape.subclass({
+  diameter: 1,
+  width: undefined,
+  height: undefined,
+  quarters: 4,
+  closed: false,
+});
+
+Ellipse.prototype.setPath = function() {
+  var width = this.width != undefined ? this.width : this.diameter;
+  var height = this.height != undefined ? this.height : this.diameter;
+  var x = width / 2;
+  var y = height / 2;
+  this.path = [
+    { x: 0, y: -y },
+    { arc: [ // top right
+      { x: x, y: -y },
+      { x: x, y: 0 },
+    ]},
+  ];
+  // bottom right
+  if ( this.quarters > 1 ) {
+    this.path.push({ arc: [
+      { x: x, y: y },
+      { x: 0, y: y },
+    ]});
+  }
+  // bottom left
+  if ( this.quarters > 2 ) {
+    this.path.push({ arc: [
+      { x: -x, y: y },
+      { x: -x, y: 0 },
+    ]});
+  }
+  // top left
+  if ( this.quarters > 3 ) {
+    this.path.push({ arc: [
+      { x: -x, y: -y },
+      { x: 0, y: -y },
+    ]});
+  }
+};
+
+return Ellipse;
+
+}));
+
+
+/***/ }),
+
+/***/ "./node_modules/zdog/js/group.js":
+/*!***************************************!*\
+  !*** ./node_modules/zdog/js/group.js ***!
+  \***************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+/**
+ * Group
+ */
+
+( function( root, factory ) {
+  // module definition
+  if (  true && module.exports ) {
+    // CommonJS
+    module.exports = factory( __webpack_require__(/*! ./anchor */ "./node_modules/zdog/js/anchor.js") );
+  } else {
+    // browser global
+    var Zdog = root.Zdog;
+    Zdog.Group = factory( Zdog.Anchor );
+  }
+}( this, function factory( Anchor ) {
+
+var Group = Anchor.subclass({
+  updateSort: false,
+  visible: true,
+});
+
+// ----- update ----- //
+
+Group.prototype.updateSortValue = function() {
+  var sortValueTotal = 0;
+  this.flatGraph.forEach( function( item ) {
+    item.updateSortValue();
+    sortValueTotal += item.sortValue;
+  });
+  // average sort value of all points
+  // def not geometrically correct, but works for me
+  this.sortValue = sortValueTotal / this.flatGraph.length;
+
+  if ( this.updateSort ) {
+    this.flatGraph.sort( Anchor.shapeSorter );
+  }
+};
+
+// ----- render ----- //
+
+Group.prototype.render = function( ctx, renderer ) {
+  if ( !this.visible ) {
+    return;
+  }
+
+  this.flatGraph.forEach( function( item ) {
+    item.render( ctx, renderer );
+  });
+};
+
+// actual group flatGraph only used inside group
+Group.prototype.updateFlatGraph = function() {
+  // do not include self
+  var flatGraph = [];
+  this.flatGraph = this.addChildFlatGraph( flatGraph );
+};
+
+// do not include children, group handles rendering & sorting internally
+Group.prototype.getFlatGraph = function() {
+  return [ this ];
+};
+
+return Group;
+
+}));
+
+
+/***/ }),
+
+/***/ "./node_modules/zdog/js/hemisphere.js":
+/*!********************************************!*\
+  !*** ./node_modules/zdog/js/hemisphere.js ***!
+  \********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+/**
+ * Hemisphere composite shape
+ */
+
+( function( root, factory ) {
+  // module definition
+  if (  true && module.exports ) {
+    // CommonJS
+    module.exports = factory( __webpack_require__(/*! ./boilerplate */ "./node_modules/zdog/js/boilerplate.js"), __webpack_require__(/*! ./vector */ "./node_modules/zdog/js/vector.js"),
+        __webpack_require__(/*! ./anchor */ "./node_modules/zdog/js/anchor.js"), __webpack_require__(/*! ./ellipse */ "./node_modules/zdog/js/ellipse.js") );
+  } else {
+    // browser global
+    var Zdog = root.Zdog;
+    Zdog.Hemisphere = factory( Zdog, Zdog.Vector, Zdog.Anchor, Zdog.Ellipse );
+  }
+}( this, function factory( utils, Vector, Anchor, Ellipse ) {
+
+var Hemisphere = Ellipse.subclass({
+  fill: true,
+});
+
+var TAU = utils.TAU;
+
+Hemisphere.prototype.create = function(/* options */) {
+  // call super
+  Ellipse.prototype.create.apply( this, arguments );
+  // composite shape, create child shapes
+  this.apex = new Anchor({
+    addTo: this,
+    translate: { z: this.diameter/2 },
+  });
+  // vector used for calculation
+  this.renderCentroid = new Vector();
+};
+
+Hemisphere.prototype.updateSortValue = function() {
+  // centroid of hemisphere is 3/8 between origin and apex
+  this.renderCentroid.set( this.renderOrigin )
+    .lerp( this.apex.renderOrigin, 3/8 );
+  this.sortValue = this.renderCentroid.z;
+};
+
+Hemisphere.prototype.render = function( ctx, renderer ) {
+  this.renderDome( ctx, renderer );
+  // call super
+  Ellipse.prototype.render.apply( this, arguments );
+};
+
+Hemisphere.prototype.renderDome = function( ctx, renderer ) {
+  if ( !this.visible ) {
+    return;
+  }
+  var elem = this.getDomeRenderElement( ctx, renderer );
+  var contourAngle = Math.atan2( this.renderNormal.y, this.renderNormal.x );
+  var domeRadius = this.diameter/2 * this.renderNormal.magnitude();
+  var x = this.renderOrigin.x;
+  var y = this.renderOrigin.y;
+
+  if ( renderer.isCanvas ) {
+    // canvas
+    var startAngle = contourAngle + TAU/4;
+    var endAngle = contourAngle - TAU/4;
+    ctx.beginPath();
+    ctx.arc( x, y, domeRadius, startAngle, endAngle );
+  } else if ( renderer.isSvg ) {
+    // svg
+    contourAngle = (contourAngle - TAU/4) / TAU * 360;
+    this.domeSvgElement.setAttribute( 'd', 'M ' + -domeRadius + ',0 A ' +
+        domeRadius + ',' + domeRadius + ' 0 0 1 ' + domeRadius + ',0' );
+    this.domeSvgElement.setAttribute( 'transform',
+        'translate(' + x + ',' + y + ' ) rotate(' + contourAngle + ')' );
+  }
+
+  renderer.stroke( ctx, elem, this.stroke, this.color, this.getLineWidth() );
+  renderer.fill( ctx, elem, this.fill, this.color );
+  renderer.end( ctx, elem );
+};
+
+var svgURI = 'http://www.w3.org/2000/svg';
+
+Hemisphere.prototype.getDomeRenderElement = function( ctx, renderer ) {
+  if ( !renderer.isSvg ) {
+    return;
+  }
+  if ( !this.domeSvgElement ) {
+    // create svgElement
+    this.domeSvgElement = document.createElementNS( svgURI, 'path');
+    this.domeSvgElement.setAttribute( 'stroke-linecap', 'round' );
+    this.domeSvgElement.setAttribute( 'stroke-linejoin', 'round' );
+  }
+  return this.domeSvgElement;
+};
+
+return Hemisphere;
+
+}));
+
+
+/***/ }),
+
+/***/ "./node_modules/zdog/js/illustration.js":
+/*!**********************************************!*\
+  !*** ./node_modules/zdog/js/illustration.js ***!
+  \**********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+/**
+ * Illustration
+ */
+
+( function( root, factory ) {
+  // module definition
+  if (  true && module.exports ) {
+    // CommonJS
+    module.exports = factory( __webpack_require__(/*! ./boilerplate */ "./node_modules/zdog/js/boilerplate.js"), __webpack_require__(/*! ./anchor */ "./node_modules/zdog/js/anchor.js"),
+        __webpack_require__(/*! ./dragger */ "./node_modules/zdog/js/dragger.js") );
+  } else {
+    // browser global
+    var Zdog = root.Zdog;
+    Zdog.Illustration = factory( Zdog, Zdog.Anchor, Zdog.Dragger );
+  }
+}( this, function factory( utils, Anchor, Dragger ) {
+
+function noop() {}
+var TAU = utils.TAU;
+
+var Illustration = Anchor.subclass({
+  element: undefined,
+  centered: true,
+  zoom: 1,
+  dragRotate: false,
+  resize: false,
+  onPrerender: noop,
+  onDragStart: noop,
+  onDragMove: noop,
+  onDragEnd: noop,
+  onResize: noop,
+});
+
+utils.extend( Illustration.prototype, Dragger.prototype );
+
+Illustration.prototype.create = function( options ) {
+  Anchor.prototype.create.call( this, options );
+  Dragger.prototype.create.call( this, options );
+  this.setElement( this.element );
+  this.setDragRotate( this.dragRotate );
+  this.setResize( this.resize );
+};
+
+Illustration.prototype.setElement = function( element ) {
+  element = this.getQueryElement( element );
+  if ( !element ) {
+    throw new Error( 'Zdog.Illustration element required. Set to ' + element );
+  }
+
+  var nodeName = element.nodeName.toLowerCase();
+  if ( nodeName == 'canvas' ) {
+    this.setCanvas( element );
+  } else if ( nodeName == 'svg' ) {
+    this.setSvg( element );
+  }
+};
+
+Illustration.prototype.setSize = function( width, height ) {
+  width = Math.round( width );
+  height = Math.round( height );
+  if ( this.isCanvas ) {
+    this.setSizeCanvas( width, height );
+  } else if ( this.isSvg ) {
+    this.setSizeSvg( width, height );
+  }
+};
+
+Illustration.prototype.setResize = function( resize ) {
+  this.resize = resize;
+  // create resize event listener
+  if ( !this.resizeListener ) {
+    this.resizeListener = this.onWindowResize.bind( this );
+  }
+  // add/remove event listener
+  if ( resize ) {
+    window.addEventListener( 'resize', this.resizeListener );
+    this.onWindowResize();
+  } else {
+    window.removeEventListener( 'resize', this.resizeListener );
+  }
+};
+
+// TODO debounce this?
+Illustration.prototype.onWindowResize = function() {
+  this.setMeasuredSize();
+  this.onResize( this.width, this.height );
+};
+
+Illustration.prototype.setMeasuredSize = function() {
+  var width, height;
+  var isFullscreen = this.resize == 'fullscreen';
+  if ( isFullscreen ) {
+    width = window.innerWidth;
+    height = window.innerHeight;
+  } else {
+    var rect = this.element.getBoundingClientRect();
+    width = rect.width;
+    height = rect.height;
+  }
+  this.setSize( width, height );
+};
+
+// ----- render ----- //
+
+Illustration.prototype.renderGraph = function( item ) {
+  if ( this.isCanvas ) {
+    this.renderGraphCanvas( item );
+  } else if ( this.isSvg ) {
+    this.renderGraphSvg( item );
+  }
+};
+
+// combo method
+Illustration.prototype.updateRenderGraph = function( item ) {
+  this.updateGraph();
+  this.renderGraph( item );
+};
+
+// ----- canvas ----- //
+
+Illustration.prototype.setCanvas = function( element ) {
+  this.element = element;
+  this.isCanvas = true;
+  // update related properties
+  this.ctx = this.element.getContext('2d');
+  // set initial size
+  this.setSizeCanvas( element.width, element.height );
+};
+
+Illustration.prototype.setSizeCanvas = function( width, height ) {
+  this.width = width;
+  this.height = height;
+  // up-rez for hi-DPI devices
+  var pixelRatio = this.pixelRatio = window.devicePixelRatio || 1;
+  this.element.width = this.canvasWidth = width * pixelRatio;
+  this.element.height = this.canvasHeight = height * pixelRatio;
+  var needsHighPixelRatioSizing = pixelRatio > 1 && !this.resize;
+  if ( needsHighPixelRatioSizing ) {
+    this.element.style.width = width + 'px';
+    this.element.style.height = height + 'px';
+  }
+};
+
+Illustration.prototype.renderGraphCanvas = function( item ) {
+  item = item || this;
+  this.prerenderCanvas();
+  Anchor.prototype.renderGraphCanvas.call( item, this.ctx );
+  this.postrenderCanvas();
+};
+
+Illustration.prototype.prerenderCanvas = function() {
+  var ctx = this.ctx;
+  ctx.lineCap = 'round';
+  ctx.lineJoin = 'round';
+  ctx.clearRect( 0, 0, this.canvasWidth, this.canvasHeight );
+  ctx.save();
+  if ( this.centered ) {
+    var centerX = this.width/2 * this.pixelRatio;
+    var centerY = this.height/2 * this.pixelRatio;
+    ctx.translate( centerX, centerY );
+  }
+  var scale = this.pixelRatio * this.zoom;
+  ctx.scale( scale, scale );
+  this.onPrerender( ctx );
+};
+
+Illustration.prototype.postrenderCanvas = function() {
+  this.ctx.restore();
+};
+
+// ----- svg ----- //
+
+Illustration.prototype.setSvg = function( element ) {
+  this.element = element;
+  this.isSvg = true;
+  this.pixelRatio = 1;
+  // set initial size from width & height attributes
+  var width = element.getAttribute('width');
+  var height = element.getAttribute('height');
+  this.setSizeSvg( width, height );
+};
+
+Illustration.prototype.setSizeSvg = function( width, height ) {
+  this.width = width;
+  this.height = height;
+  var viewWidth = width / this.zoom;
+  var viewHeight = height / this.zoom;
+  var viewX = this.centered ? -viewWidth/2 : 0;
+  var viewY = this.centered ? -viewHeight/2 : 0;
+  this.element.setAttribute( 'viewBox', viewX + ' ' + viewY + ' ' +
+    viewWidth + ' ' + viewHeight );
+  if ( this.resize ) {
+    // remove size attributes, let size be determined by viewbox
+    this.element.removeAttribute('width');
+    this.element.removeAttribute('height');
+  } else {
+    this.element.setAttribute( 'width', width );
+    this.element.setAttribute( 'height', height );
+  }
+};
+
+Illustration.prototype.renderGraphSvg = function( item ) {
+  item = item || this;
+  empty( this.element );
+  this.onPrerender( this.element );
+  Anchor.prototype.renderGraphSvg.call( item, this.element );
+};
+
+function empty( element ) {
+  while ( element.firstChild ) {
+    element.removeChild( element.firstChild );
+  }
+}
+
+// ----- drag ----- //
+
+Illustration.prototype.setDragRotate = function( item ) {
+  if ( !item ) {
+    return;
+  } else if ( item === true ) {
+    /* eslint consistent-this: "off" */
+    item = this;
+  }
+  this.dragRotate = item;
+
+  this.bindDrag( this.element );
+};
+
+Illustration.prototype.dragStart = function(/* event, pointer */) {
+  this.dragStartRX = this.dragRotate.rotate.x;
+  this.dragStartRY = this.dragRotate.rotate.y;
+  Dragger.prototype.dragStart.apply( this, arguments );
+};
+
+Illustration.prototype.dragMove = function( event, pointer ) {
+  var moveX = pointer.pageX - this.dragStartX;
+  var moveY = pointer.pageY - this.dragStartY;
+  var displaySize = Math.min( this.width, this.height );
+  var moveRY = moveX / displaySize * TAU;
+  var moveRX = moveY / displaySize * TAU;
+  this.dragRotate.rotate.x = this.dragStartRX - moveRX;
+  this.dragRotate.rotate.y = this.dragStartRY - moveRY;
+  Dragger.prototype.dragMove.apply( this, arguments );
+};
+
+return Illustration;
+
+}));
+
+
+/***/ }),
+
+/***/ "./node_modules/zdog/js/index.js":
+/*!***************************************!*\
+  !*** ./node_modules/zdog/js/index.js ***!
+  \***************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/**
+ * Index
+ */
+
+( function( root, factory ) {
+  // module definition
+  if (  true && module.exports ) {
+    // CommonJS
+    module.exports = factory(
+        __webpack_require__(/*! ./boilerplate */ "./node_modules/zdog/js/boilerplate.js"),
+        __webpack_require__(/*! ./canvas-renderer */ "./node_modules/zdog/js/canvas-renderer.js"),
+        __webpack_require__(/*! ./svg-renderer */ "./node_modules/zdog/js/svg-renderer.js"),
+        __webpack_require__(/*! ./vector */ "./node_modules/zdog/js/vector.js"),
+        __webpack_require__(/*! ./anchor */ "./node_modules/zdog/js/anchor.js"),
+        __webpack_require__(/*! ./dragger */ "./node_modules/zdog/js/dragger.js"),
+        __webpack_require__(/*! ./illustration */ "./node_modules/zdog/js/illustration.js"),
+        __webpack_require__(/*! ./path-command */ "./node_modules/zdog/js/path-command.js"),
+        __webpack_require__(/*! ./shape */ "./node_modules/zdog/js/shape.js"),
+        __webpack_require__(/*! ./group */ "./node_modules/zdog/js/group.js"),
+        __webpack_require__(/*! ./rect */ "./node_modules/zdog/js/rect.js"),
+        __webpack_require__(/*! ./rounded-rect */ "./node_modules/zdog/js/rounded-rect.js"),
+        __webpack_require__(/*! ./ellipse */ "./node_modules/zdog/js/ellipse.js"),
+        __webpack_require__(/*! ./polygon */ "./node_modules/zdog/js/polygon.js"),
+        __webpack_require__(/*! ./hemisphere */ "./node_modules/zdog/js/hemisphere.js"),
+        __webpack_require__(/*! ./cylinder */ "./node_modules/zdog/js/cylinder.js"),
+        __webpack_require__(/*! ./cone */ "./node_modules/zdog/js/cone.js"),
+        __webpack_require__(/*! ./box */ "./node_modules/zdog/js/box.js")
+    );
+  } else if ( true ) {
+    /* globals define */ // AMD
+    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_FACTORY__ = (root.Zdog),
+				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
+				(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+  }
+})( this, function factory( Zdog, CanvasRenderer, SvgRenderer, Vector, Anchor,
+    Dragger, Illustration, PathCommand, Shape, Group, Rect, RoundedRect,
+    Ellipse, Polygon, Hemisphere, Cylinder, Cone, Box ) {
+
+      Zdog.CanvasRenderer = CanvasRenderer;
+      Zdog.SvgRenderer = SvgRenderer;
+      Zdog.Vector = Vector;
+      Zdog.Anchor = Anchor;
+      Zdog.Dragger = Dragger;
+      Zdog.Illustration = Illustration;
+      Zdog.PathCommand = PathCommand;
+      Zdog.Shape = Shape;
+      Zdog.Group = Group;
+      Zdog.Rect = Rect;
+      Zdog.RoundedRect = RoundedRect;
+      Zdog.Ellipse = Ellipse;
+      Zdog.Polygon = Polygon;
+      Zdog.Hemisphere = Hemisphere;
+      Zdog.Cylinder = Cylinder;
+      Zdog.Cone = Cone;
+      Zdog.Box = Box;
+
+      return Zdog;
+});
+
+
+/***/ }),
+
+/***/ "./node_modules/zdog/js/path-command.js":
+/*!**********************************************!*\
+  !*** ./node_modules/zdog/js/path-command.js ***!
+  \**********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+/**
+ * PathCommand
+ */
+
+( function( root, factory ) {
+  // module definition
+  if (  true && module.exports ) {
+    // CommonJS
+    module.exports = factory( __webpack_require__(/*! ./vector */ "./node_modules/zdog/js/vector.js") );
+  } else {
+    // browser global
+    var Zdog = root.Zdog;
+    Zdog.PathCommand = factory( Zdog.Vector );
+  }
+}( this, function factory( Vector ) {
+
+function PathCommand( method, points, previousPoint ) {
+  this.method = method;
+  this.points = points.map( mapVectorPoint );
+  this.renderPoints = points.map( mapNewVector );
+  this.previousPoint = previousPoint;
+  this.endRenderPoint = this.renderPoints[ this.renderPoints.length - 1 ];
+  // arc actions come with previous point & corner point
+  // but require bezier control points
+  if ( method == 'arc' ) {
+    this.controlPoints = [ new Vector(), new Vector() ];
+  }
+}
+
+function mapVectorPoint( point ) {
+  if ( point instanceof Vector ) {
+    return point;
+  } else {
+    return new Vector( point );
+  }
+}
+
+function mapNewVector( point ) {
+  return new Vector( point );
+}
+
+PathCommand.prototype.reset = function() {
+  // reset renderPoints back to orignal points position
+  var points = this.points;
+  this.renderPoints.forEach( function( renderPoint, i ) {
+    var point = points[i];
+    renderPoint.set( point );
+  });
+};
+
+PathCommand.prototype.transform = function( translation, rotation, scale ) {
+  this.renderPoints.forEach( function( renderPoint ) {
+    renderPoint.transform( translation, rotation, scale );
+  });
+};
+
+PathCommand.prototype.render = function( ctx, elem, renderer ) {
+  return this[ this.method ]( ctx, elem, renderer );
+};
+
+PathCommand.prototype.move = function( ctx, elem, renderer ) {
+  return renderer.move( ctx, elem, this.renderPoints[0] );
+};
+
+PathCommand.prototype.line = function( ctx, elem, renderer ) {
+  return renderer.line( ctx, elem, this.renderPoints[0] );
+};
+
+PathCommand.prototype.bezier = function( ctx, elem, renderer ) {
+  var cp0 = this.renderPoints[0];
+  var cp1 = this.renderPoints[1];
+  var end = this.renderPoints[2];
+  return renderer.bezier( ctx, elem, cp0, cp1, end );
+};
+
+var arcHandleLength = 9/16;
+
+PathCommand.prototype.arc = function( ctx, elem, renderer ) {
+  var prev = this.previousPoint;
+  var corner = this.renderPoints[0];
+  var end = this.renderPoints[1];
+  var cp0 = this.controlPoints[0];
+  var cp1 = this.controlPoints[1];
+  cp0.set( prev ).lerp( corner, arcHandleLength );
+  cp1.set( end ).lerp( corner, arcHandleLength );
+  return renderer.bezier( ctx, elem, cp0, cp1, end );
+};
+
+return PathCommand;
+
+}));
+
+
+/***/ }),
+
+/***/ "./node_modules/zdog/js/polygon.js":
+/*!*****************************************!*\
+  !*** ./node_modules/zdog/js/polygon.js ***!
+  \*****************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+/**
+ * Shape
+ */
+
+( function( root, factory ) {
+  // module definition
+  if (  true && module.exports ) {
+    // CommonJS
+    module.exports = factory( __webpack_require__(/*! ./boilerplate */ "./node_modules/zdog/js/boilerplate.js"), __webpack_require__(/*! ./shape */ "./node_modules/zdog/js/shape.js") );
+  } else {
+    // browser global
+    var Zdog = root.Zdog;
+    Zdog.Polygon = factory( Zdog, Zdog.Shape );
+  }
+}( this, function factory( utils, Shape ) {
+
+var Polygon = Shape.subclass({
+  sides: 3,
+  radius: 0.5,
+});
+
+var TAU = utils.TAU;
+
+Polygon.prototype.setPath = function() {
+  this.path = [];
+  for ( var i=0; i < this.sides; i++ ) {
+    var theta = i/this.sides * TAU - TAU/4;
+    var x = Math.cos( theta ) * this.radius;
+    var y = Math.sin( theta ) * this.radius;
+    this.path.push({ x: x, y: y });
+  }
+};
+
+return Polygon;
+
+}));
+
+
+/***/ }),
+
+/***/ "./node_modules/zdog/js/rect.js":
+/*!**************************************!*\
+  !*** ./node_modules/zdog/js/rect.js ***!
+  \**************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+/**
+ * Rect
+ */
+
+( function( root, factory ) {
+  // module definition
+  if (  true && module.exports ) {
+    // CommonJS
+    module.exports = factory( __webpack_require__(/*! ./shape */ "./node_modules/zdog/js/shape.js") );
+  } else {
+    // browser global
+    var Zdog = root.Zdog;
+    Zdog.Rect = factory( Zdog.Shape );
+  }
+}( this, function factory( Shape ) {
+
+var Rect = Shape.subclass({
+  width: 1,
+  height: 1,
+});
+
+Rect.prototype.setPath = function() {
+  var x = this.width / 2;
+  var y = this.height / 2;
+  /* eslint key-spacing: "off" */
+  this.path = [
+    { x: -x, y: -y },
+    { x:  x, y: -y },
+    { x:  x, y:  y },
+    { x: -x, y:  y },
+  ];
+};
+
+return Rect;
+
+}));
+
+
+/***/ }),
+
+/***/ "./node_modules/zdog/js/rounded-rect.js":
+/*!**********************************************!*\
+  !*** ./node_modules/zdog/js/rounded-rect.js ***!
+  \**********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+/**
+ * RoundedRect
+ */
+
+( function( root, factory ) {
+  // module definition
+  if (  true && module.exports ) {
+    // CommonJS
+    module.exports = factory( __webpack_require__(/*! ./shape */ "./node_modules/zdog/js/shape.js") );
+  } else {
+    // browser global
+    var Zdog = root.Zdog;
+    Zdog.RoundedRect = factory( Zdog.Shape );
+  }
+}( this, function factory( Shape ) {
+
+var RoundedRect = Shape.subclass({
+  width: 1,
+  height: 1,
+  cornerRadius: 0.25,
+  closed: false,
+});
+
+RoundedRect.prototype.setPath = function() {
+  /* eslint
+     id-length: [ "error", { "min": 2, "exceptions": [ "x", "y" ] }],
+     key-spacing: "off" */
+  var xA = this.width / 2;
+  var yA = this.height / 2;
+  var shortSide = Math.min( xA, yA );
+  var cornerRadius = Math.min( this.cornerRadius, shortSide );
+  var xB = xA - cornerRadius;
+  var yB = yA - cornerRadius;
+  var path = [
+    // top right corner
+    { x: xB, y: -yA },
+    { arc: [
+      { x: xA, y: -yA },
+      { x: xA, y: -yB },
+    ]},
+  ];
+  // bottom right corner
+  if ( yB ) {
+    path.push({ x: xA, y: yB });
+  }
+  path.push({ arc: [
+    { x: xA, y:  yA },
+    { x: xB, y:  yA },
+  ]});
+  // bottom left corner
+  if ( xB ) {
+    path.push({ x: -xB, y: yA });
+  }
+  path.push({ arc: [
+    { x: -xA, y:  yA },
+    { x: -xA, y:  yB },
+  ]});
+  // top left corner
+  if ( yB ) {
+    path.push({ x: -xA, y: -yB });
+  }
+  path.push({ arc: [
+    { x: -xA, y: -yA },
+    { x: -xB, y: -yA },
+  ]});
+
+  // back to top right corner
+  if ( xB ) {
+    path.push({ x: xB, y: -yA });
+  }
+
+  this.path = path;
+};
+
+return RoundedRect;
+
+}));
+
+
+/***/ }),
+
+/***/ "./node_modules/zdog/js/shape.js":
+/*!***************************************!*\
+  !*** ./node_modules/zdog/js/shape.js ***!
+  \***************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+/**
+ * Shape
+ */
+
+( function( root, factory ) {
+  // module definition
+  if (  true && module.exports ) {
+    // CommonJS
+    module.exports = factory( __webpack_require__(/*! ./boilerplate */ "./node_modules/zdog/js/boilerplate.js"), __webpack_require__(/*! ./vector */ "./node_modules/zdog/js/vector.js"),
+        __webpack_require__(/*! ./path-command */ "./node_modules/zdog/js/path-command.js"), __webpack_require__(/*! ./anchor */ "./node_modules/zdog/js/anchor.js") );
+  } else {
+    // browser global
+    var Zdog = root.Zdog;
+    Zdog.Shape = factory( Zdog, Zdog.Vector, Zdog.PathCommand, Zdog.Anchor );
+  }
+}( this, function factory( utils, Vector, PathCommand, Anchor ) {
+
+var Shape = Anchor.subclass({
+  stroke: 1,
+  fill: false,
+  color: '#333',
+  closed: true,
+  visible: true,
+  path: [ {} ],
+  front: { z: 1 },
+  backface: true,
+});
+
+Shape.prototype.create = function( options ) {
+  Anchor.prototype.create.call( this, options );
+  this.updatePath();
+  // front
+  this.front = new Vector( options.front || this.front );
+  this.renderFront = new Vector( this.front );
+  this.renderNormal = new Vector();
+};
+
+var actionNames = [
+  'move',
+  'line',
+  'bezier',
+  'arc',
+];
+
+Shape.prototype.updatePath = function() {
+  this.setPath();
+  this.updatePathCommands();
+};
+
+// place holder for Ellipse, Rect, etc.
+Shape.prototype.setPath = function() {};
+
+// parse path into PathCommands
+Shape.prototype.updatePathCommands = function() {
+  var previousPoint;
+  this.pathCommands = this.path.map( function( pathPart, i ) {
+    // pathPart can be just vector coordinates -> { x, y, z }
+    // or path instruction -> { arc: [ {x0,y0,z0}, {x1,y1,z1} ] }
+    var keys = Object.keys( pathPart );
+    var method = keys[0];
+    var points = pathPart[ method ];
+    // default to line if no instruction
+    var isInstruction = keys.length == 1 && actionNames.indexOf( method ) != -1;
+    if ( !isInstruction ) {
+      method = 'line';
+      points = pathPart;
+    }
+    // munge single-point methods like line & move without arrays
+    var isLineOrMove = method == 'line' || method == 'move';
+    var isPointsArray = Array.isArray( points );
+    if ( isLineOrMove && !isPointsArray ) {
+      points = [ points ];
+    }
+
+    // first action is always move
+    method = i === 0 ? 'move' : method;
+    // arcs require previous last point
+    var command = new PathCommand( method, points, previousPoint );
+    // update previousLastPoint
+    previousPoint = command.endRenderPoint;
+    return command;
+  });
+};
+
+// ----- update ----- //
+
+Shape.prototype.reset = function() {
+  this.renderOrigin.set( this.origin );
+  this.renderFront.set( this.front );
+  // reset command render points
+  this.pathCommands.forEach( function( command ) {
+    command.reset();
+  });
+};
+
+Shape.prototype.transform = function( translation, rotation, scale ) {
+  // calculate render points backface visibility & cone/hemisphere shapes
+  this.renderOrigin.transform( translation, rotation, scale );
+  this.renderFront.transform( translation, rotation, scale );
+  this.renderNormal.set( this.renderOrigin ).subtract( this.renderFront );
+  // transform points
+  this.pathCommands.forEach( function( command ) {
+    command.transform( translation, rotation, scale );
+  });
+  // transform children
+  this.children.forEach( function( child ) {
+    child.transform( translation, rotation, scale );
+  });
+};
+
+Shape.prototype.updateSortValue = function() {
+  // sort by average z of all points
+  // def not geometrically correct, but works for me
+  var pointCount = this.pathCommands.length;
+  var firstPoint = this.pathCommands[0].endRenderPoint;
+  var lastPoint = this.pathCommands[ pointCount - 1 ].endRenderPoint;
+  // ignore the final point if self closing shape
+  var isSelfClosing = pointCount > 2 && firstPoint.isSame( lastPoint );
+  if ( isSelfClosing ) {
+    pointCount -= 1;
+  }
+
+  var sortValueTotal = 0;
+  for ( var i = 0; i < pointCount; i++ ) {
+    sortValueTotal += this.pathCommands[i].endRenderPoint.z;
+  }
+  this.sortValue = sortValueTotal / pointCount;
+};
+
+// ----- render ----- //
+
+Shape.prototype.render = function( ctx, renderer ) {
+  var length = this.pathCommands.length;
+  if ( !this.visible || !length ) {
+    return;
+  }
+  // do not render if hiding backface
+  this.isFacingBack = this.renderNormal.z > 0;
+  if ( !this.backface && this.isFacingBack ) {
+    return;
+  }
+  if ( !renderer ) {
+    throw new Error( 'Zdog renderer required. Set to ' + renderer );
+  }
+  // render dot or path
+  var isDot = length == 1;
+  if ( renderer.isCanvas && isDot ) {
+    this.renderCanvasDot( ctx, renderer );
+  } else {
+    this.renderPath( ctx, renderer );
+  }
+};
+
+var TAU = utils.TAU;
+// Safari does not render lines with no size, have to render circle instead
+Shape.prototype.renderCanvasDot = function( ctx ) {
+  var lineWidth = this.getLineWidth();
+  if ( !lineWidth ) {
+    return;
+  }
+  ctx.fillStyle = this.getRenderColor();
+  var point = this.pathCommands[0].endRenderPoint;
+  ctx.beginPath();
+  var radius = lineWidth/2;
+  ctx.arc( point.x, point.y, radius, 0, TAU );
+  ctx.fill();
+};
+
+Shape.prototype.getLineWidth = function() {
+  if ( !this.stroke ) {
+    return 0;
+  }
+  if ( this.stroke == true ) {
+    return 1;
+  }
+  return this.stroke;
+};
+
+Shape.prototype.getRenderColor = function() {
+  // use backface color if applicable
+  var isBackfaceColor = typeof this.backface == 'string' && this.isFacingBack;
+  var color = isBackfaceColor ? this.backface : this.color;
+  return color;
+};
+
+Shape.prototype.renderPath = function( ctx, renderer ) {
+  var elem = this.getRenderElement( ctx, renderer );
+  var isTwoPoints = this.pathCommands.length == 2 &&
+    this.pathCommands[1].method == 'line';
+  var isClosed = !isTwoPoints && this.closed;
+  var color = this.getRenderColor();
+
+  renderer.renderPath( ctx, elem, this.pathCommands, isClosed );
+  renderer.stroke( ctx, elem, this.stroke, color, this.getLineWidth() );
+  renderer.fill( ctx, elem, this.fill, color );
+  renderer.end( ctx, elem );
+};
+
+var svgURI = 'http://www.w3.org/2000/svg';
+
+Shape.prototype.getRenderElement = function( ctx, renderer ) {
+  if ( !renderer.isSvg ) {
+    return;
+  }
+  if ( !this.svgElement ) {
+    // create svgElement
+    this.svgElement = document.createElementNS( svgURI, 'path');
+    this.svgElement.setAttribute( 'stroke-linecap', 'round' );
+    this.svgElement.setAttribute( 'stroke-linejoin', 'round' );
+  }
+  return this.svgElement;
+};
+
+return Shape;
+
+}));
+
+
+/***/ }),
+
+/***/ "./node_modules/zdog/js/svg-renderer.js":
+/*!**********************************************!*\
+  !*** ./node_modules/zdog/js/svg-renderer.js ***!
+  \**********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+/**
+ * SvgRenderer
+ */
+
+( function( root, factory ) {
+  // module definition
+  if (  true && module.exports ) {
+    // CommonJS
+    module.exports = factory();
+  } else {
+    // browser global
+    root.Zdog.SvgRenderer = factory();
+  }
+}( this, function factory() {
+
+var SvgRenderer = { isSvg: true };
+
+// round path coordinates to 3 decimals
+var round = SvgRenderer.round = function( num ) {
+  return Math.round( num * 1000 ) / 1000;
+};
+
+function getPointString( point ) {
+  return round( point.x ) + ',' + round( point.y ) + ' ';
+}
+
+SvgRenderer.begin = function() {};
+
+SvgRenderer.move = function( svg, elem, point ) {
+  return 'M' + getPointString( point );
+};
+
+SvgRenderer.line = function( svg, elem, point ) {
+  return 'L' + getPointString( point );
+};
+
+SvgRenderer.bezier = function( svg, elem, cp0, cp1, end ) {
+  return 'C' + getPointString( cp0 ) + getPointString( cp1 ) +
+    getPointString( end );
+};
+
+SvgRenderer.closePath = function(/* elem */) {
+  return 'Z';
+};
+
+SvgRenderer.setPath = function( svg, elem, pathValue ) {
+  elem.setAttribute( 'd', pathValue );
+};
+
+SvgRenderer.renderPath = function( svg, elem, pathCommands, isClosed ) {
+  var pathValue = '';
+  pathCommands.forEach( function( command ) {
+    pathValue += command.render( svg, elem, SvgRenderer );
+  });
+  if ( isClosed ) {
+    pathValue += this.closePath( svg, elem );
+  }
+  this.setPath( svg, elem, pathValue );
+};
+
+SvgRenderer.stroke = function( svg, elem, isStroke, color, lineWidth ) {
+  if ( !isStroke ) {
+    return;
+  }
+  elem.setAttribute( 'stroke', color );
+  elem.setAttribute( 'stroke-width', lineWidth );
+};
+
+SvgRenderer.fill = function( svg, elem, isFill, color ) {
+  var fillColor = isFill ? color : 'none';
+  elem.setAttribute( 'fill', fillColor );
+};
+
+SvgRenderer.end = function( svg, elem ) {
+  svg.appendChild( elem );
+};
+
+return SvgRenderer;
+
+}));
+
+
+/***/ }),
+
+/***/ "./node_modules/zdog/js/vector.js":
+/*!****************************************!*\
+  !*** ./node_modules/zdog/js/vector.js ***!
+  \****************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+/**
+ * Vector
+ */
+
+( function( root, factory ) {
+  // module definition
+  if (  true && module.exports ) {
+    // CommonJS
+    module.exports = factory( __webpack_require__(/*! ./boilerplate */ "./node_modules/zdog/js/boilerplate.js") );
+  } else {
+    // browser global
+    var Zdog = root.Zdog;
+    Zdog.Vector = factory( Zdog );
+  }
+
+}( this, function factory( utils ) {
+
+function Vector( position ) {
+  this.set( position );
+}
+
+var TAU = utils.TAU;
+
+// 'pos' = 'position'
+Vector.prototype.set = function( pos ) {
+  this.x = pos && pos.x || 0;
+  this.y = pos && pos.y || 0;
+  this.z = pos && pos.z || 0;
+  return this;
+};
+
+// set coordinates without sanitizing
+// vec.write({ y: 2 }) only sets y coord
+Vector.prototype.write = function( pos ) {
+  if ( !pos ) {
+    return this;
+  }
+  this.x = pos.x != undefined ? pos.x : this.x;
+  this.y = pos.y != undefined ? pos.y : this.y;
+  this.z = pos.z != undefined ? pos.z : this.z;
+  return this;
+};
+
+Vector.prototype.rotate = function( rotation ) {
+  if ( !rotation ) {
+    return;
+  }
+  this.rotateZ( rotation.z );
+  this.rotateY( rotation.y );
+  this.rotateX( rotation.x );
+  return this;
+};
+
+Vector.prototype.rotateZ = function( angle ) {
+  rotateProperty( this, angle, 'x', 'y' );
+};
+
+Vector.prototype.rotateX = function( angle ) {
+  rotateProperty( this, angle, 'y', 'z' );
+};
+
+Vector.prototype.rotateY = function( angle ) {
+  rotateProperty( this, angle, 'x', 'z' );
+};
+
+function rotateProperty( vec, angle, propA, propB ) {
+  if ( !angle || angle % TAU === 0 ) {
+    return;
+  }
+  var cos = Math.cos( angle );
+  var sin = Math.sin( angle );
+  var a = vec[ propA ];
+  var b = vec[ propB ];
+  vec[ propA ] = a*cos - b*sin;
+  vec[ propB ] = b*cos + a*sin;
+}
+
+Vector.prototype.isSame = function( pos ) {
+  if ( !pos ) {
+    return false;
+  }
+  return this.x === pos.x && this.y === pos.y && this.z === pos.z;
+};
+
+Vector.prototype.add = function( pos ) {
+  if ( !pos ) {
+    return this;
+  }
+  this.x += pos.x || 0;
+  this.y += pos.y || 0;
+  this.z += pos.z || 0;
+  return this;
+};
+
+Vector.prototype.subtract = function( pos ) {
+  if ( !pos ) {
+    return this;
+  }
+  this.x -= pos.x || 0;
+  this.y -= pos.y || 0;
+  this.z -= pos.z || 0;
+  return this;
+};
+
+Vector.prototype.multiply = function( pos ) {
+  if ( pos == undefined ) {
+    return this;
+  }
+  // multiple all values by same number
+  if ( typeof pos == 'number' ) {
+    this.x *= pos;
+    this.y *= pos;
+    this.z *= pos;
+  } else {
+    // multiply object
+    this.x *= pos.x != undefined ? pos.x : 1;
+    this.y *= pos.y != undefined ? pos.y : 1;
+    this.z *= pos.z != undefined ? pos.z : 1;
+  }
+  return this;
+};
+
+Vector.prototype.transform = function( translation, rotation, scale ) {
+  this.multiply( scale );
+  this.rotate( rotation );
+  this.add( translation );
+  return this;
+};
+
+Vector.prototype.lerp = function( pos, alpha ) {
+  this.x = utils.lerp( this.x, pos.x || 0, alpha );
+  this.y = utils.lerp( this.y, pos.y || 0, alpha );
+  this.z = utils.lerp( this.z, pos.z || 0, alpha );
+  return this;
+};
+
+Vector.prototype.magnitude = function() {
+  var sum = this.x*this.x + this.y*this.y + this.z*this.z;
+  return getMagnitudeSqrt( sum );
+};
+
+function getMagnitudeSqrt( sum ) {
+  // PERF: check if sum ~= 1 and skip sqrt
+  if ( Math.abs( sum - 1 ) < 0.00000001 ) {
+    return 1;
+  }
+  return Math.sqrt( sum );
+}
+
+Vector.prototype.magnitude2d = function() {
+  var sum = this.x*this.x + this.y*this.y;
+  return getMagnitudeSqrt( sum );
+};
+
+Vector.prototype.copy = function() {
+  return new Vector( this );
+};
+
+return Vector;
+
+}));
+
+
+/***/ }),
+
+/***/ "./src/cube.js":
+/*!*********************!*\
+  !*** ./src/cube.js ***!
+  \*********************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var zdog__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! zdog */ "./node_modules/zdog/js/index.js");
+/* harmony import */ var zdog__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(zdog__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _moves__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./moves */ "./src/moves.js");
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
+
+ // TODO: destroy -> return stickers
+// TODO: generate getters for config
+
+/* harmony default export */ __webpack_exports__["default"] = (function (_ref) {
+  var illo = _ref.illo,
+      zoom = _ref.zoom,
+      colorsRGB = _ref.colors,
+      cubeColor = _ref.cubeColor;
+  var distance = zoom * 38;
+
+  function Cubie(_ref2) {
+    var stickers = _ref2.stickers;
+    var anchor = new zdog__WEBPACK_IMPORTED_MODULE_0___default.a.Anchor({
+      addTo: illo
+    }); // infer position from cube stickers, because why not
+
+    var translate = stickers.reduce(function (acc, _ref3) {
+      var offset = _ref3.offset,
+          axis = _ref3.axis;
+      acc[axis] = distance * offset;
+      return acc;
+    }, {});
+    var container = new zdog__WEBPACK_IMPORTED_MODULE_0___default.a.Anchor({
+      addTo: anchor,
+      translate: translate
+    });
+    var size = zoom * 36;
+    new zdog__WEBPACK_IMPORTED_MODULE_0___default.a.Box({
+      addTo: container,
+      width: size,
+      height: size,
+      depth: size,
+      stroke: false,
+      color: cubeColor
+    });
+    var stickerOffset = size / 2 + 1;
+    var rotations = {
+      x: {
+        y: _moves__WEBPACK_IMPORTED_MODULE_1__["quarter"]
+      },
+      y: {
+        x: _moves__WEBPACK_IMPORTED_MODULE_1__["quarter"]
+      }
+    };
+    var stickerElements = stickers.map(function (_ref4) {
+      var color = _ref4.color,
+          axis = _ref4.axis,
+          offset = _ref4.offset;
+      var stickerEl = new zdog__WEBPACK_IMPORTED_MODULE_0___default.a.Rect({
+        addTo: container,
+        width: size * 0.9,
+        height: size * 0.9,
+        stroke: 2,
+        fill: true,
+        color: colorsRGB[color],
+        rotate: rotations[axis]
+      });
+      stickerEl.translate[axis] += stickerOffset * offset;
+      return stickerEl;
+    });
+    return {
+      anchor: anchor,
+      stickers: stickers,
+      setColors: function setColors(colors) {
+        for (var i = 0; i < stickerElements.length; i++) {
+          var color = colors[i];
+          stickerElements[i].color = colorsRGB[color];
+          stickers[i].color = color;
+        }
+      }
+    };
+  }
+
+  var centres = [Cubie({
+    stickers: [{
+      color: 0,
+      axis: 'y',
+      offset: -1
+    }]
+  }), Cubie({
+    stickers: [{
+      color: 1,
+      axis: 'z',
+      offset: -1
+    }]
+  }), Cubie({
+    stickers: [{
+      color: 2,
+      axis: 'x',
+      offset: 1
+    }]
+  }), Cubie({
+    stickers: [{
+      color: 3,
+      axis: 'z',
+      offset: 1
+    }]
+  }), Cubie({
+    stickers: [{
+      color: 4,
+      axis: 'x',
+      offset: -1
+    }]
+  }), Cubie({
+    stickers: [{
+      color: 5,
+      axis: 'y',
+      offset: 1
+    }]
+  })];
+  var edges = [Cubie({
+    stickers: [{
+      color: 1,
+      axis: 'z',
+      offset: -1
+    }, {
+      color: 0,
+      axis: 'y',
+      offset: -1
+    }]
+  }), Cubie({
+    stickers: [{
+      color: 2,
+      axis: 'x',
+      offset: 1
+    }, {
+      color: 0,
+      axis: 'y',
+      offset: -1
+    }]
+  }), Cubie({
+    stickers: [{
+      color: 3,
+      axis: 'z',
+      offset: 1
+    }, {
+      color: 0,
+      axis: 'y',
+      offset: -1
+    }]
+  }), Cubie({
+    stickers: [{
+      color: 4,
+      axis: 'x',
+      offset: -1
+    }, {
+      color: 0,
+      axis: 'y',
+      offset: -1
+    }]
+  }), Cubie({
+    stickers: [{
+      color: 2,
+      axis: 'x',
+      offset: 1
+    }, {
+      color: 1,
+      axis: 'z',
+      offset: -1
+    }]
+  }), Cubie({
+    stickers: [{
+      color: 2,
+      axis: 'x',
+      offset: 1
+    }, {
+      color: 3,
+      axis: 'z',
+      offset: 1
+    }]
+  }), Cubie({
+    stickers: [{
+      color: 4,
+      axis: 'x',
+      offset: -1
+    }, {
+      color: 3,
+      axis: 'z',
+      offset: 1
+    }]
+  }), Cubie({
+    stickers: [{
+      color: 4,
+      axis: 'x',
+      offset: -1
+    }, {
+      color: 1,
+      axis: 'z',
+      offset: -1
+    }]
+  }), Cubie({
+    stickers: [{
+      color: 1,
+      axis: 'z',
+      offset: -1
+    }, {
+      color: 5,
+      axis: 'y',
+      offset: 1
+    }]
+  }), Cubie({
+    stickers: [{
+      color: 2,
+      axis: 'x',
+      offset: 1
+    }, {
+      color: 5,
+      axis: 'y',
+      offset: 1
+    }]
+  }), Cubie({
+    stickers: [{
+      color: 3,
+      axis: 'z',
+      offset: 1
+    }, {
+      color: 5,
+      axis: 'y',
+      offset: 1
+    }]
+  }), Cubie({
+    stickers: [{
+      color: 4,
+      axis: 'x',
+      offset: -1
+    }, {
+      color: 5,
+      axis: 'y',
+      offset: 1
+    }]
+  })];
+  var corners = [Cubie({
+    stickers: [{
+      color: 2,
+      axis: 'x',
+      offset: 1
+    }, {
+      color: 0,
+      axis: 'y',
+      offset: -1
+    }, {
+      color: 1,
+      axis: 'z',
+      offset: -1
+    }]
+  }), Cubie({
+    stickers: [{
+      color: 2,
+      axis: 'x',
+      offset: 1
+    }, {
+      color: 0,
+      axis: 'y',
+      offset: -1
+    }, {
+      color: 3,
+      axis: 'z',
+      offset: 1
+    }]
+  }), Cubie({
+    stickers: [{
+      color: 4,
+      axis: 'x',
+      offset: -1
+    }, {
+      color: 0,
+      axis: 'y',
+      offset: -1
+    }, {
+      color: 3,
+      axis: 'z',
+      offset: 1
+    }]
+  }), Cubie({
+    stickers: [{
+      color: 4,
+      axis: 'x',
+      offset: -1
+    }, {
+      color: 0,
+      axis: 'y',
+      offset: -1
+    }, {
+      color: 1,
+      axis: 'z',
+      offset: -1
+    }]
+  }), Cubie({
+    stickers: [{
+      color: 2,
+      axis: 'x',
+      offset: 1
+    }, {
+      color: 5,
+      axis: 'y',
+      offset: 1
+    }, {
+      color: 1,
+      axis: 'z',
+      offset: -1
+    }]
+  }), Cubie({
+    stickers: [{
+      color: 2,
+      axis: 'x',
+      offset: 1
+    }, {
+      color: 5,
+      axis: 'y',
+      offset: 1
+    }, {
+      color: 3,
+      axis: 'z',
+      offset: 1
+    }]
+  }), Cubie({
+    stickers: [{
+      color: 4,
+      axis: 'x',
+      offset: -1
+    }, {
+      color: 5,
+      axis: 'y',
+      offset: 1
+    }, {
+      color: 3,
+      axis: 'z',
+      offset: 1
+    }]
+  }), Cubie({
+    stickers: [{
+      color: 4,
+      axis: 'x',
+      offset: -1
+    }, {
+      color: 5,
+      axis: 'y',
+      offset: 1
+    }, {
+      color: 1,
+      axis: 'z',
+      offset: -1
+    }]
+  })];
+  var cube = {
+    edges: edges.map(function (edge) {
+      return edge.stickers.map(function (sticker) {
+        return sticker.color;
+      });
+    }),
+    corners: corners.map(function (corner) {
+      return corner.stickers.map(function (sticker) {
+        return sticker.color;
+      });
+    }),
+    centres: centres.map(function (centre) {
+      return centre.stickers.map(function (sticker) {
+        return sticker.color;
+      });
+    }),
+    cubies: {
+      edges: edges,
+      corners: corners,
+      centres: centres
+    },
+    setCubieColors: function setCubieColors(positions, type) {
+      for (var i = 0; i < positions.length; i++) {
+        var index = positions[i];
+        cube.cubies[type][index].setColors(cube[type][index]);
+      }
+    }
+  };
+  var queue = []; // let lastMove;
+
+  return {
+    // moves_instant
+    // combine axial
+    move: function move(_move) {
+      // if (queue.length === 0 && lastMove) {
+      //     lastMove.tween(0);
+      // }
+      queue.push(Object(_moves__WEBPACK_IMPORTED_MODULE_1__["getMove"])(_move, cube));
+    },
+    moves: function moves(_moves) {
+      return queue.push.apply(queue, _toConsumableArray(Object(_moves__WEBPACK_IMPORTED_MODULE_1__["getMoves"])(_moves, cube)));
+    },
+    render: function render() {
+      if (queue.length) {
+        // const tps = Math.max(queue.length, 5);
+        var tps = 4;
+        var diff = 1000 / tps;
+        var now = performance.now();
+        var move = queue[0];
+
+        if (!move.epoch) {
+          move.epoch = now;
+        }
+
+        var elapsed = now - move.epoch;
+
+        if (elapsed > diff) {
+          move.apply(); // lastMove extra offset -> fix to axial
+          // if (queue.length === 1) {
+          //     move.tween(require('zdog').lerp(0, -0.01, Math.random()));
+          // }
+
+          lastMove = queue.shift();
+        } else {
+          move.tween(elapsed / diff);
+        }
+      }
+    }
+  };
+});
+
+/***/ }),
+
+/***/ "./src/main.js":
+/*!*********************!*\
+  !*** ./src/main.js ***!
+  \*********************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var zdog__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! zdog */ "./node_modules/zdog/js/index.js");
+/* harmony import */ var zdog__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(zdog__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./util */ "./src/util.js");
+/* harmony import */ var _cube__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./cube */ "./src/cube.js");
+
+
+
+/*
+ * examples
+ *
+ * stickerless
+ * backface
+ * japanese
+ * snap to position
+ * record/playback
+ * alg demo
+ * ksim flexlayout-react
+ * solve playback
+ * move slider (slide during moves) | lerp | snap
+ * return to position lerp / delay
+ * timer
+ * solver
+ * trainer
+ * controlled position
+ * disco
+ * pillowed
+ * R3 M'R2 axial
+ * R2'
+ */
+
+function zsim(container) {
+  var zoom = 2;
+  var alpha = 1;
+  var colors = ['#ffffff', '#0045ad', '#b90000', '#009b48', '#ff5900', '#ffd500'].map(function (color) {
+    return Object(_util__WEBPACK_IMPORTED_MODULE_1__["hexToRgba"])(color, alpha);
+  });
+  var cubeColor = Object(_util__WEBPACK_IMPORTED_MODULE_1__["hexToRgba"])('#000', alpha); // rgb
+
+  var element = container.appendChild(document.createElement('canvas'));
+  element.setAttribute('width', zoom * 400);
+  element.setAttribute('height', zoom * 400);
+  var illo = new zdog__WEBPACK_IMPORTED_MODULE_0___default.a.Illustration({
+    element: element,
+    zoom: zoom,
+    dragRotate: true
+  });
+  var cube = Object(_cube__WEBPACK_IMPORTED_MODULE_2__["default"])({
+    illo: illo,
+    zoom: zoom,
+    colors: colors,
+    cubeColor: cubeColor
+  });
+
+  (function loop() {
+    cube.render();
+    illo.updateRenderGraph();
+    requestAnimationFrame(loop);
+  })();
+
+  return cube;
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (zsim);
+
+/***/ }),
+
+/***/ "./src/moves.js":
+/*!**********************!*\
+  !*** ./src/moves.js ***!
+  \**********************/
+/*! exports provided: quarter, half, getMove, getMoves */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "quarter", function() { return quarter; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "half", function() { return half; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getMove", function() { return getMove; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getMoves", function() { return getMoves; });
+/* harmony import */ var zdog__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! zdog */ "./node_modules/zdog/js/index.js");
+/* harmony import */ var zdog__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(zdog__WEBPACK_IMPORTED_MODULE_0__);
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
+
+var quarter = zdog__WEBPACK_IMPORTED_MODULE_0__["TAU"] / 4;
+var half = zdog__WEBPACK_IMPORTED_MODULE_0__["TAU"] / 2; // U B R F L D
+
+var moveList = {
+  R: {
+    edges: [5, 9, 4, 1],
+    corners: [5, 4, 0, 1],
+    centre: 2,
+    axis: 'x'
+  },
+  U: {
+    edges: [3, 2, 1, 0],
+    corners: [3, 2, 1, 0],
+    centre: 0,
+    axis: 'y'
+  },
+  F: {
+    edges: [6, 10, 5, 2],
+    corners: [1, 2, 6, 5],
+    centre: 3,
+    axis: 'z'
+  },
+  L: {
+    edges: [3, 7, 11, 6],
+    corners: [2, 3, 7, 6],
+    centre: 4,
+    axis: 'x'
+  },
+  B: {
+    edges: [4, 8, 7, 0],
+    corners: [4, 7, 3, 0],
+    centre: 1,
+    axis: 'z'
+  },
+  D: {
+    edges: [8, 9, 10, 11],
+    corners: [4, 5, 6, 7],
+    centre: 5,
+    axis: 'y'
+  },
+  M: {
+    centres: [0, 1, 5, 3],
+    edges: [2, 0, 8, 10],
+    axis: 'x'
+  },
+  E: {
+    centres: [3, 4, 1, 2],
+    edges: [4, 5, 6, 7],
+    axis: 'y'
+  },
+  S: {
+    centres: [4, 5, 2, 0],
+    edges: [3, 11, 9, 1],
+    axis: 'z'
+  },
+  r: {
+    moves: [toObject("R"), toObject("M'")]
+  },
+  l: {
+    moves: [toObject("L"), toObject("M")]
+  },
+  f: {
+    moves: [toObject("F"), toObject("S")]
+  },
+  b: {
+    moves: [toObject("B"), toObject("S'")]
+  },
+  u: {
+    moves: [toObject("U"), toObject("E'")]
+  },
+  d: {
+    moves: [toObject("D"), toObject("E")]
+  },
+  x: {
+    moves: [toObject("R"), toObject("M'"), toObject("L'")]
+  },
+  y: {
+    moves: [toObject("U"), toObject("E'"), toObject("D'")]
+  },
+  z: {
+    moves: [toObject("F"), toObject("S"), toObject("B")]
+  }
+};
+function getMove(moveRaw, cube) {
+  var _toObject = toObject(moveRaw),
+      move = _toObject.move,
+      order = _toObject.order;
+
+  if (!moveList[move]) throw new Error("invalid move ".concat(move));
+  var _moveList$move = moveList[move],
+      corners = _moveList$move.corners,
+      edges = _moveList$move.edges,
+      centres = _moveList$move.centres,
+      centre = _moveList$move.centre,
+      axis = _moveList$move.axis,
+      moves = _moveList$move.moves; // calculate transforms
+
+  var transforms = [];
+  corners && transforms.push.apply(transforms, _toConsumableArray(corners.map(function (index) {
+    return cube.cubies.corners[index];
+  })));
+  edges && transforms.push.apply(transforms, _toConsumableArray(edges.map(function (index) {
+    return cube.cubies.edges[index];
+  })));
+  centres && transforms.push.apply(transforms, _toConsumableArray(centres.map(function (index) {
+    return cube.cubies.centres[index];
+  })));
+  typeof centre !== 'undefined' && transforms.push(cube.cubies.centres[centre]); // if (moves) {
+  //     moves.forEach(move => {
+  //         transforms.push(...getMove(applyOrder(clone(move), order), cube).transforms);
+  //     });
+  // }
+  // animation function
+
+  function tween(_i) {
+    var i = _i * _i * (2 - _i * _i); // TODO: easing
+
+    if (transforms.length !== 0) {
+      for (var j = 0; j < transforms.length; j++) {
+        var cubie = transforms[j];
+        cubie.anchor.rotate[axis] = Object(zdog__WEBPACK_IMPORTED_MODULE_0__["lerp"])(0, quarter * order, i);
+      }
+    }
+  } // clean up move
+
+
+  function apply() {
+    moves && moves.forEach(function (move) {
+      getMove(applyOrder(clone(move), order), cube).apply();
+    });
+
+    if (edges) {
+      // force axis as z if we have a slice move (for some reason?)
+      doCycle(cube.edges, order, edges, centres ? 'z' : axis);
+      cube.setCubieColors(edges, 'edges');
+    }
+
+    if (centres) {
+      doCycle(cube.centres, order, centres, axis);
+      cube.setCubieColors(centres, 'centres');
+    }
+
+    if (corners) {
+      doCycle(cube.corners, order, corners, axis);
+      cube.setCubieColors(corners, 'corners');
+    } // reset transforms
+
+
+    tween(0);
+  }
+
+  return {
+    apply: apply,
+    tween: tween,
+    transforms: transforms,
+    axis: axis
+  };
+}
+function getMoves(moves, cube) {
+  return splitMoves(moves).map(function (move) {
+    return getMove(move, cube);
+  });
+}
+
+function splitMoves(str) {
+  if (typeof str !== 'string') return str;
+  return str.replace(/\s/g, '').split(/(\w\d|\w'|\w)/).filter(function (move) {
+    return move;
+  });
+}
+
+function toObject(move) {
+  if (typeof move !== 'string') return move;
+  return {
+    move: move[0],
+    order: {
+      '\'': -1,
+      '2': 2
+    }[move[1]] || 1
+  };
+}
+
+function clone(move) {
+  return Object.assign({}, move);
+}
+
+function applyOrder(move, order) {
+  if (order === 1) return move;
+
+  if (order === -1) {
+    move.order = move.order === 2 ? 2 : -move.order;
+  }
+
+  if (order == 2) {
+    move.order = move.order === 2 ? 0 : 2;
+  }
+
+  return move;
+}
+
+var cornerSwaps = {
+  x: [1, 2],
+  y: [0, 2],
+  z: [0, 1]
+};
+
+function doCycle(arr, order, cycle, axis) {
+  if (order === 0) return;
+
+  if (order === -1 || order === 3) {
+    cycle = _toConsumableArray(cycle).reverse();
+  }
+
+  if (order === 2) {
+    doCycle(arr, 1, cycle, axis);
+  } // cycles
+
+
+  for (var i = 0; i < cycle.length - 1; i++) {
+    swap(arr, cycle[i], cycle[i + 1]);
+  } // corner 'twists'
+
+
+  if (arr[0].length === 3) {
+    for (var _i2 = 0; _i2 < cycle.length; _i2++) {
+      swap.apply(void 0, [arr[cycle[_i2]]].concat(_toConsumableArray(cornerSwaps[axis])));
+    }
+  } // edge flips
+  else if (axis === 'z') {
+      for (var _i3 = 0; _i3 < cycle.length; _i3++) {
+        swap(arr[cycle[_i3]], 0, 1);
+      }
+    }
+}
+
+function swap(arr, first, second) {
+  var tmp = arr[first];
+  arr[first] = arr[second];
+  arr[second] = tmp;
+}
+
+/***/ }),
+
+/***/ "./src/util.js":
+/*!*********************!*\
+  !*** ./src/util.js ***!
+  \*********************/
+/*! exports provided: hexToRgba */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "hexToRgba", function() { return hexToRgba; });
+function hexToRgba(x) {
+  var a = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
+  return "rgba(".concat(x.match(x[5] ? /\w./g : /\w/g).map(function (d) {
+    return "0x" + d + d & 255;
+  }), ",").concat(a, ")");
+}
+
+/***/ })
+
+/******/ });
+//# sourceMappingURL=main.js.map

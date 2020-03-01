@@ -14,19 +14,16 @@
     </head>
     <body>
         <main> </main>
-        <button id="sune">sune</button>
-        <button id="asune">asune</button>
+        <button data-alg="RUR'URU2R'">sune</button>
+        <button data-alg="r'r'">small R prime</button>
         <script>
             <!-- dat.gui -->
 
-    const cube = zsim.default(document.querySelector('main'));
+            const cube = zsim.default(document.querySelector('main'));
 
-document.querySelector('#sune')
-    .addEventListener('click', () => cube.moves(`RUR'URU2R'`))
-document.querySelector('#asune')
-    .addEventListener('click', () => cube.moves(`RU2R'U'RU'R'`))
-
-
+            [...document.querySelectorAll('[data-alg]')].forEach(node => {
+                node.addEventListener('click', () => cube.moves(node.dataset.alg))
+            });
         </script>
     </body>
 </html>

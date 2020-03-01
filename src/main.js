@@ -11,6 +11,7 @@ import Cube from './cube';
  * snap to position
  * record/playback
  * alg demo
+ * ksim flexlayout-react
  * solve playback
  * move slider (slide during moves) | lerp | snap
  * return to position lerp / delay
@@ -21,6 +22,7 @@ import Cube from './cube';
  * disco
  * pillowed
  * R3 M'R2 axial
+ * R2'
  */
 
 function zsim(container) {

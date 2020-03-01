@@ -229,15 +229,22 @@ export default function({ illo, zoom, colors: colorsRGB, cubeColor }) {
     };
 
     const queue = [];
+    // let lastMove;
 
     return {
         // moves_instant
         // combine axial
-        move: (move) => queue.push(getMove(move, cube)),
+        move: (move) => {
+            // if (queue.length === 0 && lastMove) {
+            //     lastMove.tween(0);
+            // }
+            queue.push(getMove(move, cube))
+        },
         moves: (moves) => queue.push(...getMoves(moves, cube)),
         render: () => {
             if (queue.length) {
-                const tps = Math.max(queue.length, 5);
+                // const tps = Math.max(queue.length, 5);
+                const tps = 4;
                 const diff = 1000 / tps;
 
                 const now = performance.now();
@@ -248,7 +255,12 @@ export default function({ illo, zoom, colors: colorsRGB, cubeColor }) {
                 const elapsed = now - move.epoch;
                 if (elapsed > diff) {
                     move.apply();
-                    queue.shift();
+
+                    // lastMove extra offset -> fix to axial
+                    // if (queue.length === 1) {
+                    //     move.tween(require('zdog').lerp(0, -0.01, Math.random()));
+                    // }
+                    lastMove = queue.shift();
                 } else {
                     move.tween(elapsed / diff);
                 }

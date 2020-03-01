@@ -26,16 +26,19 @@ const moveList = {
     L: {
         edges: [3, 7, 11, 6],
         corners: [2, 3, 7, 6],
+        centre: 4,
         axis: 'x',
     },
     B: {
         edges: [4, 8, 7, 0],
         corners: [4, 7, 3, 0],
+        centre: 1,
         axis: 'z',
     },
     D: {
         edges: [8, 9, 10, 11],
         corners: [4, 5, 6, 7],
+        centre: 5,
         axis: 'y',
     },
     M: {
@@ -54,6 +57,14 @@ const moveList = {
         axis: 'z',
     },
     r: { moves: [toObject(`R`), toObject(`M'`)] },
+    l: { moves: [toObject(`L`), toObject(`M`)] },
+    f: { moves: [toObject(`F`), toObject(`S`)] },
+    b: { moves: [toObject(`B`), toObject(`S'`)] },
+    u: { moves: [toObject(`U`), toObject(`E'`)] },
+    d: { moves: [toObject(`D`), toObject(`E`)] },
+    x: { moves: [toObject(`R`), toObject(`M'`), toObject(`L'`)] },
+    y: { moves: [toObject(`U`), toObject(`E'`), toObject(`D'`)] },
+    z: { moves: [toObject(`F`), toObject(`S`), toObject(`B`)] },
 };
 
 export function getMove(moveRaw, cube) {
@@ -72,11 +83,20 @@ export function getMove(moveRaw, cube) {
     const transforms = [];
     corners && transforms.push(...corners.map(index => cube.cubies.corners[index]));
     edges && transforms.push(...edges.map(index => cube.cubies.edges[index]));
+    centres && transforms.push(...centres.map(index => cube.cubies.centres[index]));
     typeof centre !== 'undefined' && transforms.push(cube.cubies.centres[centre]);
 
+    // if (moves) {
+    //     moves.forEach(move => {
+    //         transforms.push(...getMove(applyOrder(clone(move), order), cube).transforms);
+    //     });
+    // }
+
     // animation function
-    function tween(i) {
-        if (corners) {
+    function tween(_i) {
+        const i = _i * _i * (2 - _i * _i);
+        // TODO: easing
+        if (transforms.length !== 0) {
             for (let j = 0; j < transforms.length; j++) {
                 const cubie = transforms[j];
                 cubie.anchor.rotate[axis] = lerp(0, quarter * order, i);
@@ -86,9 +106,9 @@ export function getMove(moveRaw, cube) {
     }
     // clean up move
     function apply() {
-        moves && (
-            moves.forEach(move => getMove(applyOrder(move, order), cube).apply())
-        );
+        moves && moves.forEach(move => {
+            getMove(applyOrder(clone(move), order), cube).apply()
+        });
         if (edges) {
             // force axis as z if we have a slice move (for some reason?)
             doCycle(cube.edges, order, edges, centres ? 'z' : axis);
@@ -109,6 +129,8 @@ export function getMove(moveRaw, cube) {
     return {
         apply,
         tween,
+        transforms,
+        axis,
     };
 }
 
@@ -130,6 +152,10 @@ function toObject(move) {
             '2': 2,
         }[move[1]] || 1,
     };
+}
+
+function clone(move) {
+    return Object.assign({}, move);
 }
 
 function applyOrder(move, order) {
