@@ -38,8 +38,11 @@ export default function({ illo, zoom, colors: colorsRGB, cubeColor }) {
         };
 
         const stickerElements = stickers.map(({ color, axis, offset }) => {
-            const stickerEl = new Zdog.Rect({
+            const group = new Zdog.Group({
                 addTo: container,
+            });
+            const stickerEl = new Zdog.Rect({
+                addTo: group,
                 width: size * 0.9,
                 height: size * 0.9,
                 stroke: 2,
@@ -50,7 +53,14 @@ export default function({ illo, zoom, colors: colorsRGB, cubeColor }) {
             });
 
             stickerEl.translate[axis] += stickerOffset * offset;
-            return stickerEl;
+
+            const back = stickerEl.copy();
+            back.translate[axis] += size * offset;
+            const zOffset = axis === 'z' ? -1 : 1;
+            back.front = { z: quarter * offset * zOffset };
+            back.backface = false;
+
+            return group;
         });
 
         return {
@@ -59,7 +69,9 @@ export default function({ illo, zoom, colors: colorsRGB, cubeColor }) {
             setColors: (colors) => {
                 for (let i = 0; i < stickerElements.length; i++) {
                     const color = colors[i];
-                    stickerElements[i].color = colorsRGB[color];
+                    stickerElements[i].children.forEach(child => {
+                        child.color = colorsRGB[color];
+                    });
                     stickers[i].color = color;
                 }
             },
@@ -241,6 +253,9 @@ export default function({ illo, zoom, colors: colorsRGB, cubeColor }) {
             queue.push(getMove(move, cube))
         },
         moves: (moves) => queue.push(...getMoves(moves, cube)),
+        movesInstant: (moves) => {
+            getMoves(moves, cube).forEach(move => move.apply());
+        },
         render: () => {
             if (queue.length) {
                 // const tps = Math.max(queue.length, 5);
@@ -258,9 +273,11 @@ export default function({ illo, zoom, colors: colorsRGB, cubeColor }) {
 
                     // lastMove extra offset -> fix to axial
                     // if (queue.length === 1) {
-                    //     move.tween(require('zdog').lerp(0, -0.01, Math.random()));
+                    //     move.tween(require('zdog').lerp(0, -0.02, Math.random()));
                     // }
-                    lastMove = queue.shift();
+                    // move.tweenClean()
+                    // lastMove =
+                        queue.shift();
                 } else {
                     move.tween(elapsed / diff);
                 }

@@ -2577,8 +2577,11 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
       var color = _ref4.color,
           axis = _ref4.axis,
           offset = _ref4.offset;
+      var group = new zdog__WEBPACK_IMPORTED_MODULE_0___default.a.Group({
+        addTo: container
+      });
       var stickerEl = new zdog__WEBPACK_IMPORTED_MODULE_0___default.a.Rect({
-        addTo: container,
+        addTo: group,
         width: size * 0.9,
         height: size * 0.9,
         stroke: 2,
@@ -2587,16 +2590,29 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
         rotate: rotations[axis]
       });
       stickerEl.translate[axis] += stickerOffset * offset;
-      return stickerEl;
+      var back = stickerEl.copy();
+      back.translate[axis] += size * offset;
+      var zOffset = axis === 'z' ? -1 : 1;
+      back.front = {
+        z: _moves__WEBPACK_IMPORTED_MODULE_1__["quarter"] * offset * zOffset
+      };
+      back.backface = false;
+      return group;
     });
     return {
       anchor: anchor,
       stickers: stickers,
       setColors: function setColors(colors) {
-        for (var i = 0; i < stickerElements.length; i++) {
+        var _loop = function _loop(i) {
           var color = colors[i];
-          stickerElements[i].color = colorsRGB[color];
+          stickerElements[i].children.forEach(function (child) {
+            child.color = colorsRGB[color];
+          });
           stickers[i].color = color;
+        };
+
+        for (var i = 0; i < stickerElements.length; i++) {
+          _loop(i);
         }
       }
     };
@@ -2915,6 +2931,11 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
     moves: function moves(_moves) {
       return queue.push.apply(queue, _toConsumableArray(Object(_moves__WEBPACK_IMPORTED_MODULE_1__["getMoves"])(_moves, cube)));
     },
+    movesInstant: function movesInstant(moves) {
+      Object(_moves__WEBPACK_IMPORTED_MODULE_1__["getMoves"])(moves, cube).forEach(function (move) {
+        return move.apply();
+      });
+    },
     render: function render() {
       if (queue.length) {
         // const tps = Math.max(queue.length, 5);
@@ -2932,10 +2953,12 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
         if (elapsed > diff) {
           move.apply(); // lastMove extra offset -> fix to axial
           // if (queue.length === 1) {
-          //     move.tween(require('zdog').lerp(0, -0.01, Math.random()));
+          //     move.tween(require('zdog').lerp(0, -0.02, Math.random()));
           // }
+          // move.tweenClean()
+          // lastMove =
 
-          lastMove = queue.shift();
+          queue.shift();
         } else {
           move.tween(elapsed / diff);
         }
@@ -2976,6 +2999,8 @@ __webpack_require__.r(__webpack_exports__);
  * move slider (slide during moves) | lerp | snap
  * return to position lerp / delay
  * timer
+ * -2 order
+ * bld
  * solver
  * trainer
  * controlled position
@@ -2991,7 +3016,7 @@ function zsim(container) {
   var colors = ['#ffffff', '#0045ad', '#b90000', '#009b48', '#ff5900', '#ffd500'].map(function (color) {
     return Object(_util__WEBPACK_IMPORTED_MODULE_1__["hexToRgba"])(color, alpha);
   });
-  var cubeColor = Object(_util__WEBPACK_IMPORTED_MODULE_1__["hexToRgba"])('#000', alpha); // rgb
+  var cubeColor = Object(_util__WEBPACK_IMPORTED_MODULE_1__["hexToRgba"])('#814ED0', alpha); // rgb
 
   var element = container.appendChild(document.createElement('canvas'));
   element.setAttribute('width', zoom * 400);
@@ -3001,6 +3026,8 @@ function zsim(container) {
     zoom: zoom,
     dragRotate: true
   });
+  illo.rotate.y += 0.3;
+  illo.rotate.x -= 0.3;
   var cube = Object(_cube__WEBPACK_IMPORTED_MODULE_2__["default"])({
     illo: illo,
     zoom: zoom,
@@ -3071,29 +3098,34 @@ var moveList = {
     edges: [3, 7, 11, 6],
     corners: [2, 3, 7, 6],
     centre: 4,
-    axis: 'x'
+    axis: 'x',
+    axisFlip: true
   },
   B: {
     edges: [4, 8, 7, 0],
     corners: [4, 7, 3, 0],
     centre: 1,
-    axis: 'z'
+    axis: 'z',
+    axisFlip: true
   },
   D: {
     edges: [8, 9, 10, 11],
     corners: [4, 5, 6, 7],
     centre: 5,
-    axis: 'y'
+    axis: 'y',
+    axisFlip: true
   },
   M: {
     centres: [0, 1, 5, 3],
     edges: [2, 0, 8, 10],
-    axis: 'x'
+    axis: 'x',
+    axisFlip: true
   },
   E: {
     centres: [3, 4, 1, 2],
     edges: [4, 5, 6, 7],
-    axis: 'y'
+    axis: 'y',
+    axisFlip: true
   },
   S: {
     centres: [4, 5, 2, 0],
@@ -3140,6 +3172,7 @@ function getMove(moveRaw, cube) {
       centres = _moveList$move.centres,
       centre = _moveList$move.centre,
       axis = _moveList$move.axis,
+      axisFlip = _moveList$move.axisFlip,
       moves = _moveList$move.moves; // calculate transforms
 
   var transforms = [];
@@ -3152,28 +3185,33 @@ function getMove(moveRaw, cube) {
   centres && transforms.push.apply(transforms, _toConsumableArray(centres.map(function (index) {
     return cube.cubies.centres[index];
   })));
-  typeof centre !== 'undefined' && transforms.push(cube.cubies.centres[centre]); // if (moves) {
-  //     moves.forEach(move => {
-  //         transforms.push(...getMove(applyOrder(clone(move), order), cube).transforms);
-  //     });
-  // }
-  // animation function
+  typeof centre !== 'undefined' && transforms.push(cube.cubies.centres[centre]);
+  var axisOrder = axisFlip ? -1 : 1;
+  var extraMoves = moves && moves.map(function (move) {
+    return getMove(applyOrder(clone(move), order), cube);
+  }); // animation function
 
   function tween(_i) {
-    var i = _i * _i * (2 - _i * _i); // TODO: easing
+    var i = Object(zdog__WEBPACK_IMPORTED_MODULE_0__["easeInOut"])(_i);
+
+    if (extraMoves) {
+      extraMoves.forEach(function (move) {
+        return move.tween(i);
+      });
+    }
 
     if (transforms.length !== 0) {
       for (var j = 0; j < transforms.length; j++) {
         var cubie = transforms[j];
-        cubie.anchor.rotate[axis] = Object(zdog__WEBPACK_IMPORTED_MODULE_0__["lerp"])(0, quarter * order, i);
+        cubie.anchor.rotate[axis] = Object(zdog__WEBPACK_IMPORTED_MODULE_0__["lerp"])(0, quarter * order * axisOrder, i);
       }
     }
   } // clean up move
 
 
   function apply() {
-    moves && moves.forEach(function (move) {
-      getMove(applyOrder(clone(move), order), cube).apply();
+    extraMoves && extraMoves.forEach(function (move) {
+      return move.apply();
     });
 
     if (edges) {
@@ -3183,7 +3221,7 @@ function getMove(moveRaw, cube) {
     }
 
     if (centres) {
-      doCycle(cube.centres, order, centres, axis);
+      doCycle(cube.centres, order, centres);
       cube.setCubieColors(centres, 'centres');
     }
 

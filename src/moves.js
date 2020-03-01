@@ -1,4 +1,4 @@
-import { TAU, lerp } from 'zdog';
+import { TAU, lerp, easeInOut } from 'zdog';
 
 export const quarter = TAU / 4;
 export const half = TAU / 2;
@@ -28,28 +28,33 @@ const moveList = {
         corners: [2, 3, 7, 6],
         centre: 4,
         axis: 'x',
+        axisFlip: true,
     },
     B: {
         edges: [4, 8, 7, 0],
         corners: [4, 7, 3, 0],
         centre: 1,
         axis: 'z',
+        axisFlip: true,
     },
     D: {
         edges: [8, 9, 10, 11],
         corners: [4, 5, 6, 7],
         centre: 5,
         axis: 'y',
+        axisFlip: true,
     },
     M: {
         centres: [0, 1, 5, 3],
         edges: [2, 0, 8, 10],
         axis: 'x',
+        axisFlip: true,
     },
     E: {
         centres: [3, 4, 1, 2],
         edges: [4, 5, 6, 7],
         axis: 'y',
+        axisFlip: true,
     },
     S: {
         centres: [4, 5, 2, 0],
@@ -76,6 +81,7 @@ export function getMove(moveRaw, cube) {
         centres,
         centre,
         axis,
+        axisFlip,
         moves,
     } = moveList[move];
 
@@ -85,37 +91,34 @@ export function getMove(moveRaw, cube) {
     edges && transforms.push(...edges.map(index => cube.cubies.edges[index]));
     centres && transforms.push(...centres.map(index => cube.cubies.centres[index]));
     typeof centre !== 'undefined' && transforms.push(cube.cubies.centres[centre]);
-
-    // if (moves) {
-    //     moves.forEach(move => {
-    //         transforms.push(...getMove(applyOrder(clone(move), order), cube).transforms);
-    //     });
-    // }
+    const axisOrder = axisFlip ? -1 : 1;
+    const extraMoves = moves && (
+        moves.map(move => getMove(applyOrder(clone(move), order), cube))
+    );
 
     // animation function
     function tween(_i) {
-        const i = _i * _i * (2 - _i * _i);
-        // TODO: easing
+        const i = easeInOut(_i);
+        if (extraMoves) {
+            extraMoves.forEach(move => move.tween(i));
+        }
         if (transforms.length !== 0) {
             for (let j = 0; j < transforms.length; j++) {
                 const cubie = transforms[j];
-                cubie.anchor.rotate[axis] = lerp(0, quarter * order, i);
+                cubie.anchor.rotate[axis] = lerp(0, quarter * order * axisOrder, i);
             }
         }
-
     }
     // clean up move
     function apply() {
-        moves && moves.forEach(move => {
-            getMove(applyOrder(clone(move), order), cube).apply()
-        });
+        extraMoves && extraMoves.forEach(move => move.apply());
         if (edges) {
             // force axis as z if we have a slice move (for some reason?)
             doCycle(cube.edges, order, edges, centres ? 'z' : axis);
             cube.setCubieColors(edges, 'edges');
         }
         if (centres) {
-            doCycle(cube.centres, order, centres, axis);
+            doCycle(cube.centres, order, centres);
             cube.setCubieColors(centres, 'centres');
         }
         if (corners) {

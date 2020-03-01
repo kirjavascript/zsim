@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>petrus</title>
+        <meta charset="UTF-8" />
+        <meta name="theme-color" content="#000000">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, minimal-ui">
+        <script src="./main.js"></script>
+        <style>
+            html {
+                background-color: steelblue;
+            }
+        </style>
+    </head>
+    <body>
+        <main> </main>
+        <script>
+            const cube = zsim.default(document.querySelector('main'));
+            cube.movesInstant(`U' B F' U' L' D L D U2 B2 F2 D' F2 R D U2 R2 D' U F2 U B' R' U L' `);
+            setTimeout(() => {
+                cube.moves(`z2 L' B' D' B2 R' L' F2 u'
+    U L2 F2 U F
+    y' U R U' R'
+    y' R U2 R' U' R2
+    U' R U R' U R U R'
+    L R' U L2 U2 R U' R' U2 L2 R U2 L'
+    y R2 U' R' U' R U R U R U' R`);
+            }, 500)
+        </script>
+    </body>
+</html>
