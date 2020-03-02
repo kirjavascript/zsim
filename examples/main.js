@@ -2520,6 +2520,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var zdog__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! zdog */ "./node_modules/zdog/js/index.js");
 /* harmony import */ var zdog__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(zdog__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _moves__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./moves */ "./src/moves.js");
+/* harmony import */ var _cubies__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./cubies */ "./src/cubies.js");
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
 
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
@@ -2528,9 +2529,14 @@ function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.
 
 function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
 
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
- // TODO: destroy -> return stickers
-// TODO: generate getters for config
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+
 
 /* harmony default export */ __webpack_exports__["default"] = (function (_ref) {
   var illo = _ref.illo,
@@ -2539,389 +2545,31 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
       cubeColor = _ref.cubeColor;
   var distance = zoom * 38;
 
-  function Cubie(_ref2) {
-    var stickers = _ref2.stickers;
-    var anchor = new zdog__WEBPACK_IMPORTED_MODULE_0___default.a.Anchor({
-      addTo: illo
-    }); // infer position from cube stickers, because why not
-
-    var translate = stickers.reduce(function (acc, _ref3) {
-      var offset = _ref3.offset,
-          axis = _ref3.axis;
-      acc[axis] = distance * offset;
-      return acc;
-    }, {});
-    var container = new zdog__WEBPACK_IMPORTED_MODULE_0___default.a.Anchor({
-      addTo: anchor,
-      translate: translate
-    });
-    var size = zoom * 36;
-    new zdog__WEBPACK_IMPORTED_MODULE_0___default.a.Box({
-      addTo: container,
-      width: size,
-      height: size,
-      depth: size,
-      stroke: false,
-      color: cubeColor
-    });
-    var stickerOffset = size / 2 + 1;
-    var rotations = {
-      x: {
-        y: _moves__WEBPACK_IMPORTED_MODULE_1__["quarter"]
-      },
-      y: {
-        x: _moves__WEBPACK_IMPORTED_MODULE_1__["quarter"]
+  var cube = _objectSpread({}, Object(_cubies__WEBPACK_IMPORTED_MODULE_2__["Model"])(), {
+    cubies: Object(_cubies__WEBPACK_IMPORTED_MODULE_2__["Cubies"])({
+      illo: illo,
+      config: {
+        distance: distance,
+        zoom: zoom,
+        cubeColor: cubeColor,
+        colorsRGB: colorsRGB
       }
-    };
-    var stickerElements = stickers.map(function (_ref4) {
-      var color = _ref4.color,
-          axis = _ref4.axis,
-          offset = _ref4.offset;
-      var group = new zdog__WEBPACK_IMPORTED_MODULE_0___default.a.Group({
-        addTo: container
-      });
-      var stickerEl = new zdog__WEBPACK_IMPORTED_MODULE_0___default.a.Rect({
-        addTo: group,
-        width: size * 0.9,
-        height: size * 0.9,
-        stroke: 2,
-        fill: true,
-        color: colorsRGB[color],
-        rotate: rotations[axis]
-      });
-      stickerEl.translate[axis] += stickerOffset * offset;
-      var back = stickerEl.copy();
-      back.translate[axis] += size * offset;
-      var zOffset = axis === 'z' ? -1 : 1;
-      back.front = {
-        z: _moves__WEBPACK_IMPORTED_MODULE_1__["quarter"] * offset * zOffset
-      };
-      back.backface = false;
-      return group;
-    });
-    return {
-      anchor: anchor,
-      stickers: stickers,
-      setColors: function setColors(colors) {
-        var _loop = function _loop(i) {
-          var color = colors[i];
-          stickerElements[i].children.forEach(function (child) {
-            child.color = colorsRGB[color];
-          });
-          stickers[i].color = color;
-        };
-
-        for (var i = 0; i < stickerElements.length; i++) {
-          _loop(i);
-        }
-      }
-    };
-  }
-
-  var centres = [Cubie({
-    stickers: [{
-      color: 0,
-      axis: 'y',
-      offset: -1
-    }]
-  }), Cubie({
-    stickers: [{
-      color: 1,
-      axis: 'z',
-      offset: -1
-    }]
-  }), Cubie({
-    stickers: [{
-      color: 2,
-      axis: 'x',
-      offset: 1
-    }]
-  }), Cubie({
-    stickers: [{
-      color: 3,
-      axis: 'z',
-      offset: 1
-    }]
-  }), Cubie({
-    stickers: [{
-      color: 4,
-      axis: 'x',
-      offset: -1
-    }]
-  }), Cubie({
-    stickers: [{
-      color: 5,
-      axis: 'y',
-      offset: 1
-    }]
-  })];
-  var edges = [Cubie({
-    stickers: [{
-      color: 1,
-      axis: 'z',
-      offset: -1
-    }, {
-      color: 0,
-      axis: 'y',
-      offset: -1
-    }]
-  }), Cubie({
-    stickers: [{
-      color: 2,
-      axis: 'x',
-      offset: 1
-    }, {
-      color: 0,
-      axis: 'y',
-      offset: -1
-    }]
-  }), Cubie({
-    stickers: [{
-      color: 3,
-      axis: 'z',
-      offset: 1
-    }, {
-      color: 0,
-      axis: 'y',
-      offset: -1
-    }]
-  }), Cubie({
-    stickers: [{
-      color: 4,
-      axis: 'x',
-      offset: -1
-    }, {
-      color: 0,
-      axis: 'y',
-      offset: -1
-    }]
-  }), Cubie({
-    stickers: [{
-      color: 2,
-      axis: 'x',
-      offset: 1
-    }, {
-      color: 1,
-      axis: 'z',
-      offset: -1
-    }]
-  }), Cubie({
-    stickers: [{
-      color: 2,
-      axis: 'x',
-      offset: 1
-    }, {
-      color: 3,
-      axis: 'z',
-      offset: 1
-    }]
-  }), Cubie({
-    stickers: [{
-      color: 4,
-      axis: 'x',
-      offset: -1
-    }, {
-      color: 3,
-      axis: 'z',
-      offset: 1
-    }]
-  }), Cubie({
-    stickers: [{
-      color: 4,
-      axis: 'x',
-      offset: -1
-    }, {
-      color: 1,
-      axis: 'z',
-      offset: -1
-    }]
-  }), Cubie({
-    stickers: [{
-      color: 1,
-      axis: 'z',
-      offset: -1
-    }, {
-      color: 5,
-      axis: 'y',
-      offset: 1
-    }]
-  }), Cubie({
-    stickers: [{
-      color: 2,
-      axis: 'x',
-      offset: 1
-    }, {
-      color: 5,
-      axis: 'y',
-      offset: 1
-    }]
-  }), Cubie({
-    stickers: [{
-      color: 3,
-      axis: 'z',
-      offset: 1
-    }, {
-      color: 5,
-      axis: 'y',
-      offset: 1
-    }]
-  }), Cubie({
-    stickers: [{
-      color: 4,
-      axis: 'x',
-      offset: -1
-    }, {
-      color: 5,
-      axis: 'y',
-      offset: 1
-    }]
-  })];
-  var corners = [Cubie({
-    stickers: [{
-      color: 2,
-      axis: 'x',
-      offset: 1
-    }, {
-      color: 0,
-      axis: 'y',
-      offset: -1
-    }, {
-      color: 1,
-      axis: 'z',
-      offset: -1
-    }]
-  }), Cubie({
-    stickers: [{
-      color: 2,
-      axis: 'x',
-      offset: 1
-    }, {
-      color: 0,
-      axis: 'y',
-      offset: -1
-    }, {
-      color: 3,
-      axis: 'z',
-      offset: 1
-    }]
-  }), Cubie({
-    stickers: [{
-      color: 4,
-      axis: 'x',
-      offset: -1
-    }, {
-      color: 0,
-      axis: 'y',
-      offset: -1
-    }, {
-      color: 3,
-      axis: 'z',
-      offset: 1
-    }]
-  }), Cubie({
-    stickers: [{
-      color: 4,
-      axis: 'x',
-      offset: -1
-    }, {
-      color: 0,
-      axis: 'y',
-      offset: -1
-    }, {
-      color: 1,
-      axis: 'z',
-      offset: -1
-    }]
-  }), Cubie({
-    stickers: [{
-      color: 2,
-      axis: 'x',
-      offset: 1
-    }, {
-      color: 5,
-      axis: 'y',
-      offset: 1
-    }, {
-      color: 1,
-      axis: 'z',
-      offset: -1
-    }]
-  }), Cubie({
-    stickers: [{
-      color: 2,
-      axis: 'x',
-      offset: 1
-    }, {
-      color: 5,
-      axis: 'y',
-      offset: 1
-    }, {
-      color: 3,
-      axis: 'z',
-      offset: 1
-    }]
-  }), Cubie({
-    stickers: [{
-      color: 4,
-      axis: 'x',
-      offset: -1
-    }, {
-      color: 5,
-      axis: 'y',
-      offset: 1
-    }, {
-      color: 3,
-      axis: 'z',
-      offset: 1
-    }]
-  }), Cubie({
-    stickers: [{
-      color: 4,
-      axis: 'x',
-      offset: -1
-    }, {
-      color: 5,
-      axis: 'y',
-      offset: 1
-    }, {
-      color: 1,
-      axis: 'z',
-      offset: -1
-    }]
-  })];
-  var cube = {
-    edges: edges.map(function (edge) {
-      return edge.stickers.map(function (sticker) {
-        return sticker.color;
-      });
     }),
-    corners: corners.map(function (corner) {
-      return corner.stickers.map(function (sticker) {
-        return sticker.color;
-      });
-    }),
-    centres: centres.map(function (centre) {
-      return centre.stickers.map(function (sticker) {
-        return sticker.color;
-      });
-    }),
-    cubies: {
-      edges: edges,
-      corners: corners,
-      centres: centres
-    },
     setCubieColors: function setCubieColors(positions, type) {
       for (var i = 0; i < positions.length; i++) {
         var index = positions[i];
         cube.cubies[type][index].setColors(cube[type][index]);
       }
     }
-  };
+  });
+
   var queue = []; // let lastMove;
 
   return {
-    // moves_instant
-    // combine axial
+    // config = getters + object
+    // cubie.destroy
+    // undo cycle
+    // combine axial { moves: [] }
     move: function move(_move) {
       // if (queue.length === 0 && lastMove) {
       //     lastMove.tween(0);
@@ -2966,6 +2614,373 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
     }
   };
 });
+
+/***/ }),
+
+/***/ "./src/cubies.js":
+/*!***********************!*\
+  !*** ./src/cubies.js ***!
+  \***********************/
+/*! exports provided: Model, Cubies */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Model", function() { return Model; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Cubies", function() { return Cubies; });
+/* harmony import */ var zdog__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! zdog */ "./node_modules/zdog/js/index.js");
+/* harmony import */ var zdog__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(zdog__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _moves__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./moves */ "./src/moves.js");
+
+
+var centres = [// U B R F L D ?
+{
+  color: 0,
+  axis: 'y',
+  offset: -1
+}, {
+  color: 1,
+  axis: 'z',
+  offset: -1
+}, {
+  color: 2,
+  axis: 'x',
+  offset: 1
+}, {
+  color: 3,
+  axis: 'z',
+  offset: 1
+}, {
+  color: 4,
+  axis: 'x',
+  offset: -1
+}, {
+  color: 5,
+  axis: 'y',
+  offset: 1
+}];
+var edges = [// UB UR UF UL
+[{
+  color: 1,
+  axis: 'z',
+  offset: -1
+}, {
+  color: 0,
+  axis: 'y',
+  offset: -1
+}], [{
+  color: 2,
+  axis: 'x',
+  offset: 1
+}, {
+  color: 0,
+  axis: 'y',
+  offset: -1
+}], [{
+  color: 3,
+  axis: 'z',
+  offset: 1
+}, {
+  color: 0,
+  axis: 'y',
+  offset: -1
+}], [{
+  color: 4,
+  axis: 'x',
+  offset: -1
+}, {
+  color: 0,
+  axis: 'y',
+  offset: -1
+}], // BR FR FL BL
+[{
+  color: 2,
+  axis: 'x',
+  offset: 1
+}, {
+  color: 1,
+  axis: 'z',
+  offset: -1
+}], [{
+  color: 2,
+  axis: 'x',
+  offset: 1
+}, {
+  color: 3,
+  axis: 'z',
+  offset: 1
+}], [{
+  color: 4,
+  axis: 'x',
+  offset: -1
+}, {
+  color: 3,
+  axis: 'z',
+  offset: 1
+}], [{
+  color: 4,
+  axis: 'x',
+  offset: -1
+}, {
+  color: 1,
+  axis: 'z',
+  offset: -1
+}], // DB DR DF DL
+[{
+  color: 1,
+  axis: 'z',
+  offset: -1
+}, {
+  color: 5,
+  axis: 'y',
+  offset: 1
+}], [{
+  color: 2,
+  axis: 'x',
+  offset: 1
+}, {
+  color: 5,
+  axis: 'y',
+  offset: 1
+}], [{
+  color: 3,
+  axis: 'z',
+  offset: 1
+}, {
+  color: 5,
+  axis: 'y',
+  offset: 1
+}], [{
+  color: 4,
+  axis: 'x',
+  offset: -1
+}, {
+  color: 5,
+  axis: 'y',
+  offset: 1
+}]];
+var corners = [// UBR URF UFL ULB
+[{
+  color: 2,
+  axis: 'x',
+  offset: 1
+}, {
+  color: 0,
+  axis: 'y',
+  offset: -1
+}, {
+  color: 1,
+  axis: 'z',
+  offset: -1
+}], [{
+  color: 2,
+  axis: 'x',
+  offset: 1
+}, {
+  color: 0,
+  axis: 'y',
+  offset: -1
+}, {
+  color: 3,
+  axis: 'z',
+  offset: 1
+}], [{
+  color: 4,
+  axis: 'x',
+  offset: -1
+}, {
+  color: 0,
+  axis: 'y',
+  offset: -1
+}, {
+  color: 3,
+  axis: 'z',
+  offset: 1
+}], [{
+  color: 4,
+  axis: 'x',
+  offset: -1
+}, {
+  color: 0,
+  axis: 'y',
+  offset: -1
+}, {
+  color: 1,
+  axis: 'z',
+  offset: -1
+}], // DRB DFR DLF DBL
+[{
+  color: 2,
+  axis: 'x',
+  offset: 1
+}, {
+  color: 5,
+  axis: 'y',
+  offset: 1
+}, {
+  color: 1,
+  axis: 'z',
+  offset: -1
+}], [{
+  color: 2,
+  axis: 'x',
+  offset: 1
+}, {
+  color: 5,
+  axis: 'y',
+  offset: 1
+}, {
+  color: 3,
+  axis: 'z',
+  offset: 1
+}], [{
+  color: 4,
+  axis: 'x',
+  offset: -1
+}, {
+  color: 5,
+  axis: 'y',
+  offset: 1
+}, {
+  color: 3,
+  axis: 'z',
+  offset: 1
+}], [{
+  color: 4,
+  axis: 'x',
+  offset: -1
+}, {
+  color: 5,
+  axis: 'y',
+  offset: 1
+}, {
+  color: 1,
+  axis: 'z',
+  offset: -1
+}]];
+function Model() {
+  return {
+    edges: edges.map(function (edge) {
+      return edge.map(function (sticker) {
+        return sticker.color;
+      });
+    }),
+    corners: corners.map(function (corner) {
+      return corner.map(function (sticker) {
+        return sticker.color;
+      });
+    }),
+    centres: centres.map(function (centre) {
+      return [centre.color];
+    })
+  };
+}
+function Cubies(obj) {
+  return {
+    edges: edges.map(function (edge) {
+      return Cubie(cloneStickers(edge), obj);
+    }),
+    corners: corners.map(function (corner) {
+      return Cubie(cloneStickers(corner), obj);
+    }),
+    centres: centres.map(function (centre) {
+      return Cubie(cloneStickers([centre]), obj);
+    })
+  };
+}
+
+function cloneStickers(stickers) {
+  return stickers.map(function (sticker) {
+    return Object.assign({}, sticker);
+  });
+}
+
+function Cubie(stickers, _ref) {
+  var illo = _ref.illo,
+      config = _ref.config;
+  var distance = config.distance,
+      zoom = config.zoom,
+      cubeColor = config.cubeColor,
+      colorsRGB = config.colorsRGB;
+  var anchor = new zdog__WEBPACK_IMPORTED_MODULE_0___default.a.Anchor({
+    addTo: illo
+  }); // infer position from cube stickers, because why not
+
+  var translate = stickers.reduce(function (acc, _ref2) {
+    var offset = _ref2.offset,
+        axis = _ref2.axis;
+    acc[axis] = distance * offset;
+    return acc;
+  }, {});
+  var container = new zdog__WEBPACK_IMPORTED_MODULE_0___default.a.Anchor({
+    addTo: anchor,
+    translate: translate
+  });
+  var size = zoom * 36;
+  new zdog__WEBPACK_IMPORTED_MODULE_0___default.a.Box({
+    addTo: container,
+    width: size,
+    height: size,
+    depth: size,
+    stroke: false,
+    color: cubeColor
+  });
+  var stickerOffset = size / 2 + 1;
+  var rotations = {
+    x: {
+      y: _moves__WEBPACK_IMPORTED_MODULE_1__["quarter"]
+    },
+    y: {
+      x: _moves__WEBPACK_IMPORTED_MODULE_1__["quarter"]
+    }
+  };
+  var stickerElements = stickers.map(function (_ref3) {
+    var color = _ref3.color,
+        axis = _ref3.axis,
+        offset = _ref3.offset;
+    var group = new zdog__WEBPACK_IMPORTED_MODULE_0___default.a.Group({
+      addTo: container
+    });
+    var stickerEl = new zdog__WEBPACK_IMPORTED_MODULE_0___default.a.Rect({
+      addTo: group,
+      width: size * 0.9,
+      height: size * 0.9,
+      stroke: 2,
+      fill: true,
+      color: colorsRGB[color],
+      rotate: rotations[axis]
+    });
+    stickerEl.translate[axis] += stickerOffset * offset;
+    var back = stickerEl.copy();
+    back.translate[axis] += size * offset;
+    var zOffset = axis === 'z' ? -1 : 1;
+    back.front = {
+      z: _moves__WEBPACK_IMPORTED_MODULE_1__["quarter"] * offset * zOffset
+    };
+    back.backface = false;
+    return group;
+  });
+  return {
+    anchor: anchor,
+    stickers: stickers,
+    setColors: function setColors(colors) {
+      var _loop = function _loop(i) {
+        var color = colors[i];
+        stickerElements[i].children.forEach(function (child) {
+          child.color = colorsRGB[color];
+        });
+        stickers[i].color = color;
+      };
+
+      for (var i = 0; i < stickerElements.length; i++) {
+        _loop(i);
+      }
+    },
+    destroy: function destroy() {
+      return anchor.remove();
+    }
+  };
+}
 
 /***/ }),
 

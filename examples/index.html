@@ -3,9 +3,13 @@
     <head>
         <title>zsim</title>
         <meta charset="UTF-8" />
-        <meta name="theme-color" content="#000000">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, minimal-ui">
+        <meta name="theme-color" content="#000000" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, minimal-ui"
+        />
         <script src="./main.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.7.6/dat.gui.min.js"></script>
         <style>
             html {
                 background-color: steelblue;
@@ -13,16 +17,28 @@
         </style>
     </head>
     <body>
-        <main> </main>
+        <main></main>
         <button data-alg="RUR'URU2R'">sune</button>
         <button data-alg="r'r'">small R prime</button>
         <script>
-            <!-- dat.gui -->
-
             const cube = zsim.default(document.querySelector('main'));
 
+            const gui = new dat.GUI();
+            if (window.innerWidth < 800) {
+                gui.close();
+            }
+            const config = {
+                stuff: 12,
+                backface: false,
+                stickerless: false,
+            };
+
+            gui.add(config, 'stuff');
+
             [...document.querySelectorAll('[data-alg]')].forEach(node => {
-                node.addEventListener('click', () => cube.moves(node.dataset.alg))
+                node.addEventListener('click', () =>
+                    cube.moves(node.dataset.alg),
+                );
             });
         </script>
     </body>
