@@ -2588,7 +2588,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       if (queue.length) {
         queue[0].tween(0);
-        console.log(queue[0].tween);
         clearQueue();
       }
     },
@@ -2629,13 +2628,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   return {
     // config = getters + object
     // cubie.destroy
-    // undo cycle
+    // move.invert()
     // combine axial { moves: [] }
-    reset: function reset() {
-      clearQueue();
-      cube.reset();
-    },
-    reload: cube.reload,
+    reset: cube.reset,
     move: function move(_move) {
       // if (queue.length === 0 && lastMove) {
       //     lastMove.tween(0);

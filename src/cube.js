@@ -48,7 +48,6 @@ export default function({ element, config }) {
             cube.setAllCubies();
             if (queue.length) {
                 queue[0].tween(0);
-                console.log(queue[0].tween);
                 clearQueue();
             }
         },
@@ -77,13 +76,9 @@ export default function({ element, config }) {
     return {
         // config = getters + object
         // cubie.destroy
-        // undo cycle
+        // move.invert()
         // combine axial { moves: [] }
-        reset: () => {
-            clearQueue();
-            cube.reset();
-        },
-        reload: cube.reload,
+        reset: cube.reset,
         move: (move) => {
             // if (queue.length === 0 && lastMove) {
             //     lastMove.tween(0);
