@@ -96,7 +96,8 @@ function cloneStickers(stickers) {
 
 function Cubie(stickers, { illo, config }) {
 
-    const { distance, zoom, cubeColor, colorsRGB } = config;
+    const { zoom, cubeColor, colorsRGB } = config;
+    const distance = zoom * 38;
 
     const anchor = new Zdog.Anchor({ addTo: illo });
 

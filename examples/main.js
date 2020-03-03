@@ -2521,6 +2521,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var zdog__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(zdog__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _moves__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./moves */ "./src/moves.js");
 /* harmony import */ var _cubies__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./cubies */ "./src/cubies.js");
+/* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./util */ "./src/util.js");
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
 
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
@@ -2538,18 +2539,38 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 
+
 /* harmony default export */ __webpack_exports__["default"] = (function (_ref) {
-  var illo = _ref.illo,
-      zoom = _ref.zoom,
-      colorsRGB = _ref.colors,
-      cubeColor = _ref.cubeColor;
-  var distance = zoom * 38;
+  var element = _ref.element,
+      config = _ref.config;
+  var zoom = 2;
+  var alpha = 1;
+  var colorsRGB = ['#ffffff', '#0045ad', '#b90000', '#009b48', '#ff5900', '#ffd500'].map(function (color) {
+    return Object(_util__WEBPACK_IMPORTED_MODULE_3__["hexToRgba"])(color, alpha);
+  });
+  var cubeColor = Object(_util__WEBPACK_IMPORTED_MODULE_3__["hexToRgba"])('#814ED0', alpha); // rgb
+
+  element.setAttribute('width', zoom * 400);
+  element.setAttribute('height', zoom * 400);
+  var illo = new zdog__WEBPACK_IMPORTED_MODULE_0___default.a.Illustration({
+    element: element,
+    zoom: zoom,
+    dragRotate: true
+  });
+  illo.rotate.y += 0.3;
+  illo.rotate.x -= 0.3;
+  var queue = [];
+
+  var clearQueue = function clearQueue() {
+    return queue.splice(0, queue.length).map(function (move) {
+      return move.source;
+    });
+  };
 
   var cube = _objectSpread({}, Object(_cubies__WEBPACK_IMPORTED_MODULE_2__["Model"])(), {
     cubies: Object(_cubies__WEBPACK_IMPORTED_MODULE_2__["Cubies"])({
       illo: illo,
       config: {
-        distance: distance,
         zoom: zoom,
         cubeColor: cubeColor,
         colorsRGB: colorsRGB
@@ -2560,16 +2581,61 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         var index = positions[i];
         cube.cubies[type][index].setColors(cube[type][index]);
       }
+    },
+    reset: function reset() {
+      Object.assign(cube, Object(_cubies__WEBPACK_IMPORTED_MODULE_2__["Model"])());
+      cube.setAllCubies();
+
+      if (queue.length) {
+        queue[0].tween(0);
+        console.log(queue[0].tween);
+        clearQueue();
+      }
+    },
+    setAllCubies: function setAllCubies() {
+      cube.setCubieColors([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], 'edges');
+      cube.setCubieColors([0, 1, 2, 3, 4, 5, 6, 7], 'corners');
+      cube.setCubieColors([0, 1, 2, 3, 4, 5], 'centres');
+    },
+    reload: function reload() {
+      cube.cubies.edges.forEach(function (edge) {
+        return edge.destroy();
+      });
+      cube.cubies.corners.forEach(function (corner) {
+        return corner.destroy();
+      });
+      cube.cubies.centres.forEach(function (centre) {
+        return centre.destroy();
+      });
+      cube.cubies = Object(_cubies__WEBPACK_IMPORTED_MODULE_2__["Cubies"])({
+        illo: illo,
+        config: {
+          zoom: zoom,
+          cubeColor: cubeColor,
+          colorsRGB: colorsRGB
+        }
+      });
+      cube.setAllCubies();
+
+      if (queue.length) {
+        var sources = clearQueue();
+        var moves = Object(_moves__WEBPACK_IMPORTED_MODULE_1__["getMoves"])(sources, cube);
+        moves[0].epoch = sources[0].epoch;
+        queue.push.apply(queue, _toConsumableArray(moves));
+      }
     }
   });
-
-  var queue = []; // let lastMove;
 
   return {
     // config = getters + object
     // cubie.destroy
     // undo cycle
     // combine axial { moves: [] }
+    reset: function reset() {
+      clearQueue();
+      cube.reset();
+    },
+    reload: cube.reload,
     move: function move(_move) {
       // if (queue.length === 0 && lastMove) {
       //     lastMove.tween(0);
@@ -2585,7 +2651,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       });
     },
     render: function render() {
-      if (queue.length) {
+      if (queue.length !== 0) {
         // const tps = Math.max(queue.length, 5);
         var tps = 4;
         var diff = 1000 / tps;
@@ -2611,6 +2677,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           move.tween(elapsed / diff);
         }
       }
+
+      illo.updateRenderGraph();
     }
   };
 });
@@ -2898,10 +2966,10 @@ function cloneStickers(stickers) {
 function Cubie(stickers, _ref) {
   var illo = _ref.illo,
       config = _ref.config;
-  var distance = config.distance,
-      zoom = config.zoom,
+  var zoom = config.zoom,
       cubeColor = config.cubeColor,
       colorsRGB = config.colorsRGB;
+  var distance = zoom * 38;
   var anchor = new zdog__WEBPACK_IMPORTED_MODULE_0___default.a.Anchor({
     addTo: illo
   }); // infer position from cube stickers, because why not
@@ -2993,12 +3061,7 @@ function Cubie(stickers, _ref) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var zdog__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! zdog */ "./node_modules/zdog/js/index.js");
-/* harmony import */ var zdog__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(zdog__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./util */ "./src/util.js");
-/* harmony import */ var _cube__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./cube */ "./src/cube.js");
-
-
+/* harmony import */ var _cube__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./cube */ "./src/cube.js");
 
 /*
  * examples
@@ -3026,33 +3089,14 @@ __webpack_require__.r(__webpack_exports__);
  */
 
 function zsim(container) {
-  var zoom = 2;
-  var alpha = 1;
-  var colors = ['#ffffff', '#0045ad', '#b90000', '#009b48', '#ff5900', '#ffd500'].map(function (color) {
-    return Object(_util__WEBPACK_IMPORTED_MODULE_1__["hexToRgba"])(color, alpha);
-  });
-  var cubeColor = Object(_util__WEBPACK_IMPORTED_MODULE_1__["hexToRgba"])('#814ED0', alpha); // rgb
-
-  var element = container.appendChild(document.createElement('canvas'));
-  element.setAttribute('width', zoom * 400);
-  element.setAttribute('height', zoom * 400);
-  var illo = new zdog__WEBPACK_IMPORTED_MODULE_0___default.a.Illustration({
-    element: element,
-    zoom: zoom,
-    dragRotate: true
-  });
-  illo.rotate.y += 0.3;
-  illo.rotate.x -= 0.3;
-  var cube = Object(_cube__WEBPACK_IMPORTED_MODULE_2__["default"])({
-    illo: illo,
-    zoom: zoom,
-    colors: colors,
-    cubeColor: cubeColor
+  var config = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+  var cube = Object(_cube__WEBPACK_IMPORTED_MODULE_0__["default"])({
+    element: container.appendChild(document.createElement('canvas')),
+    config: config
   });
 
   (function loop() {
     cube.render();
-    illo.updateRenderGraph();
     requestAnimationFrame(loop);
   })();
 
@@ -3204,7 +3248,7 @@ function getMove(moveRaw, cube) {
   var axisOrder = axisFlip ? -1 : 1;
   var extraMoves = moves && moves.map(function (move) {
     return getMove(applyOrder(clone(move), order), cube);
-  }); // animation function
+  }); // animate cubies
 
   function tween(_i) {
     var i = Object(zdog__WEBPACK_IMPORTED_MODULE_0__["easeInOut"])(_i);
@@ -3221,7 +3265,7 @@ function getMove(moveRaw, cube) {
         cubie.anchor.rotate[axis] = Object(zdog__WEBPACK_IMPORTED_MODULE_0__["lerp"])(0, quarter * order * axisOrder, i);
       }
     }
-  } // clean up move
+  } // swap stickers / clean up move
 
 
   function apply() {
@@ -3253,7 +3297,11 @@ function getMove(moveRaw, cube) {
     apply: apply,
     tween: tween,
     transforms: transforms,
-    axis: axis
+    axis: axis,
+    source: {
+      move: move,
+      order: order
+    }
   };
 }
 function getMoves(moves, cube) {

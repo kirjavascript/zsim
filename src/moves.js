@@ -96,7 +96,7 @@ export function getMove(moveRaw, cube) {
         moves.map(move => getMove(applyOrder(clone(move), order), cube))
     );
 
-    // animation function
+    // animate cubies
     function tween(_i) {
         const i = easeInOut(_i);
         if (extraMoves) {
@@ -109,7 +109,7 @@ export function getMove(moveRaw, cube) {
             }
         }
     }
-    // clean up move
+    // swap stickers / clean up move
     function apply() {
         extraMoves && extraMoves.forEach(move => move.apply());
         if (edges) {
@@ -134,6 +134,7 @@ export function getMove(moveRaw, cube) {
         tween,
         transforms,
         axis,
+        source: { move, order },
     };
 }
 
