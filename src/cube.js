@@ -26,9 +26,7 @@ export default function({ element, config }) {
         dragRotate: true,
     });
 
-
-    illo.rotate.y += 0.3;
-    illo.rotate.x -= 0.3;
+    illo.rotate = { x: -.3, y: .3 }
 
     const queue = [];
 
