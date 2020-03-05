@@ -2623,7 +2623,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         queue.push.apply(queue, _toConsumableArray(moves));
       }
     }
-  });
+  }); // move loop here
+
 
   return {
     // config = getters + object

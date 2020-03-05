@@ -72,6 +72,7 @@ export default function({ element, config }) {
     };
 
 
+    // move loop here
 
     return {
         // config = getters + object
