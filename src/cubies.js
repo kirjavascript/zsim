@@ -96,7 +96,7 @@ function cloneStickers(stickers) {
 
 function Cubie(stickers, { illo, config }) {
 
-    const { zoom, cubeColor, colorsRGB } = config;
+    const { zoom, colors: colorsRGB } = config;
     const distance = zoom * 38;
 
     const anchor = new Zdog.Anchor({ addTo: illo });
@@ -119,7 +119,7 @@ function Cubie(stickers, { illo, config }) {
         height: size,
         depth: size,
         stroke: false,
-        color: cubeColor,
+        color: config.cubeColor,
     });
 
     const stickerOffset = (size / 2) + 1;
@@ -145,11 +145,15 @@ function Cubie(stickers, { illo, config }) {
 
         stickerEl.translate[axis] += stickerOffset * offset;
 
-        const back = stickerEl.copy();
-        back.translate[axis] += size * offset;
-        const zOffset = axis === 'z' ? -1 : 1;
-        back.front = { z: quarter * offset * zOffset };
-        back.backface = false;
+        if (config.backface) {
+            const back = stickerEl.copy();
+            back.translate[axis] += size * offset;
+            const zOffset = axis === 'z' ? -1 : 1;
+            back.front = { z: quarter * offset * zOffset };
+            back.opacity = 0.5;
+            back.alpha = 0.5;
+            back.backface = false;
+        }
 
         return group;
     });
@@ -159,10 +163,11 @@ function Cubie(stickers, { illo, config }) {
         stickers,
         setColors: (colors) => {
             for (let i = 0; i < stickerElements.length; i++) {
-                const color = colors[i];
-                stickerElements[i].children.forEach(child => {
-                    child.color = colorsRGB[color];
-                });
+                const color = colorsRGB[colors[i]];
+                stickerElements[i].children[0].color = color;
+                if (config.backface) {
+                    stickerElements[i].children[1].color = color;
+                }
                 stickers[i].color = color;
             }
         },

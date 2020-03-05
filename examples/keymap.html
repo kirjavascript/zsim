@@ -14,6 +14,7 @@
         <main></main>
         <script>
             const cube = zsim.default(document.querySelector('main'));
+            cube.tps = 11;
             // get input tps
             const keys = [
                 ['1', 'S'],
@@ -53,7 +54,13 @@
                 ['p', 'z'],
                 ['q', "z'"],
             ].reduce((a, [b, c]) => ((a[b] = c), a), {});
-            window.addEventListener('keydown', e => cube.move(keys[e.key]));
+            window.addEventListener('keydown', e => {
+                if (keys[e.key]) {
+                    cube.move(keys[e.key])
+                } else if (e.key === 'Escape') {
+                    cube.reset();
+                }
+            });
         </script>
     </body>
 </html>

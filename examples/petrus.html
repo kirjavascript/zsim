@@ -16,6 +16,7 @@
         <main> </main>
         <script>
             const cube = zsim.default(document.querySelector('main'));
+            cube.cubeColor = 'rgba(129,78,208,0.5)'
             cube.movesInstant(`U' B F' U' L' D L D U2 B2 F2 D' F2 R D U2 R2 D' U F2 U B' R' U L' `);
             setTimeout(() => {
                 cube.moves(`z2 L' B' D' B2 R' L' F2 u'

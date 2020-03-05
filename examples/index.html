@@ -18,28 +18,27 @@
     </head>
     <body>
         <main></main>
-        <button data-alg="RUR'URU2R'">sune</button>
-        <button data-alg="r'r'">small R prime</button>
         <script>
-            const cube = zsim.default(document.querySelector('main'));
 
-            const gui = new dat.GUI();
-            if (window.innerWidth < 800) {
-                gui.close();
-            }
-            const config = {
-                stuff: 12,
-                backface: false,
-                stickerless: false,
-            };
+const cube = zsim.default(document.querySelector('main'));
 
-            gui.add(config, 'stuff');
+const gui = new dat.GUI();
+if (window.innerWidth < 800) {
+    gui.close();
+}
 
-            [...document.querySelectorAll('[data-alg]')].forEach(node => {
-                node.addEventListener('click', () =>
-                    cube.moves(node.dataset.alg),
-                );
-            });
+const config = {
+    alg: `RUR'URU2R'`,
+    do_alg: () => { cube.moves(config.alg); },
+};
+
+gui.add(config, 'alg');
+gui.add(config, 'do_alg');
+gui.add(cube, 'tps');
+gui.add(cube, 'zoom', 0.1, 4);
+gui.add(cube, 'backface');
+gui.addColor(cube, 'cubeColor')
+
         </script>
     </body>
 </html>

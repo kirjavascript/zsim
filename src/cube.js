@@ -1,21 +1,11 @@
 import Zdog from 'zdog';
-import { getMoves, getMove, quarter } from './moves';
+import { getMoves, getMove } from './moves';
 import { Model, Cubies } from './cubies';
-import { hexToRgba } from './util';
+import { defaults, reactive } from './config';
 
-export default function({ element, config }) {
-    const zoom = 2;
-
-    const alpha = 1;
-    const colorsRGB = [
-        '#ffffff',
-        '#0045ad',
-        '#b90000',
-        '#009b48',
-        '#ff5900',
-        '#ffd500',
-    ].map(color => hexToRgba(color, alpha));
-    const cubeColor = hexToRgba('#814ED0', alpha); // rgb
+export default function({ element, config: originalConfig }) {
+    const config = defaults(originalConfig);
+    const { zoom, rotate } = config;
 
     element.setAttribute('width', zoom * 400);
     element.setAttribute('height', zoom * 400);
@@ -24,9 +14,8 @@ export default function({ element, config }) {
         element,
         zoom,
         dragRotate: true,
+        rotate,
     });
-
-    illo.rotate = { x: -.3, y: .3 }
 
     const queue = [];
 
@@ -34,7 +23,7 @@ export default function({ element, config }) {
 
     const cube = {
         ...Model(),
-        cubies: Cubies({ illo, config: { zoom, cubeColor, colorsRGB } }),
+        cubies: Cubies({ illo, config }),
         setCubieColors: (positions, type) => {
             for (let i = 0; i < positions.length; i++) {
                 const index = positions[i];
@@ -58,7 +47,7 @@ export default function({ element, config }) {
             cube.cubies.edges.forEach(edge => edge.destroy());
             cube.cubies.corners.forEach(corner => corner.destroy());
             cube.cubies.centres.forEach(centre => centre.destroy());
-            cube.cubies = Cubies({ illo, config: { zoom, cubeColor, colorsRGB } });
+            cube.cubies = Cubies({ illo, config });
             cube.setAllCubies();
             if (queue.length) {
                 const sources = clearQueue();
@@ -69,14 +58,16 @@ export default function({ element, config }) {
         },
     };
 
+    // TODO: move loop here
 
-    // move loop here
+    // API
 
-    return {
-        // config = getters + object
-        // cubie.destroy
-        // move.invert()
+    return reactive(config, {
+        onChange: (_key) => cube.reload(),
+        // preload for element width/ height, illo rotate
+        // moveProcessing: crushAxial|expand
         // combine axial { moves: [] }
+        // move.invert()
         reset: cube.reset,
         move: (move) => {
             // if (queue.length === 0 && lastMove) {
@@ -91,8 +82,7 @@ export default function({ element, config }) {
         render: () => {
             if (queue.length !== 0) {
                 // const tps = Math.max(queue.length, 5);
-                const tps = 4;
-                const diff = 1000 / tps;
+                const diff = 1000 / config.tps;
 
                 const now = performance.now();
                 const [move] = queue;
@@ -116,5 +106,5 @@ export default function({ element, config }) {
             }
             illo.updateRenderGraph();
         },
-    };
+    });
 }
