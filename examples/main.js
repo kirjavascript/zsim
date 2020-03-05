@@ -2557,8 +2557,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     zoom: zoom,
     dragRotate: true
   });
-  illo.rotate.y += 0.3;
-  illo.rotate.x -= 0.3;
+  illo.rotate = {
+    x: -.3,
+    y: .3
+  };
   var queue = [];
 
   var clearQueue = function clearQueue() {
@@ -2697,7 +2699,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _moves__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./moves */ "./src/moves.js");
 
 
-var centres = [// U B R F L D ?
+var centres = [// U B R F L D
 {
   color: 0,
   axis: 'y',
@@ -3212,7 +3214,7 @@ var moveList = {
     moves: [toObject("U"), toObject("E'"), toObject("D'")]
   },
   z: {
-    moves: [toObject("F"), toObject("S"), toObject("B")]
+    moves: [toObject("F"), toObject("S"), toObject("B'")]
   }
 };
 function getMove(moveRaw, cube) {

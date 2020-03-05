@@ -69,7 +69,7 @@ const moveList = {
     d: { moves: [toObject(`D`), toObject(`E`)] },
     x: { moves: [toObject(`R`), toObject(`M'`), toObject(`L'`)] },
     y: { moves: [toObject(`U`), toObject(`E'`), toObject(`D'`)] },
-    z: { moves: [toObject(`F`), toObject(`S`), toObject(`B`)] },
+    z: { moves: [toObject(`F`), toObject(`S`), toObject(`B'`)] },
 };
 
 export function getMove(moveRaw, cube) {

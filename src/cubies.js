@@ -2,7 +2,7 @@ import Zdog from 'zdog';
 import { quarter } from './moves';
 
 const centres = [
-    // U B R F L D ?
+    // U B R F L D
     { color: 0, axis: 'y', offset: -1 },
     { color: 1, axis: 'z', offset: -1 },
     { color: 2, axis: 'x', offset: 1 },
