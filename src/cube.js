@@ -70,9 +70,6 @@ export default function({ element, config: originalConfig }) {
         // move.invert()
         reset: cube.reset,
         move: (move) => {
-            // if (queue.length === 0 && lastMove) {
-            //     lastMove.tween(0);
-            // }
             queue.push(getMove(move, cube))
         },
         moves: (moves) => queue.push(...getMoves(moves, cube)),
@@ -81,28 +78,37 @@ export default function({ element, config: originalConfig }) {
         },
         render: () => {
             if (queue.length !== 0) {
-                // const tps = Math.max(queue.length, 5);
                 const diff = 1000 / config.tps;
-
                 const now = performance.now();
-                const [move] = queue;
-                if (!move.epoch) {
-                    move.epoch = now;
-                }
-                const elapsed = now - move.epoch;
-                if (elapsed > diff) {
-                    move.apply();
 
-                    // lastMove extra offset -> fix to axial
-                    // if (queue.length === 1) {
-                    //     move.tween(require('zdog').lerp(0, -0.02, Math.random()));
-                    // }
-                    // move.tweenClean()
-                    // lastMove =
+                const [move] = queue;
+                const { axis } = move;
+
+                for (let i = 0; i < queue.length; i++) {
+                    const move = queue[i]
+                    if (move.axis !== axis) break;
+                    if (!move.epoch) {
+                        move.epoch = now;
+                    }
+                    const elapsed = now - move.epoch;
+                    if (elapsed > diff && i === 0) {
+                        move.apply();
                         queue.shift();
-                } else {
-                    move.tween(elapsed / diff);
+                    } else {
+                        move.tween(elapsed / diff);
+                    }
                 }
+
+                // if (!move.epoch) {
+                //     move.epoch = now;
+                // }
+                // const elapsed = now - move.epoch;
+                // if (elapsed > diff) {
+                //     move.apply();
+                //     queue.shift();
+                // } else {
+                //     move.tween(elapsed / diff);
+                // }
             }
             illo.updateRenderGraph();
         },
