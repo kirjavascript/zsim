@@ -68,6 +68,7 @@ export default function({ element, config: originalConfig }) {
         // moveProcessing: crushAxial|expand
         // combine axial { moves: [] }
         // move.invert()
+        // animation spring for moves
         reset: cube.reset,
         move: (move) => {
             queue.push(getMove(move, cube))
@@ -82,33 +83,33 @@ export default function({ element, config: originalConfig }) {
                 const now = performance.now();
 
                 const [move] = queue;
-                const { axis } = move;
+                // const { axis } = move;
 
-                for (let i = 0; i < queue.length; i++) {
-                    const move = queue[i]
-                    if (move.axis !== axis) break;
-                    if (!move.epoch) {
-                        move.epoch = now;
-                    }
-                    const elapsed = now - move.epoch;
-                    if (elapsed > diff && i === 0) {
-                        move.apply();
-                        queue.shift();
-                    } else {
-                        move.tween(elapsed / diff);
-                    }
+                // for (let i = 0; i < queue.length; i++) {
+                //     const move = queue[i]
+                //     if (move.axis !== axis) break;
+                //     if (!move.epoch) {
+                //         move.epoch = now;
+                //     }
+                //     const elapsed = now - move.epoch;
+                //     if (elapsed > diff && i === 0) {
+                //         move.apply();
+                //         queue.shift();
+                //     } else {
+                //         move.tween(elapsed / diff);
+                //     }
+                // }
+
+                if (!move.epoch) {
+                    move.epoch = now;
                 }
-
-                // if (!move.epoch) {
-                //     move.epoch = now;
-                // }
-                // const elapsed = now - move.epoch;
-                // if (elapsed > diff) {
-                //     move.apply();
-                //     queue.shift();
-                // } else {
-                //     move.tween(elapsed / diff);
-                // }
+                const elapsed = now - move.epoch;
+                if (elapsed > diff) {
+                    move.apply();
+                    queue.shift();
+                } else {
+                    move.tween(elapsed / diff);
+                }
             }
             illo.updateRenderGraph();
         },
