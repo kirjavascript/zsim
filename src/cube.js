@@ -52,6 +52,7 @@ export default function({ element, config: originalConfig }) {
             if (queue.length) {
                 const sources = clearQueue();
                 const moves = getMoves(sources, cube);
+                // TODO: check epoch is actually set here
                 moves[0].epoch = sources[0].epoch;
                 queue.push(...moves);
             }
@@ -70,6 +71,8 @@ export default function({ element, config: originalConfig }) {
         // move.invert()
         // animation spring for moves
         // stickerheight for LL
+        // setState
+        // getState
         reset: cube.reset,
         move: (move) => {
             queue.push(getMove(move, cube))
