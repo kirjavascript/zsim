@@ -74,7 +74,7 @@ export default function({ element, config: originalConfig }) {
             queue.push(getMove(move, cube))
         },
         moves: (moves) => queue.push(...getMoves(moves, cube)),
-        movesInstant: (moves) => {
+        setupMoves: (moves) => {
             getMoves(moves, cube).forEach(move => move.apply());
         },
         render: () => {
