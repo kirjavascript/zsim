@@ -149,7 +149,7 @@ function splitMoves(str) {
 
 function toObject(move) {
     if (typeof move !== 'string') return move;
-    if (move[1] === 'w') move = move[0].toLowerCase().concat(move[2] || '');
+    if (move[1] === 'w') move = `${move[0].toLowerCase()}${move[2] || ''}`;
     return {
         move: move[0],
         order: {

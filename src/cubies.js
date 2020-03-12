@@ -95,9 +95,8 @@ function cloneStickers(stickers) {
 }
 
 function Cubie(stickers, { illo, config }) {
-
-    const { zoom, colors: colorsRGB } = config;
-    const distance = zoom * 38;
+    const { colors: colorsRGB, baseZoom } = config;
+    const distance = baseZoom * 76;
 
     const anchor = new Zdog.Anchor({ addTo: illo });
 
@@ -112,7 +111,7 @@ function Cubie(stickers, { illo, config }) {
         translate,
     });
 
-    const size = zoom * 36;
+    const size = baseZoom * 72;
     new Zdog.Box({
         addTo: container,
         width: size,

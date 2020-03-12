@@ -1,8 +1,9 @@
 import { quarter } from './moves';
 
 export function defaults(obj) {
-    return Object.assign({
-        zoom: 2,
+    const config = Object.assign({
+        zoom: 1,
+        size: 400,
         tps: 4,
         backface: false,
         colors: [
@@ -16,6 +17,14 @@ export function defaults(obj) {
         cubeColor: '#000000',
         rotate: { x: -quarter / 2, y: quarter / 2 },
     }, obj);
+
+    // computed values
+
+    Object.defineProperty(config, 'baseZoom', {
+        get: () => config.size / 400,
+    });
+
+    return config;
 }
 
 // expose config
