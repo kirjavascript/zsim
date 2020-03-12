@@ -5,10 +5,10 @@ import { defaults, reactive } from './config';
 
 export default function({ element, config: originalConfig }) {
     const config = defaults(originalConfig);
-    const { zoom, rotate } = config;
+    const { zoom, rotate, size } = config;
 
-    element.setAttribute('width', zoom * 400);
-    element.setAttribute('height', zoom * 400);
+    element.setAttribute('width', size);
+    element.setAttribute('height', size);
 
     const illo = new Zdog.Illustration({
         element,
@@ -52,6 +52,7 @@ export default function({ element, config: originalConfig }) {
             if (queue.length) {
                 const sources = clearQueue();
                 const moves = getMoves(sources, cube);
+                // TODO: check epoch is actually set here
                 moves[0].epoch = sources[0].epoch;
                 queue.push(...moves);
             }
@@ -69,6 +70,9 @@ export default function({ element, config: originalConfig }) {
         // combine axial { moves: [] }
         // move.invert()
         // animation spring for moves
+        // stickerheight for LL
+        // setState
+        // getState
         reset: cube.reset,
         move: (move) => {
             queue.push(getMove(move, cube))

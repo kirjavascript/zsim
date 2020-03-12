@@ -144,11 +144,12 @@ export function getMoves(moves, cube) {
 
 function splitMoves(str) {
     if (typeof str !== 'string') return str;
-    return str.replace(/\s/g,'').split(/(\w\d|\w'|\w)/).filter((move) => move);
+    return str.split(/(\ww?['\d]?)/).filter(d => d.trim());
 }
 
 function toObject(move) {
     if (typeof move !== 'string') return move;
+    if (move[1] === 'w') move = `${move[0].toLowerCase()}${move[2] || ''}`;
     return {
         move: move[0],
         order: {

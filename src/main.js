@@ -11,6 +11,7 @@ import Cube from './cube';
  * alg demo
  * ksim flexlayout-react
  * solve playback
+ * LL case
  * move slider (slide during moves) | lerp | snap
  * return to position lerp / delay
  * timer
