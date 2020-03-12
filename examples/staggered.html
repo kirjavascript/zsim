@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>zsim</title>
+        <meta charset="UTF-8" />
+        <meta name="theme-color" content="#000000" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, minimal-ui"
+        />
+        <script src="../zsim.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.7.6/dat.gui.min.js"></script>
+    </head>
+    <body>
+        <main></main>
+        <script>
+const gui = new dat.GUI();
+const node = () => document.querySelector('main').appendChild(document.createElement('div'));
+const length = 7;
+const config = {
+    tps: 6,
+    delay: 500,
+};
+
+const cubes = Array.from({ length }, (_, i) => {
+    const cube = zsim.default(document.querySelector('main'), {
+        size: 400 - (i * 50),
+    });
+    return cube;
+})
+gui.add(config, 'tps', 1, 20).onChange(() => {
+    cubes.forEach(cube => cube.tps = config.tps)
+});
+gui.add(config, 'delay', 0, 500)
+
+// get input tps
+const keys = [
+    ['1', 'S'],
+    ['2', 'S\''],
+
+    ['I', 'R2'],
+    ['K', "R2"],
+    ['F', "U2"],
+    ['J', "U2"],
+
+    ['i', 'R'],
+    ['k', "R'"],
+    ['8', 'R2'],
+    ['u', 'r'],
+    ['m', "r'"],
+    ['j', 'U'],
+    ['f', "U'"],
+    ['s', 'D'],
+    ['l', "D'"],
+    ['n', 'F'],
+    ['v', "F'"],
+    ['o', "B'"],
+    ['w', 'B'],
+    ['g', "M'"],
+    ['H', 'E2'],
+    ['G', 'E2'],
+    ['h', 'M'],
+    ['d', 'L'],
+    ['e', "L'"],
+    ['3', 'L2'],
+    ['c', 'l'],
+    ['r', "l'"],
+    [';', 'y'],
+    ['a', "y'"],
+    ['y', 'x'],
+    ['t', "x'"],
+    ['p', 'z'],
+    ['q', "z'"],
+].reduce((a, [b, c]) => ((a[b] = c), a), {});
+window.addEventListener('keydown', e => {
+    if (keys[e.key]) {
+        cubes.forEach((cube, i) => {
+            setTimeout(() => {
+                cube.move(keys[e.key])
+            }, config.delay * i);
+        })
+    }
+});
+        </script>
+    </body>
+</html>

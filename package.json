@@ -1,4 +1,5 @@
 {
+    "version": "0.1.0",
     "scripts": {
         "watch": "webpack -w --env.dev",
         "deploy": "webpack -p"

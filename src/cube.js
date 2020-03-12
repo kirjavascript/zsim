@@ -5,17 +5,24 @@ import { defaults, reactive } from './config';
 
 export default function({ element, config: originalConfig }) {
     const config = defaults(originalConfig);
-    const { zoom, rotate, size } = config;
-
-    element.setAttribute('width', size);
-    element.setAttribute('height', size);
 
     const illo = new Zdog.Illustration({
         element,
-        zoom,
         dragRotate: true,
-        rotate,
     });
+
+    const setSize = () => {
+        element.setAttribute('width', config.size);
+        element.setAttribute('height', config.size);
+        illo.setMeasuredSize();
+    };
+
+    const setZoom = () => { illo.zoom = config.zoom; };
+    const setRotate = () => { illo.rotate = config.rotate; };
+
+    setSize();
+    setZoom();
+    setRotate();
 
     const queue = [];
 
@@ -64,7 +71,12 @@ export default function({ element, config: originalConfig }) {
     // API
 
     return reactive(config, {
-        onChange: (_key) => cube.reload(),
+        onChange: (key) => {
+            key === 'size' && setSize();
+            key === 'zoom' && setZoom();
+            key === 'rotate' && setRotate();
+            cube.reload()
+        },
         // preload for element width/ height, illo rotate
         // moveProcessing: crushAxial|expand
         // combine axial { moves: [] }
@@ -73,6 +85,7 @@ export default function({ element, config: originalConfig }) {
         // stickerheight for LL
         // setState
         // getState
+        // disable autorotate
         reset: cube.reset,
         move: (move) => {
             queue.push(getMove(move, cube))

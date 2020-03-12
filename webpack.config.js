@@ -1,5 +1,5 @@
 const webpack = require('webpack');
-const path = require('path');
+const { version } = require('./package.json');
 
 module.exports = (env={}, args={}) => {
 
@@ -9,8 +9,8 @@ module.exports = (env={}, args={}) => {
             main: './src/main.js',
         },
         output: {
-            path:     path.join(__dirname, 'examples'),
-            filename: '[name].js',
+            path: __dirname,
+            filename: 'zsim.js',
             library: 'zsim',
             libraryTarget: 'window',
             auxiliaryComment: 'zsim - embeddable cube simulator',
@@ -36,9 +36,8 @@ module.exports = (env={}, args={}) => {
             ],
         },
         plugins: [
-            new webpack.DefinePlugin({
-                __DEV__: env.dev
-            }),
+            new webpack.DefinePlugin({ __DEV__: env.dev }),
+            new webpack.BannerPlugin(`zsim ${version}`)
         ],
         resolve: {
             extensions: ['.js', '.json'],

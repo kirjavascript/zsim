@@ -41,5 +41,7 @@ export function reactive(config, API) {
             });
         });
 
+    Object.defineProperty(API, 'onChange', { enumerable: false });
+
     return API;
 }
