@@ -3144,25 +3144,29 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var zdog__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! zdog */ "./node_modules/zdog/js/index.js");
 /* harmony import */ var zdog__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(zdog__WEBPACK_IMPORTED_MODULE_0__);
 
+var _Zdog$CanvasRenderer = zdog__WEBPACK_IMPORTED_MODULE_0___default.a.CanvasRenderer,
+    move = _Zdog$CanvasRenderer.move,
+    line = _Zdog$CanvasRenderer.line;
 function setFov(i) {
-  var sign = (i > 0) - (i < 0);
-  var I = i < 0 ? -1 - i : 1 - i;
-  var fov = sign * Object(zdog__WEBPACK_IMPORTED_MODULE_0__["lerp"])(-20000, -250, Math.abs(Math.cos(I)));
+  if (i === 0) {
+    Object.assign(zdog__WEBPACK_IMPORTED_MODULE_0___default.a.CanvasRenderer, {
+      move: move,
+      line: line
+    });
+  } else {
+    var sign = i < 0 ? -1 : 1;
+    var fov = sign * Object(zdog__WEBPACK_IMPORTED_MODULE_0__["lerp"])(-20000, -250, Math.abs(Math.cos(sign - i)));
 
-  var scale = function scale(z) {
-    if (i === 0) return 1;
-    return fov / (fov + z);
-  };
+    zdog__WEBPACK_IMPORTED_MODULE_0___default.a.CanvasRenderer.move = function (ctx, elem, point) {
+      var s = fov / (fov + point.z);
+      ctx.moveTo(point.x * s, point.y * s);
+    };
 
-  zdog__WEBPACK_IMPORTED_MODULE_0___default.a.CanvasRenderer.move = function (ctx, elem, point) {
-    var s = scale(point.z);
-    ctx.moveTo(point.x * s, point.y * s);
-  };
-
-  zdog__WEBPACK_IMPORTED_MODULE_0___default.a.CanvasRenderer.line = function (ctx, elem, point) {
-    var s = scale(point.z);
-    ctx.lineTo(point.x * s, point.y * s);
-  };
+    zdog__WEBPACK_IMPORTED_MODULE_0___default.a.CanvasRenderer.line = function (ctx, elem, point) {
+      var s = fov / (fov + point.z);
+      ctx.lineTo(point.x * s, point.y * s);
+    };
+  }
 }
 
 /***/ }),

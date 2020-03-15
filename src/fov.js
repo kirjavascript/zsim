@@ -1,22 +1,22 @@
 import Zdog, { lerp } from 'zdog';
 
+const { move, line } = Zdog.CanvasRenderer;
+
 export default function setFov(i) {
-    const sign = (i > 0) - (i < 0);
-    const I = i < 0 ? -1 - i : 1 - i;
-    const fov = sign * lerp(-20000, -250, Math.abs(Math.cos(I)));
+    if (i === 0) {
+        Object.assign(Zdog.CanvasRenderer, { move, line });
+    } else {
+        const sign = i < 0 ? -1 : 1;
+        const fov = sign * lerp(-20000, -250, Math.abs(Math.cos(sign - i)));
 
-    const scale = (z) => {
-        if (i === 0) return 1;
-        return fov / (fov + z);
-    };
+        Zdog.CanvasRenderer.move = (ctx, elem, point) => {
+            const s = fov / (fov + point.z);
+            ctx.moveTo(point.x * s, point.y * s);
+        };
 
-    Zdog.CanvasRenderer.move = (ctx, elem, point) => {
-        const s = scale(point.z);
-        ctx.moveTo(point.x * s, point.y * s);
-    };
-
-    Zdog.CanvasRenderer.line = (ctx, elem, point) => {
-        const s = scale(point.z);
-        ctx.lineTo(point.x * s, point.y * s);
-    };
+        Zdog.CanvasRenderer.line = (ctx, elem, point) => {
+            const s = fov / (fov + point.z);
+            ctx.lineTo(point.x * s, point.y * s);
+        };
+    }
 }
