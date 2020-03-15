@@ -6,14 +6,14 @@ module.exports = (env={}, args={}) => {
     const config = {
         mode: env.dev ? 'development' : 'production',
         entry : {
-            main: './src/main.js',
+            zsim: './src/main.js',
+            'examples/ksim3/ksim': './examples/ksim3/src/main.js',
         },
         output: {
             path: __dirname,
-            filename: 'zsim.js',
+            filename: '[name].js',
             library: 'zsim',
             libraryTarget: 'window',
-            auxiliaryComment: 'zsim - embeddable cube simulator',
         },
         module: {
             rules: [

@@ -2,6 +2,7 @@ import Zdog from 'zdog';
 import { getMoves, getMove } from './moves';
 import { Model, Cubies } from './cubies';
 import { defaults, reactive } from './config';
+import setFov from './fov';
 
 export default function({ element, config: originalConfig }) {
     const config = defaults(originalConfig);
@@ -23,6 +24,7 @@ export default function({ element, config: originalConfig }) {
     setSize();
     setZoom();
     setRotate();
+    setFov(config.fov);
 
     const queue = [];
 
@@ -72,6 +74,7 @@ export default function({ element, config: originalConfig }) {
 
     return reactive(config, {
         onChange: (key) => {
+            key === 'fov' && setFov(config.fov)
             key === 'size' && setSize();
             key === 'zoom' && setZoom();
             key === 'rotate' && setRotate();
@@ -86,6 +89,7 @@ export default function({ element, config: originalConfig }) {
         // setState
         // getState
         // disable autorotate
+        // fov
         reset: cube.reset,
         move: (move) => {
             queue.push(getMove(move, cube))
