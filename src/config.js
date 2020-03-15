@@ -7,6 +7,7 @@ export function defaults(obj) {
         fov: 0,
         tps: 4,
         backface: false,
+        cubies: true,
         colors: [
             '#ffffff',
             '#0045ad',

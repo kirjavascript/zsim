@@ -2529,6 +2529,7 @@ function defaults(obj) {
     fov: 0,
     tps: 4,
     backface: false,
+    cubies: true,
     colors: ['#ffffff', '#0045ad', '#b90000', '#009b48', '#ff5900', '#ffd500'],
     cubeColor: '#000000',
     rotate: {
@@ -2580,6 +2581,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _cubies__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./cubies */ "./src/cubies.js");
 /* harmony import */ var _config__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./config */ "./src/config.js");
 /* harmony import */ var _fov__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./fov */ "./src/fov.js");
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
+
+function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
 
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
@@ -2633,6 +2642,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       return move.source;
     });
   };
+
+  console.log(Object(_cubies__WEBPACK_IMPORTED_MODULE_2__["Model"])());
 
   var cube = _objectSpread({}, Object(_cubies__WEBPACK_IMPORTED_MODULE_2__["Model"])(), {
     cubies: Object(_cubies__WEBPACK_IMPORTED_MODULE_2__["Cubies"])({
@@ -2718,6 +2729,41 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       Object(_moves__WEBPACK_IMPORTED_MODULE_1__["getMoves"])(moves, cube).forEach(function (move) {
         return move.apply();
       });
+    },
+    isSolved: function isSolved() {
+      var _cube$cubies = cube.cubies,
+          centres = _cube$cubies.centres,
+          edges = _cube$cubies.edges,
+          corners = _cube$cubies.corners;
+      var lookup = {};
+      centres.forEach(function (_ref2) {
+        var _ref2$stickers = _slicedToArray(_ref2.stickers, 1),
+            _ref2$stickers$ = _ref2$stickers[0],
+            color = _ref2$stickers$.color,
+            axis = _ref2$stickers$.axis,
+            offset = _ref2$stickers$.offset;
+
+        lookup["".concat(axis, "|").concat(offset)] = color;
+      }); // const pieces = [...edges, ...corners].map(piece => piece.stickers);
+
+      var pieces = edges.concat(corners).map(function (piece) {
+        return piece.stickers;
+      });
+
+      for (var i = 0; i < pieces.length; i++) {
+        for (var j = 0; j < pieces[i].length; j++) {
+          var _pieces$i$j = pieces[i][j],
+              axis = _pieces$i$j.axis,
+              offset = _pieces$i$j.offset,
+              color = _pieces$i$j.color;
+
+          if (color !== lookup["".concat(axis, "|").concat(offset)]) {
+            return false;
+          }
+        }
+      }
+
+      return true;
     },
     render: function render() {
       if (queue.length !== 0) {
@@ -3059,14 +3105,18 @@ function Cubie(stickers, _ref) {
     translate: translate
   });
   var size = baseZoom * 72;
-  new zdog__WEBPACK_IMPORTED_MODULE_0___default.a.Box({
-    addTo: container,
-    width: size,
-    height: size,
-    depth: size,
-    stroke: false,
-    color: config.cubeColor
-  });
+
+  if (config.cubies) {
+    new zdog__WEBPACK_IMPORTED_MODULE_0___default.a.Box({
+      addTo: container,
+      width: size,
+      height: size,
+      depth: size,
+      stroke: false,
+      color: config.cubeColor
+    });
+  }
+
   var stickerOffset = size / 2 + 1;
   var rotations = {
     x: {
@@ -3120,7 +3170,7 @@ function Cubie(stickers, _ref) {
           stickerElements[i].children[1].color = color;
         }
 
-        stickers[i].color = color;
+        stickers[i].color = colors[i];
       }
     },
     destroy: function destroy() {

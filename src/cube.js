@@ -30,6 +30,8 @@ export default function({ element, config: originalConfig }) {
 
     const clearQueue = () => queue.splice(0, queue.length).map(move => move.source);
 
+    console.log(Model())
+
     const cube = {
         ...Model(),
         cubies: Cubies({ illo, config }),
@@ -98,6 +100,24 @@ export default function({ element, config: originalConfig }) {
         setupMoves: (moves, reset = true) => {
             reset && cube.reset();
             getMoves(moves, cube).forEach(move => move.apply());
+        },
+        isSolved: () => {
+            const { centres, edges, corners } = cube.cubies;
+            const lookup = {};
+            centres.forEach(({ stickers: [{ color, axis, offset }]}) => {
+                lookup[`${axis}|${offset}`] = color;
+            });
+            // const pieces = [...edges, ...corners].map(piece => piece.stickers);
+            const pieces = edges.concat(corners).map(piece => piece.stickers);
+            for (let i = 0; i < pieces.length; i++) {
+                for (let j = 0; j < pieces[i].length; j++) {
+                    const { axis, offset, color } = pieces[i][j];
+                    if (color !== lookup[`${axis}|${offset}`]) {
+                        return false;
+                    }
+                }
+            }
+            return true;
         },
         render: () => {
             if (queue.length !== 0) {
