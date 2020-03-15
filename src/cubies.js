@@ -1,6 +1,8 @@
 import Zdog from 'zdog';
 import { quarter } from './moves';
 
+// TODO: axis and offset can be inferred from color
+
 const centres = [
     // U B R F L D
     { color: 0, axis: 'y', offset: -1 },

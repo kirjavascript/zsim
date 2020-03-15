@@ -30,8 +30,6 @@ export default function({ element, config: originalConfig }) {
 
     const clearQueue = () => queue.splice(0, queue.length).map(move => move.source);
 
-    console.log(Model())
-
     const cube = {
         ...Model(),
         cubies: Cubies({ illo, config }),
@@ -70,8 +68,6 @@ export default function({ element, config: originalConfig }) {
         },
     };
 
-    // TODO: move loop here
-
     // API
 
     return reactive(config, {
@@ -107,7 +103,6 @@ export default function({ element, config: originalConfig }) {
             centres.forEach(({ stickers: [{ color, axis, offset }]}) => {
                 lookup[`${axis}|${offset}`] = color;
             });
-            // const pieces = [...edges, ...corners].map(piece => piece.stickers);
             const pieces = edges.concat(corners).map(piece => piece.stickers);
             for (let i = 0; i < pieces.length; i++) {
                 for (let j = 0; j < pieces[i].length; j++) {
@@ -120,6 +115,13 @@ export default function({ element, config: originalConfig }) {
             return true;
         },
         render: () => {
+            // snap off
+            // if (queue.length > 1) {
+            //     queue.splice(0, queue.length-1).forEach((move) => {
+            //         move.apply()
+            //     })
+            // }
+
             if (queue.length !== 0) {
                 const diff = 1000 / config.tps;
                 const now = performance.now();

@@ -2643,8 +2643,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     });
   };
 
-  console.log(Object(_cubies__WEBPACK_IMPORTED_MODULE_2__["Model"])());
-
   var cube = _objectSpread({}, Object(_cubies__WEBPACK_IMPORTED_MODULE_2__["Model"])(), {
     cubies: Object(_cubies__WEBPACK_IMPORTED_MODULE_2__["Cubies"])({
       illo: illo,
@@ -2694,8 +2692,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         queue.push.apply(queue, _toConsumableArray(moves));
       }
     }
-  }); // TODO: move loop here
-  // API
+  }); // API
 
 
   return Object(_config__WEBPACK_IMPORTED_MODULE_3__["reactive"])(config, {
@@ -2744,8 +2741,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             offset = _ref2$stickers$.offset;
 
         lookup["".concat(axis, "|").concat(offset)] = color;
-      }); // const pieces = [...edges, ...corners].map(piece => piece.stickers);
-
+      });
       var pieces = edges.concat(corners).map(function (piece) {
         return piece.stickers;
       });
@@ -2766,6 +2762,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       return true;
     },
     render: function render() {
+      // snap off
+      // if (queue.length > 1) {
+      //     queue.splice(0, queue.length-1).forEach((move) => {
+      //         move.apply()
+      //     })
+      // }
       if (queue.length !== 0) {
         var diff = 1000 / config.tps;
         var now = performance.now();
@@ -2821,6 +2823,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var zdog__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(zdog__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _moves__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./moves */ "./src/moves.js");
 
+ // TODO: axis and offset can be inferred from color
 
 var centres = [// U B R F L D
 {

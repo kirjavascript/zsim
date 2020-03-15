@@ -1,13 +1,16 @@
 import cube from './cube';
+import { escape, space, move } from './logic';
 
 const keys = [
-    ['1', 'S'],
-    ['2', 'S\''],
-
     ['I', 'R2'],
     ['K', "R2"],
     ['F', "U2"],
     ['J', "U2"],
+    ['g', "M'"],
+    ['H', 'E2'],
+    ['G', 'E2'],
+    ['h', 'M'],
+
 
     ['i', 'R'],
     ['k', "R'"],
@@ -22,10 +25,6 @@ const keys = [
     ['v', "F'"],
     ['o', "B'"],
     ['w', 'B'],
-    ['g', "M'"],
-    ['H', 'E2'],
-    ['G', 'E2'],
-    ['h', 'M'],
     ['d', 'L'],
     ['e', "L'"],
     ['3', 'L2'],
@@ -37,11 +36,19 @@ const keys = [
     ['t', "x'"],
     ['p', 'z'],
     ['q', "z'"],
+
+    ['n', `x'`],
+    ['g', "F'"],
+    ['h', 'F'],
+    ['k', `R'`],
 ].reduce((a, [b, c]) => ((a[b] = c), a), {});
+
 window.addEventListener('keydown', e => {
     if (keys[e.key]) {
-        cube.move(keys[e.key])
+        move(keys[e.key])
     } else if (e.key === 'Escape') {
-        cube.reset();
+        escape();
+    } else if (e.key === ' ') {
+        space();
     }
 });
