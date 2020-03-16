@@ -13,7 +13,6 @@ module.exports = (env={}, args={}) => {
             filename: 'zsim.js',
             library: 'zsim',
             libraryTarget: 'window',
-            auxiliaryComment: 'zsim - embeddable cube simulator',
         },
         module: {
             rules: [
