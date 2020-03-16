@@ -2,6 +2,7 @@ import Zdog from 'zdog';
 import { getMoves, getMove } from './moves';
 import { Model, Cubies } from './cubies';
 import { defaults, reactive } from './config';
+import setFov from './fov';
 
 export default function({ element, config: originalConfig }) {
     const config = defaults(originalConfig);
@@ -23,6 +24,7 @@ export default function({ element, config: originalConfig }) {
     setSize();
     setZoom();
     setRotate();
+    setFov(config.fov);
 
     const queue = [];
 
@@ -66,12 +68,11 @@ export default function({ element, config: originalConfig }) {
         },
     };
 
-    // TODO: move loop here
-
     // API
 
     return reactive(config, {
         onChange: (key) => {
+            key === 'fov' && setFov(config.fov)
             key === 'size' && setSize();
             key === 'zoom' && setZoom();
             key === 'rotate' && setRotate();
@@ -86,6 +87,7 @@ export default function({ element, config: originalConfig }) {
         // setState
         // getState
         // disable autorotate
+        // fov
         reset: cube.reset,
         move: (move) => {
             queue.push(getMove(move, cube))
@@ -95,7 +97,31 @@ export default function({ element, config: originalConfig }) {
             reset && cube.reset();
             getMoves(moves, cube).forEach(move => move.apply());
         },
+        isSolved: () => {
+            const { centres, edges, corners } = cube.cubies;
+            const lookup = {};
+            centres.forEach(({ stickers: [{ color, axis, offset }]}) => {
+                lookup[`${axis}|${offset}`] = color;
+            });
+            const pieces = edges.concat(corners).map(piece => piece.stickers);
+            for (let i = 0; i < pieces.length; i++) {
+                for (let j = 0; j < pieces[i].length; j++) {
+                    const { axis, offset, color } = pieces[i][j];
+                    if (color !== lookup[`${axis}|${offset}`]) {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        },
         render: () => {
+            // snap off
+            // if (queue.length > 1) {
+            //     queue.splice(0, queue.length-1).forEach((move) => {
+            //         move.apply()
+            //     })
+            // }
+
             if (queue.length !== 0) {
                 const diff = 1000 / config.tps;
                 const now = performance.now();

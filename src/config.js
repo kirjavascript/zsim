@@ -4,8 +4,10 @@ export function defaults(obj) {
     const config = Object.assign({
         zoom: 1,
         size: 400,
+        fov: 0,
         tps: 4,
         backface: false,
+        cubies: true,
         colors: [
             '#ffffff',
             '#0045ad',

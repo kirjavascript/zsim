@@ -20,7 +20,7 @@ import Cube from './cube';
  * solver
  * trainer
  * controlled position
- * disco
+ * disco / trippy
  * pillowed
  * R3 M'R2 axial
  * R2'

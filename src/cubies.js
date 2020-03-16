@@ -1,6 +1,8 @@
 import Zdog from 'zdog';
 import { quarter } from './moves';
 
+// TODO: axis and offset can be inferred from color
+
 const centres = [
     // U B R F L D
     { color: 0, axis: 'y', offset: -1 },
@@ -112,14 +114,16 @@ function Cubie(stickers, { illo, config }) {
     });
 
     const size = baseZoom * 72;
-    new Zdog.Box({
-        addTo: container,
-        width: size,
-        height: size,
-        depth: size,
-        stroke: false,
-        color: config.cubeColor,
-    });
+    if (config.cubies) {
+        new Zdog.Box({
+            addTo: container,
+            width: size,
+            height: size,
+            depth: size,
+            stroke: false,
+            color: config.cubeColor,
+        });
+    }
 
     const stickerOffset = (size / 2) + 1;
     const rotations = {
@@ -136,7 +140,6 @@ function Cubie(stickers, { illo, config }) {
             width: size * 0.9,
             height: size * 0.9,
             stroke: 2,
-
             fill: true,
             color: colorsRGB[color],
             rotate: rotations[axis],
@@ -167,7 +170,7 @@ function Cubie(stickers, { illo, config }) {
                 if (config.backface) {
                     stickerElements[i].children[1].color = color;
                 }
-                stickers[i].color = color;
+                stickers[i].color = colors[i];
             }
         },
         destroy: () => anchor.remove(),
