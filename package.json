@@ -1,5 +1,6 @@
 {
     "version": "0.1.0",
+    "main": "./zsim.js",
     "scripts": {
         "watch": "webpack -w --env.dev",
         "deploy": "webpack -p"

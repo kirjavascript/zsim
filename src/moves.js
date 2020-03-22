@@ -144,18 +144,19 @@ export function getMoves(moves, cube) {
 
 function splitMoves(str) {
     if (typeof str !== 'string') return str;
-    return str.split(/(\ww?['\d]?)/).filter(d => d.trim());
+    return str.split(/(\ww?\d?'?)/).filter(d => d.trim());
 }
 
 function toObject(move) {
     if (typeof move !== 'string') return move;
-    if (move[1] === 'w') move = `${move[0].toLowerCase()}${move[2] || ''}`;
+    if (move[1] === 'w') move = `${move[0].toLowerCase()}${move.slice(2) || ''}`;
     return {
         move: move[0],
         order: {
             '\'': -1,
+            '2\'': -2,
             '2': 2,
-        }[move[1]] || 1,
+        }[move.slice(1)] || 1,
     };
 }
 
@@ -186,7 +187,7 @@ function doCycle(arr, order, cycle, axis) {
     if (order === -1 || order === 3) {
         cycle = [...cycle].reverse();
     }
-    if (order === 2) {
+    if (order === 2 || order === -2) {
         doCycle(arr, 1, cycle, axis);
     }
 

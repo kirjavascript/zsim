@@ -37,10 +37,10 @@ const keys = [
     ['p', 'z'],
     ['q', "z'"],
 
-    ['n', `x'`],
-    ['g', "F'"],
-    ['h', 'F'],
-    ['k', `R'`],
+    // ['n', `x'`],
+    // ['g', "F'"],
+    // ['h', 'F'],
+    // ['k', `R'`],
 ].reduce((a, [b, c]) => ((a[b] = c), a), {});
 
 window.addEventListener('keydown', e => {
